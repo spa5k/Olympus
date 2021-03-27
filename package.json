@@ -23,6 +23,8 @@
   "devDependencies": {
     "@commitlint/cli": "^12.0.1",
     "@commitlint/config-conventional": "^12.0.1",
+    "eslint-config-adjunct": "^4.11.0",
+    "eslint-config-prettier": "^8.1.0",
     "prettier": "^2.2.1"
   },
   "workspaces": [

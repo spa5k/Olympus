@@ -4,7 +4,6 @@ import cors from "cors";
 import { PrismaClient } from "@prisma/client";
 import { makeSchema, nullable, objectType, queryType, stringArg } from "nexus";
 import path from "path";
-import { Tag } from "nexus-prisma";
 import { GaiaContext } from "./config/context";
 
 const { env } = process;
