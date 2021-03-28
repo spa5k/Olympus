@@ -1,12 +1,11 @@
+import "reflect-metadata";
 import { ApolloServer } from "apollo-server-express";
 import express from "express";
 import cors from "cors";
 import { PrismaClient } from "@prisma/client";
-import { makeSchema, nullable, objectType, queryType, stringArg } from "nexus";
-import path from "path";
 import { GaiaContext } from "./config/context";
+import { createSchema } from "./config/schema";
 
-const { env } = process;
 const prisma = new PrismaClient({
   log: ["query", "info", `warn`, `error`],
 });
@@ -20,48 +19,7 @@ const main = async () => {
       credentials: true,
     })
   );
-  const schema = makeSchema({
-    sourceTypes: {
-      modules: [{ module: ".prisma/client", alias: "PrismaClient" }],
-    },
-    outputs: {
-      typegen: path.join(
-        __dirname,
-        "node_modules/@types/nexus-typegen/index.d.ts"
-      ),
-      schema: path.join(__dirname, "./api.graphql"),
-    },
-    shouldExitAfterGenerateArtifacts: Boolean(
-      process.env.NEXUS_SHOULD_EXIT_AFTER_REFLECTION
-    ),
-    types: [
-      objectType({
-        name: "User",
-        definition(t) {
-          t.id("id");
-          t.string("name", {
-            resolve(parent) {
-              return parent.name;
-            },
-          });
-        },
-      }),
-      queryType({
-        definition(t) {
-          t.list.field("users", {
-            type: "User",
-            args: {
-              world: nullable(stringArg()),
-            },
-            resolve(_root, _args, ctx) {
-              return ctx.prisma.user.findMany();
-            },
-          });
-        },
-      }),
-    ],
-  });
-
+  const schema = await createSchema();
   const server = new ApolloServer({
     context: ({ req, res }: GaiaContext) => ({
       res,

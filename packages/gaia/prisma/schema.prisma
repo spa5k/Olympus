@@ -10,8 +10,8 @@ generator client {
   provider = "prisma-client-js"
 }
 
-generator nexusPrisma {
-  provider = "nexus-prisma"
+generator typegraphql {
+  provider = "typegraphql-prisma"
 }
 
 model Blog {
