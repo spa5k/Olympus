@@ -5,6 +5,8 @@ import cors from "cors";
 import { PrismaClient } from "@prisma/client";
 import { GaiaContext } from "./config/context";
 import { createSchema } from "./config/schema";
+import session from "express-session";
+import pgSession from "connect-pg-simple";
 
 const prisma = new PrismaClient({
   log: ["query", "info", `warn`, `error`],
@@ -12,6 +14,11 @@ const prisma = new PrismaClient({
 
 const main = async () => {
   const app = express();
+  const pg = pgSession(session);
+
+  const store = new pg({
+    conString: process.env.DATABASE_URL,
+  });
 
   app.use(
     cors({
@@ -19,6 +26,18 @@ const main = async () => {
       credentials: true,
     })
   );
+
+  app.use(
+    session({
+      store,
+      secret: "niceoooooooooooooooooo",
+      resave: false,
+      cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 }, // 30 days
+      name: "prisma_id",
+      saveUninitialized: false,
+    })
+  );
+
   const schema = await createSchema();
   const server = new ApolloServer({
     context: ({ req, res }: GaiaContext) => ({

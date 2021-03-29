@@ -14,39 +14,18 @@ generator typegraphql {
   provider = "typegraphql-prisma"
 }
 
-model Blog {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  name      String
-  viewCount Int      @default(0)
-  posts     Post[]
-  authors   User[]
-}
-
 model User {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   name      String?
-  posts     Post[]
-  blogId    Int?
-  blog      Blog?    @relation(fields: [blogId], references: [id])
-  rating    Float
+  role      UserRole @default(FREE)
+  email     String   @unique
 }
 
-model Post {
-  id     Int    @id @default(autoincrement())
-  title  String
-  tags   Tag[]  @relation(references: [id])
-  blogId Int?
-  blog   Blog?  @relation(fields: [blogId], references: [id])
-  User   User?  @relation(fields: [userId], references: [id])
-  userId Int?
-}
-
-model Tag {
-  id    Int    @id @default(autoincrement())
-  label String
-  posts Post[] @relation(references: [id])
+enum UserRole {
+  ADMIN
+  MODERATOR
+  PREMIUM
+  FREE
 }

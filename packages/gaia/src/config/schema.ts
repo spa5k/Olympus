@@ -1,10 +1,11 @@
 import {
-  BlogCrudResolver,
+  resolvers,
   ResolversEnhanceMap,
   applyResolversEnhanceMap,
 } from "@generated/type-graphql";
 import { GraphQLSchema } from "graphql";
 import { buildSchema } from "type-graphql";
+import { LoginMutation } from "../modules/login";
 
 const resolversEnhancerMap: ResolversEnhanceMap = {
   User: {
@@ -15,7 +16,7 @@ const resolversEnhancerMap: ResolversEnhanceMap = {
 applyResolversEnhanceMap(resolversEnhancerMap);
 export const createSchema = async (): Promise<GraphQLSchema> => {
   return buildSchema({
-    resolvers: [BlogCrudResolver],
+    resolvers: [...resolvers, LoginMutation],
     validate: true,
     emitSchemaFile: true,
   });
