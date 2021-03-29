@@ -1,17 +1,14 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
 generator client {
   provider = "prisma-client-js"
 }
 
 generator typegraphql {
   provider = "typegraphql-prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -21,6 +18,14 @@ model User {
   name      String?
   role      UserRole @default(FREE)
   email     String   @unique
+}
+
+model session {
+  sid    String   @id @db.VarChar
+  sess   Json     @db.Json
+  expire DateTime @db.Timestamp(6)
+
+  @@index([expire], name: "IDX_session_expire")
 }
 
 enum UserRole {
