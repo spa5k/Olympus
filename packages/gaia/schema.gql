@@ -7,12 +7,27 @@ type AffectedRowsOutput {
   count: Int!
 }
 
+type AggregateSession {
+  count: SessionCountAggregate
+  max: SessionMaxAggregate
+  min: SessionMinAggregate
+}
+
 type AggregateUser {
   avg: UserAvgAggregate
   count: UserCountAggregate
   max: UserMaxAggregate
   min: UserMinAggregate
   sum: UserSumAggregate
+}
+
+input BoolFieldUpdateOperationsInput {
+  set: Boolean
+}
+
+input BoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
 }
 
 """
@@ -46,6 +61,11 @@ input EnumUserRoleFilter {
   notIn: [UserRole!]
 }
 
+type FieldError {
+  field: String!
+  message: String!
+}
+
 input IntFilter {
   equals: Int
   gt: Int
@@ -57,14 +77,37 @@ input IntFilter {
   notIn: [Int!]
 }
 
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+input JsonFilter {
+  equals: JSON
+  not: JSON
+}
+
 type Mutation {
+  Logout: Boolean!
+  createSession(data: SessionCreateInput!): Session!
   createUser(data: UserCreateInput!): User!
+  deleteManySession(where: SessionWhereInput): AffectedRowsOutput!
   deleteManyUser(where: UserWhereInput): AffectedRowsOutput!
+  deleteSession(where: SessionWhereUniqueInput!): Session
   deleteUser(where: UserWhereUniqueInput!): User
-  login(options: UserCreateInput!): Boolean!
+  login(options: UserCreateInput!): UserResponse!
+  register(options: UserCreateInput!): UserResponse!
+  updateManySession(data: SessionUpdateManyMutationInput!, where: SessionWhereInput): AffectedRowsOutput!
   updateManyUser(data: UserUpdateManyMutationInput!, where: UserWhereInput): AffectedRowsOutput!
+  updateSession(data: SessionUpdateInput!, where: SessionWhereUniqueInput!): Session
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  upsertSession(create: SessionCreateInput!, update: SessionUpdateInput!, where: SessionWhereUniqueInput!): Session!
   upsertUser(create: UserCreateInput!, update: UserUpdateInput!, where: UserWhereUniqueInput!): User!
+}
+
+input NestedBoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
 }
 
 input NestedDateTimeFilter {
@@ -129,8 +172,12 @@ input NullableStringFieldUpdateOperationsInput {
 }
 
 type Query {
+  aggregateSession(cursor: SessionWhereUniqueInput, orderBy: [SessionOrderByInput!], skip: Int, take: Int, where: SessionWhereInput): AggregateSession!
   aggregateUser(cursor: UserWhereUniqueInput, orderBy: [UserOrderByInput!], skip: Int, take: Int, where: UserWhereInput): AggregateUser!
+  findFirstSession(cursor: SessionWhereUniqueInput, distinct: [SessionScalarFieldEnum!], orderBy: [SessionOrderByInput!], skip: Int, take: Int, where: SessionWhereInput): Session
   findFirstUser(cursor: UserWhereUniqueInput, distinct: [UserScalarFieldEnum!], orderBy: [UserOrderByInput!], skip: Int, take: Int, where: UserWhereInput): User
+  session(where: SessionWhereUniqueInput!): Session
+  sessions(cursor: SessionWhereUniqueInput, distinct: [SessionScalarFieldEnum!], orderBy: [SessionOrderByInput!], skip: Int, take: Int, where: SessionWhereInput): [Session!]!
   user(where: UserWhereUniqueInput!): User
   users(cursor: UserWhereUniqueInput, distinct: [UserScalarFieldEnum!], orderBy: [UserOrderByInput!], skip: Int, take: Int, where: UserWhereInput): [User!]!
 }
@@ -138,6 +185,72 @@ type Query {
 enum QueryMode {
   default
   insensitive
+}
+
+type Session {
+  expire: DateTime!
+  sess: JSON!
+  sid: String!
+}
+
+type SessionCountAggregate {
+  _all: Int!
+  expire: Int
+  sess: Int
+  sid: Int
+}
+
+input SessionCreateInput {
+  expire: DateTime!
+  sess: JSON!
+  sid: String!
+}
+
+type SessionMaxAggregate {
+  expire: DateTime
+  sid: String
+}
+
+type SessionMinAggregate {
+  expire: DateTime
+  sid: String
+}
+
+input SessionOrderByInput {
+  expire: SortOrder
+  sess: SortOrder
+  sid: SortOrder
+}
+
+enum SessionScalarFieldEnum {
+  expire
+  sess
+  sid
+}
+
+input SessionUpdateInput {
+  expire: DateTimeFieldUpdateOperationsInput
+  sess: JSON
+  sid: StringFieldUpdateOperationsInput
+}
+
+input SessionUpdateManyMutationInput {
+  expire: DateTimeFieldUpdateOperationsInput
+  sess: JSON
+  sid: StringFieldUpdateOperationsInput
+}
+
+input SessionWhereInput {
+  AND: [SessionWhereInput!]
+  NOT: [SessionWhereInput!]
+  OR: [SessionWhereInput!]
+  expire: DateTimeFilter
+  sess: JsonFilter
+  sid: StringFilter
+}
+
+input SessionWhereUniqueInput {
+  sid: String
 }
 
 enum SortOrder {
@@ -184,8 +297,10 @@ type User {
   email: String!
   id: Int!
   name: String
+  password: String!
   role: UserRole!
   updatedAt: DateTime!
+  verified: Boolean!
 }
 
 type UserAvgAggregate {
@@ -198,16 +313,20 @@ type UserCountAggregate {
   email: Int
   id: Int!
   name: Int
+  password: Int
   role: Int
   updatedAt: Int
+  verified: Int
 }
 
 input UserCreateInput {
   createdAt: DateTime
   email: String!
   name: String
+  password: String!
   role: UserRole
   updatedAt: DateTime
+  verified: Boolean
 }
 
 type UserMaxAggregate {
@@ -215,8 +334,10 @@ type UserMaxAggregate {
   email: String
   id: Int!
   name: String
+  password: String
   role: UserRole
   updatedAt: DateTime
+  verified: Boolean
 }
 
 type UserMinAggregate {
@@ -224,8 +345,10 @@ type UserMinAggregate {
   email: String
   id: Int!
   name: String
+  password: String
   role: UserRole
   updatedAt: DateTime
+  verified: Boolean
 }
 
 input UserOrderByInput {
@@ -233,8 +356,15 @@ input UserOrderByInput {
   email: SortOrder
   id: SortOrder
   name: SortOrder
+  password: SortOrder
   role: SortOrder
   updatedAt: SortOrder
+  verified: SortOrder
+}
+
+type UserResponse {
+  errors: [FieldError!]
+  user: User
 }
 
 enum UserRole {
@@ -249,8 +379,10 @@ enum UserScalarFieldEnum {
   email
   id
   name
+  password
   role
   updatedAt
+  verified
 }
 
 type UserSumAggregate {
@@ -261,16 +393,20 @@ input UserUpdateInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   email: StringFieldUpdateOperationsInput
   name: NullableStringFieldUpdateOperationsInput
+  password: StringFieldUpdateOperationsInput
   role: EnumUserRoleFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
+  verified: BoolFieldUpdateOperationsInput
 }
 
 input UserUpdateManyMutationInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   email: StringFieldUpdateOperationsInput
   name: NullableStringFieldUpdateOperationsInput
+  password: StringFieldUpdateOperationsInput
   role: EnumUserRoleFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
+  verified: BoolFieldUpdateOperationsInput
 }
 
 input UserWhereInput {
@@ -281,8 +417,10 @@ input UserWhereInput {
   email: StringFilter
   id: IntFilter
   name: StringNullableFilter
+  password: StringFilter
   role: EnumUserRoleFilter
   updatedAt: DateTimeFilter
+  verified: BoolFilter
 }
 
 input UserWhereUniqueInput {

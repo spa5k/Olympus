@@ -2,6 +2,7 @@
   "conventionalCommits.scopes": [
     "docker",
     "gaia-type-graphql",
-    "gaia-session"
+    "gaia-session",
+    "tokens"
   ]
 }

@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["napi"]
 }
 
 generator typegraphql {
@@ -12,12 +13,14 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   name      String?
   role      UserRole @default(FREE)
   email     String   @unique
+  password  String
+  verified  Boolean  @default(false)
 }
 
 model session {
@@ -28,9 +31,22 @@ model session {
   @@index([expire], name: "IDX_session_expire")
 }
 
+model tokens {
+  id        String    @id @default(uuid())
+  type      TokenType
+  userId    String
+  expire    DateTime  @db.Timestamp(6)
+  createdAt DateTime  @default(now())
+}
+
 enum UserRole {
   ADMIN
   MODERATOR
   PREMIUM
   FREE
+}
+
+enum TokenType {
+  FORGET_PASSWORD
+  ACCOUNT_VERIFICATION
 }

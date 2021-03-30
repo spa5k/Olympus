@@ -7,12 +7,14 @@ import { GaiaContext } from "./config/context";
 import { createSchema } from "./config/schema";
 import session from "express-session";
 import pgSession from "connect-pg-simple";
+// import { sendEmail } from "./utils/sendEmail";
 
 const prisma = new PrismaClient({
   log: ["query", "info", `warn`, `error`],
 });
 
 const main = async () => {
+  // sendEmail("bob@bob.com", "nice");
   const app = express();
   const pg = pgSession(session);
 
