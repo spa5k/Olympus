@@ -13,12 +13,16 @@ type AggregateSession {
   min: SessionMinAggregate
 }
 
+type AggregateTokens {
+  count: TokensCountAggregate
+  max: TokensMaxAggregate
+  min: TokensMinAggregate
+}
+
 type AggregateUser {
-  avg: UserAvgAggregate
   count: UserCountAggregate
   max: UserMaxAggregate
   min: UserMinAggregate
-  sum: UserSumAggregate
 }
 
 input BoolFieldUpdateOperationsInput {
@@ -28,6 +32,14 @@ input BoolFieldUpdateOperationsInput {
 input BoolFilter {
   equals: Boolean
   not: NestedBoolFilter
+}
+
+input BoolWithAggregatesFilter {
+  count: NestedIntFilter
+  equals: Boolean
+  max: NestedBoolFilter
+  min: NestedBoolFilter
+  not: NestedBoolWithAggregatesFilter
 }
 
 """
@@ -50,6 +62,41 @@ input DateTimeFilter {
   notIn: [DateTime!]
 }
 
+input DateTimeWithAggregatesFilter {
+  count: NestedIntFilter
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  max: NestedDateTimeFilter
+  min: NestedDateTimeFilter
+  not: NestedDateTimeWithAggregatesFilter
+  notIn: [DateTime!]
+}
+
+input EnumTokenTypeFieldUpdateOperationsInput {
+  set: TokenType
+}
+
+input EnumTokenTypeFilter {
+  equals: TokenType
+  in: [TokenType!]
+  not: NestedEnumTokenTypeFilter
+  notIn: [TokenType!]
+}
+
+input EnumTokenTypeWithAggregatesFilter {
+  count: NestedIntFilter
+  equals: TokenType
+  in: [TokenType!]
+  max: NestedEnumTokenTypeFilter
+  min: NestedEnumTokenTypeFilter
+  not: NestedEnumTokenTypeWithAggregatesFilter
+  notIn: [TokenType!]
+}
+
 input EnumUserRoleFieldUpdateOperationsInput {
   set: UserRole
 }
@@ -61,20 +108,19 @@ input EnumUserRoleFilter {
   notIn: [UserRole!]
 }
 
+input EnumUserRoleWithAggregatesFilter {
+  count: NestedIntFilter
+  equals: UserRole
+  in: [UserRole!]
+  max: NestedEnumUserRoleFilter
+  min: NestedEnumUserRoleFilter
+  not: NestedEnumUserRoleWithAggregatesFilter
+  notIn: [UserRole!]
+}
+
 type FieldError {
   field: String!
   message: String!
-}
-
-input IntFilter {
-  equals: Int
-  gt: Int
-  gte: Int
-  in: [Int!]
-  lt: Int
-  lte: Int
-  not: NestedIntFilter
-  notIn: [Int!]
 }
 
 """
@@ -87,27 +133,53 @@ input JsonFilter {
   not: JSON
 }
 
+input JsonWithAggregatesFilter {
+  count: NestedIntFilter
+  equals: JSON
+  max: NestedJsonFilter
+  min: NestedJsonFilter
+  not: JSON
+}
+
 type Mutation {
   Logout: Boolean!
+  createManySession(data: [SessionCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
+  createManyTokens(data: [TokensCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
+  createManyUser(data: [UserCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
   createSession(data: SessionCreateInput!): Session!
+  createTokens(data: TokensCreateInput!): Tokens!
   createUser(data: UserCreateInput!): User!
   deleteManySession(where: SessionWhereInput): AffectedRowsOutput!
+  deleteManyTokens(where: TokensWhereInput): AffectedRowsOutput!
   deleteManyUser(where: UserWhereInput): AffectedRowsOutput!
   deleteSession(where: SessionWhereUniqueInput!): Session
+  deleteTokens(where: TokensWhereUniqueInput!): Tokens
   deleteUser(where: UserWhereUniqueInput!): User
   login(options: UserCreateInput!): UserResponse!
   register(options: UserCreateInput!): UserResponse!
   updateManySession(data: SessionUpdateManyMutationInput!, where: SessionWhereInput): AffectedRowsOutput!
+  updateManyTokens(data: TokensUpdateManyMutationInput!, where: TokensWhereInput): AffectedRowsOutput!
   updateManyUser(data: UserUpdateManyMutationInput!, where: UserWhereInput): AffectedRowsOutput!
   updateSession(data: SessionUpdateInput!, where: SessionWhereUniqueInput!): Session
+  updateTokens(data: TokensUpdateInput!, where: TokensWhereUniqueInput!): Tokens
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   upsertSession(create: SessionCreateInput!, update: SessionUpdateInput!, where: SessionWhereUniqueInput!): Session!
+  upsertTokens(create: TokensCreateInput!, update: TokensUpdateInput!, where: TokensWhereUniqueInput!): Tokens!
   upsertUser(create: UserCreateInput!, update: UserUpdateInput!, where: UserWhereUniqueInput!): User!
+  verifyUser(token: String!): Boolean!
 }
 
 input NestedBoolFilter {
   equals: Boolean
   not: NestedBoolFilter
+}
+
+input NestedBoolWithAggregatesFilter {
+  count: NestedIntFilter
+  equals: Boolean
+  max: NestedBoolFilter
+  min: NestedBoolFilter
+  not: NestedBoolWithAggregatesFilter
 }
 
 input NestedDateTimeFilter {
@@ -121,10 +193,51 @@ input NestedDateTimeFilter {
   notIn: [DateTime!]
 }
 
+input NestedDateTimeWithAggregatesFilter {
+  count: NestedIntFilter
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  max: NestedDateTimeFilter
+  min: NestedDateTimeFilter
+  not: NestedDateTimeWithAggregatesFilter
+  notIn: [DateTime!]
+}
+
+input NestedEnumTokenTypeFilter {
+  equals: TokenType
+  in: [TokenType!]
+  not: NestedEnumTokenTypeFilter
+  notIn: [TokenType!]
+}
+
+input NestedEnumTokenTypeWithAggregatesFilter {
+  count: NestedIntFilter
+  equals: TokenType
+  in: [TokenType!]
+  max: NestedEnumTokenTypeFilter
+  min: NestedEnumTokenTypeFilter
+  not: NestedEnumTokenTypeWithAggregatesFilter
+  notIn: [TokenType!]
+}
+
 input NestedEnumUserRoleFilter {
   equals: UserRole
   in: [UserRole!]
   not: NestedEnumUserRoleFilter
+  notIn: [UserRole!]
+}
+
+input NestedEnumUserRoleWithAggregatesFilter {
+  count: NestedIntFilter
+  equals: UserRole
+  in: [UserRole!]
+  max: NestedEnumUserRoleFilter
+  min: NestedEnumUserRoleFilter
+  not: NestedEnumUserRoleWithAggregatesFilter
   notIn: [UserRole!]
 }
 
@@ -137,6 +250,22 @@ input NestedIntFilter {
   lte: Int
   not: NestedIntFilter
   notIn: [Int!]
+}
+
+input NestedIntNullableFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: NestedIntNullableFilter
+  notIn: [Int!]
+}
+
+input NestedJsonFilter {
+  equals: JSON
+  not: JSON
 }
 
 input NestedStringFilter {
@@ -167,15 +296,56 @@ input NestedStringNullableFilter {
   startsWith: String
 }
 
+input NestedStringNullableWithAggregatesFilter {
+  contains: String
+  count: NestedIntNullableFilter
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  max: NestedStringNullableFilter
+  min: NestedStringNullableFilter
+  not: NestedStringNullableWithAggregatesFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+input NestedStringWithAggregatesFilter {
+  contains: String
+  count: NestedIntFilter
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  max: NestedStringFilter
+  min: NestedStringFilter
+  not: NestedStringWithAggregatesFilter
+  notIn: [String!]
+  startsWith: String
+}
+
 input NullableStringFieldUpdateOperationsInput {
   set: String
 }
 
 type Query {
   aggregateSession(cursor: SessionWhereUniqueInput, orderBy: [SessionOrderByInput!], skip: Int, take: Int, where: SessionWhereInput): AggregateSession!
+  aggregateTokens(cursor: TokensWhereUniqueInput, orderBy: [TokensOrderByInput!], skip: Int, take: Int, where: TokensWhereInput): AggregateTokens!
   aggregateUser(cursor: UserWhereUniqueInput, orderBy: [UserOrderByInput!], skip: Int, take: Int, where: UserWhereInput): AggregateUser!
   findFirstSession(cursor: SessionWhereUniqueInput, distinct: [SessionScalarFieldEnum!], orderBy: [SessionOrderByInput!], skip: Int, take: Int, where: SessionWhereInput): Session
+  findFirstTokens(cursor: TokensWhereUniqueInput, distinct: [TokensScalarFieldEnum!], orderBy: [TokensOrderByInput!], skip: Int, take: Int, where: TokensWhereInput): Tokens
   findFirstUser(cursor: UserWhereUniqueInput, distinct: [UserScalarFieldEnum!], orderBy: [UserOrderByInput!], skip: Int, take: Int, where: UserWhereInput): User
+  findManyTokens(cursor: TokensWhereUniqueInput, distinct: [TokensScalarFieldEnum!], orderBy: [TokensOrderByInput!], skip: Int, take: Int, where: TokensWhereInput): [Tokens!]!
+  findUniqueTokens(where: TokensWhereUniqueInput!): Tokens
+  groupBySession(by: [SessionScalarFieldEnum!]!, having: SessionScalarWhereWithAggregatesInput, orderBy: [SessionOrderByInput!], skip: Int, take: Int, where: SessionWhereInput): [SessionGroupBy!]!
+  groupByTokens(by: [TokensScalarFieldEnum!]!, having: TokensScalarWhereWithAggregatesInput, orderBy: [TokensOrderByInput!], skip: Int, take: Int, where: TokensWhereInput): [TokensGroupBy!]!
+  groupByUser(by: [UserScalarFieldEnum!]!, having: UserScalarWhereWithAggregatesInput, orderBy: [UserOrderByInput!], skip: Int, take: Int, where: UserWhereInput): [UserGroupBy!]!
   session(where: SessionWhereUniqueInput!): Session
   sessions(cursor: SessionWhereUniqueInput, distinct: [SessionScalarFieldEnum!], orderBy: [SessionOrderByInput!], skip: Int, take: Int, where: SessionWhereInput): [Session!]!
   user(where: UserWhereUniqueInput!): User
@@ -206,6 +376,21 @@ input SessionCreateInput {
   sid: String!
 }
 
+input SessionCreateManyInput {
+  expire: DateTime!
+  sess: JSON!
+  sid: String!
+}
+
+type SessionGroupBy {
+  count: SessionCountAggregate
+  expire: DateTime!
+  max: SessionMaxAggregate
+  min: SessionMinAggregate
+  sess: JSON!
+  sid: String!
+}
+
 type SessionMaxAggregate {
   expire: DateTime
   sid: String
@@ -226,6 +411,15 @@ enum SessionScalarFieldEnum {
   expire
   sess
   sid
+}
+
+input SessionScalarWhereWithAggregatesInput {
+  AND: [SessionScalarWhereWithAggregatesInput!]
+  NOT: [SessionScalarWhereWithAggregatesInput!]
+  OR: [SessionScalarWhereWithAggregatesInput!]
+  expire: DateTimeWithAggregatesFilter
+  sess: JsonWithAggregatesFilter
+  sid: StringWithAggregatesFilter
 }
 
 input SessionUpdateInput {
@@ -292,10 +486,183 @@ input StringNullableFilter {
   startsWith: String
 }
 
+input StringNullableWithAggregatesFilter {
+  contains: String
+  count: NestedIntNullableFilter
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  max: NestedStringNullableFilter
+  min: NestedStringNullableFilter
+  mode: QueryMode
+  not: NestedStringNullableWithAggregatesFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+input StringWithAggregatesFilter {
+  contains: String
+  count: NestedIntFilter
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  max: NestedStringFilter
+  min: NestedStringFilter
+  mode: QueryMode
+  not: NestedStringWithAggregatesFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+enum TokenType {
+  ACCOUNT_VERIFICATION
+  FORGET_PASSWORD
+}
+
+type Tokens {
+  createdAt: DateTime!
+  expire: DateTime!
+  id: String!
+  token: String!
+  type: TokenType!
+  userId: String!
+}
+
+type TokensCountAggregate {
+  _all: Int!
+  createdAt: Int
+  expire: Int
+  id: Int
+  token: Int
+  type: Int
+  userId: Int
+}
+
+input TokensCreateInput {
+  createdAt: DateTime
+  expire: DateTime!
+  id: String
+  token: String!
+  type: TokenType!
+  userId: String!
+}
+
+input TokensCreateManyInput {
+  createdAt: DateTime
+  expire: DateTime!
+  id: String
+  token: String!
+  type: TokenType!
+  userId: String!
+}
+
+type TokensGroupBy {
+  count: TokensCountAggregate
+  createdAt: DateTime!
+  expire: DateTime!
+  id: String!
+  max: TokensMaxAggregate
+  min: TokensMinAggregate
+  token: String!
+  type: TokenType!
+  userId: String!
+}
+
+type TokensMaxAggregate {
+  createdAt: DateTime
+  expire: DateTime
+  id: String
+  token: String
+  type: TokenType
+  userId: String
+}
+
+type TokensMinAggregate {
+  createdAt: DateTime
+  expire: DateTime
+  id: String
+  token: String
+  type: TokenType
+  userId: String
+}
+
+input TokensOrderByInput {
+  createdAt: SortOrder
+  expire: SortOrder
+  id: SortOrder
+  token: SortOrder
+  type: SortOrder
+  userId: SortOrder
+}
+
+enum TokensScalarFieldEnum {
+  createdAt
+  expire
+  id
+  token
+  type
+  userId
+}
+
+input TokensScalarWhereWithAggregatesInput {
+  AND: [TokensScalarWhereWithAggregatesInput!]
+  NOT: [TokensScalarWhereWithAggregatesInput!]
+  OR: [TokensScalarWhereWithAggregatesInput!]
+  createdAt: DateTimeWithAggregatesFilter
+  expire: DateTimeWithAggregatesFilter
+  id: StringWithAggregatesFilter
+  token: StringWithAggregatesFilter
+  type: EnumTokenTypeWithAggregatesFilter
+  userId: StringWithAggregatesFilter
+}
+
+input TokensUpdateInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  expire: DateTimeFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  token: StringFieldUpdateOperationsInput
+  type: EnumTokenTypeFieldUpdateOperationsInput
+  userId: StringFieldUpdateOperationsInput
+}
+
+input TokensUpdateManyMutationInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
+  expire: DateTimeFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  token: StringFieldUpdateOperationsInput
+  type: EnumTokenTypeFieldUpdateOperationsInput
+  userId: StringFieldUpdateOperationsInput
+}
+
+input TokensWhereInput {
+  AND: [TokensWhereInput!]
+  NOT: [TokensWhereInput!]
+  OR: [TokensWhereInput!]
+  createdAt: DateTimeFilter
+  expire: DateTimeFilter
+  id: StringFilter
+  token: StringFilter
+  type: EnumTokenTypeFilter
+  userId: StringFilter
+}
+
+input TokensWhereUniqueInput {
+  id: String
+  token: String
+}
+
 type User {
   createdAt: DateTime!
   email: String!
-  id: Int!
+  id: String!
   name: String
   password: String!
   role: UserRole!
@@ -303,15 +670,11 @@ type User {
   verified: Boolean!
 }
 
-type UserAvgAggregate {
-  id: Float!
-}
-
 type UserCountAggregate {
   _all: Int!
   createdAt: Int
   email: Int
-  id: Int!
+  id: Int
   name: Int
   password: Int
   role: Int
@@ -322,6 +685,7 @@ type UserCountAggregate {
 input UserCreateInput {
   createdAt: DateTime
   email: String!
+  id: String
   name: String
   password: String!
   role: UserRole
@@ -329,10 +693,35 @@ input UserCreateInput {
   verified: Boolean
 }
 
+input UserCreateManyInput {
+  createdAt: DateTime
+  email: String!
+  id: String
+  name: String
+  password: String!
+  role: UserRole
+  updatedAt: DateTime
+  verified: Boolean
+}
+
+type UserGroupBy {
+  count: UserCountAggregate
+  createdAt: DateTime!
+  email: String!
+  id: String!
+  max: UserMaxAggregate
+  min: UserMinAggregate
+  name: String
+  password: String!
+  role: UserRole!
+  updatedAt: DateTime!
+  verified: Boolean!
+}
+
 type UserMaxAggregate {
   createdAt: DateTime
   email: String
-  id: Int!
+  id: String
   name: String
   password: String
   role: UserRole
@@ -343,7 +732,7 @@ type UserMaxAggregate {
 type UserMinAggregate {
   createdAt: DateTime
   email: String
-  id: Int!
+  id: String
   name: String
   password: String
   role: UserRole
@@ -385,13 +774,24 @@ enum UserScalarFieldEnum {
   verified
 }
 
-type UserSumAggregate {
-  id: Int!
+input UserScalarWhereWithAggregatesInput {
+  AND: [UserScalarWhereWithAggregatesInput!]
+  NOT: [UserScalarWhereWithAggregatesInput!]
+  OR: [UserScalarWhereWithAggregatesInput!]
+  createdAt: DateTimeWithAggregatesFilter
+  email: StringWithAggregatesFilter
+  id: StringWithAggregatesFilter
+  name: StringNullableWithAggregatesFilter
+  password: StringWithAggregatesFilter
+  role: EnumUserRoleWithAggregatesFilter
+  updatedAt: DateTimeWithAggregatesFilter
+  verified: BoolWithAggregatesFilter
 }
 
 input UserUpdateInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   email: StringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
   name: NullableStringFieldUpdateOperationsInput
   password: StringFieldUpdateOperationsInput
   role: EnumUserRoleFieldUpdateOperationsInput
@@ -402,6 +802,7 @@ input UserUpdateInput {
 input UserUpdateManyMutationInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   email: StringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
   name: NullableStringFieldUpdateOperationsInput
   password: StringFieldUpdateOperationsInput
   role: EnumUserRoleFieldUpdateOperationsInput
@@ -415,7 +816,7 @@ input UserWhereInput {
   OR: [UserWhereInput!]
   createdAt: DateTimeFilter
   email: StringFilter
-  id: IntFilter
+  id: StringFilter
   name: StringNullableFilter
   password: StringFilter
   role: EnumUserRoleFilter
@@ -425,5 +826,5 @@ input UserWhereInput {
 
 input UserWhereUniqueInput {
   email: String
-  id: Int
+  id: String
 }

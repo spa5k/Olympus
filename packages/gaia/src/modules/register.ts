@@ -5,6 +5,7 @@ import argon2 from "argon2";
 import { UserResponse } from "../types/response/UserResponse";
 import { v4 } from "uuid";
 import { sendEmail } from "../utils/sendEmail";
+import { minutesAdder } from "../utils/minutesAdder";
 
 @Resolver(() => User)
 export class RegisterMutation {
@@ -33,13 +34,16 @@ export class RegisterMutation {
     if (user) {
       const token = v4();
       const verificationLink = `<a href="http://localhost:3000/verify/${token}">Verify your account</a>`;
+      await prisma.tokens.create({
+        data: {
+          userId: user.id,
+          type: "ACCOUNT_VERIFICATION",
+          expire: minutesAdder(new Date(), 60).toISOString(),
+          token,
+        },
+      });
       await sendEmail(user.email, verificationLink);
-      // await prisma.tokens.create({
-      //   data: {
-      //     userId: user.id,
-      //     type: "ACCOUNT_VERIFICATION",
-      //   },
-      // });
+
       return { user };
     } else {
       return {

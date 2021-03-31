@@ -1,6 +1,5 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["napi"]
+  provider = "prisma-client-js"
 }
 
 generator typegraphql {
@@ -37,6 +36,7 @@ model tokens {
   userId    String
   expire    DateTime  @db.Timestamp(6)
   createdAt DateTime  @default(now())
+  token     String    @unique
 }
 
 enum UserRole {
