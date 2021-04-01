@@ -5,6 +5,8 @@ import {
 } from "@generated/type-graphql";
 import { GraphQLSchema } from "graphql";
 import { buildSchema } from "type-graphql";
+import { ChangePassword } from "../modules/changePassword";
+import { ForgetPassword } from "../modules/forgetPassword";
 import { LoginMutation } from "../modules/login";
 import { LogoutMutation } from "../modules/logout";
 import { RegisterMutation } from "../modules/register";
@@ -25,6 +27,8 @@ export const createSchema = async (): Promise<GraphQLSchema> => {
       LogoutMutation,
       RegisterMutation,
       VerifyUser,
+      ForgetPassword,
+      ChangePassword,
     ],
     validate: true,
     emitSchemaFile: true,

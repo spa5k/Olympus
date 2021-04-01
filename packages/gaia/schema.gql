@@ -143,6 +143,7 @@ input JsonWithAggregatesFilter {
 
 type Mutation {
   Logout: Boolean!
+  changePassword(newPassword: String!, token: String!): UserResponse!
   createManySession(data: [SessionCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
   createManyTokens(data: [TokensCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
   createManyUser(data: [UserCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
@@ -155,6 +156,7 @@ type Mutation {
   deleteSession(where: SessionWhereUniqueInput!): Session
   deleteTokens(where: TokensWhereUniqueInput!): Tokens
   deleteUser(where: UserWhereUniqueInput!): User
+  forgetPassword(email: String!): Boolean!
   login(options: UserCreateInput!): UserResponse!
   register(options: UserCreateInput!): UserResponse!
   updateManySession(data: SessionUpdateManyMutationInput!, where: SessionWhereInput): AffectedRowsOutput!

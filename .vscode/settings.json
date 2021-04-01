@@ -3,6 +3,7 @@
     "docker",
     "gaia-type-graphql",
     "gaia-session",
-    "tokens"
+    "tokens",
+    "gaia-password"
   ]
 }
