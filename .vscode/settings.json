@@ -4,6 +4,7 @@
     "gaia-type-graphql",
     "gaia-session",
     "tokens",
-    "gaia-password"
+    "gaia-password",
+    "readme"
   ]
 }
