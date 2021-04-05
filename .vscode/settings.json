@@ -17,6 +17,7 @@
   "typescript.tsdk": ".yarn/sdks/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "conventionalCommits.scopes": [
-    "yarn2"
+    "yarn2",
+    "generated"
   ]
 }
