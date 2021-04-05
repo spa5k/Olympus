@@ -2,8 +2,9 @@
 !/.yarn/releases
 !/.yarn/plugins
 !/.yarn/sdks
-./generated/graphql
-./generated/client
+generated/graphql/
+generated/client/
+prisma/migrations/
 # Swap the comments on the following lines if you don't wish to use zero-installs
 # Documentation here: https://yarnpkg.com/features/zero-installs
 !/.yarn/cache
@@ -240,3 +241,4 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+generated/graphql/resolvers
