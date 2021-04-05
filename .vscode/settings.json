@@ -18,6 +18,7 @@
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "conventionalCommits.scopes": [
     "yarn2",
-    "generated"
+    "generated",
+    "docs"
   ]
 }

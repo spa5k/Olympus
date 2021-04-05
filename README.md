@@ -1,4 +1,7 @@
-# 1. Olympus
+# Olympus
+<center>
+<a href="https://deepsource.io/gh/Unbuttun/Olympus/?ref=repository-badge" target="_blank"><img alt="DeepSource" title="DeepSource" src="https://deepsource.io/gh/Unbuttun/Olympus.svg/?label=resolved+issues&show_trend=true"/></a>
+</center>
 
 The modern full-stack Next.js &amp; GraphQL boilerplate with user authentication, subscription payments, emails and everything else you need
 
@@ -28,4 +31,5 @@ The modern full-stack Next.js &amp; GraphQL boilerplate with user authentication
  - [ ] Subscriptions
  - [ ] Payments
  - [ ] Invitations
+
 
