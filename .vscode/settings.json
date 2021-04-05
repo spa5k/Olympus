@@ -1,10 +1,22 @@
 {
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "eslint.nodePath": ".yarn/sdks",
+  "prettier.prettierPath": ".yarn/sdks/prettier/index.js",
+  "files.associations": {
+    ".env.**": "dotenv"
+  },
+  "search.exclude": {
+    "**/lib/": true,
+    "yarn-error.log": true,
+    "yarn.lock": true,
+    "**/.yarn": true,
+    "**/.pnp.*": true
+  },
+  "typescript.tsdk": ".yarn/sdks/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
   "conventionalCommits.scopes": [
-    "docker",
-    "gaia-type-graphql",
-    "gaia-session",
-    "tokens",
-    "gaia-password",
-    "readme"
+    "yarn2"
   ]
 }

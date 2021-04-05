@@ -1,0 +1,15 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "dist",
+    "declaration": true,
+    "incremental": true
+  },
+  "ts-node": {
+    "transpileOnly": true,
+    "preferTsExts": true
+  }
+}

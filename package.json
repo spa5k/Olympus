@@ -5,31 +5,46 @@
   "main": "index.js",
   "repository": "https://github.com/Unbuttun/Olympus.git",
   "author": "UnButtun <unbuttun@gmail.com>",
+  "dependencies": {
+    "@prisma/client": "2.19.0",
+    "@yarnpkg/pnpify": "^2.4.0",
+    "class-validator": "^0.13.1",
+    "graphql": "^15.5.0",
+    "graphql-fields": "^2.0.3",
+    "graphql-scalars": "^1.9.0",
+    "prisma": "2.19.0",
+    "reflect-metadata": "^0.1.13",
+    "tslib": "^2.1.0",
+    "type-graphql": "^1.1.1"
+  },
+  "private": true,
+  "workspaces": [
+    "gaia"
+  ],
+  "scripts": {
+    "gaia": "yarn workspace @olympus/gaia",
+    "eslint": "eslint --color --ext .ts,.tsx",
+    "eslint:fix": "yarn eslint -- --fix",
+    "db": "docker-compose up"
+  },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn prettier-format",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
-  "scripts": {
-    "prettier:format": "prettier --config .prettierrc '**/**/*.ts' --write",
-    "eslint": "eslint --color --ext .ts,.tsx",
-    "eslint:fix": "yarn eslint -- --fix",
-    "athena": "yarn workspace @olympus/athena",
-    "gaia": "yarn workspace @olympus/gaia",
-    "nyx": "yarn workspace @olympus/nyx",
-    "dev": "yarn athena dev && yarn nyx dev"
-  },
   "devDependencies": {
-    "@commitlint/cli": "^12.0.1",
-    "@commitlint/config-conventional": "^12.0.1",
-    "eslint-config-adjunct": "^4.11.0",
-    "eslint-config-prettier": "^8.1.0",
-    "prettier": "^2.2.1"
-  },
-  "workspaces": [
-    "packages/*"
-  ],
-  "private": true,
-  "license": "UNLICENSED"
+    "@commitlint/cli": "^12.1.1",
+    "@commitlint/config-conventional": "^12.1.1",
+    "@types/eslint": "^7",
+    "@types/graphql-fields": "^1.3.3",
+    "@types/node": "^14.14.37",
+    "@types/prettier": "^2",
+    "eslint": "^7.23.0",
+    "eslint-config-galex": "^2.13.7",
+    "husky": "^6.0.0",
+    "prettier": "^2.2.1",
+    "ts-node-dev": "^1.1.6",
+    "typegraphql-prisma": "^0.12.0",
+    "typescript": "^4.2.3"
+  }
 }

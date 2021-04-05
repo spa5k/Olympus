@@ -1,0 +1,40 @@
+{
+  "name": "@olympus/gaia",
+  "dependencies": {
+    "altair-express-middleware": "^4.0.0",
+    "apollo-server-express": "^2.22.2",
+    "argon2": "^0.27.2",
+    "class-validator": "^0.13.1",
+    "connect-pg-simple": "^6.2.1",
+    "cors": "^2.8.5",
+    "dotenv-safe": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "graphql": "^15.5.0",
+    "nodemailer": "^6.5.0",
+    "reflect-metadata": "^0.1.13",
+    "ts-node-dev": "^1.1.6",
+    "tslib": "^2.1.0",
+    "type-graphql": "^1.1.1",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/connect-pg-simple": "^4.2.2",
+    "@types/cors": "^2",
+    "@types/dotenv-safe": "^8",
+    "@types/eslint": "^7",
+    "@types/express": "^4",
+    "@types/express-session": "^1",
+    "@types/nodemailer": "^6",
+    "@types/prettier": "^2",
+    "@types/uuid": "^8",
+    "eslint": "^7.23.0",
+    "prettier": "^2.2.1",
+    "src": "link:./src",
+    "typescript": "^4.2.3"
+  },
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only --no-deps --exit-child src/main.ts"
+  },
+  "type": "module"
+}
