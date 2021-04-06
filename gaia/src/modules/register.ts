@@ -8,7 +8,6 @@ import { UserResponse } from "../types/response/UserResponse";
 import { minutesAdder } from "../utils/minutesAdder";
 import { sendEmail } from "../utils/sendEmail";
 
-const { env } = process;
 @Resolver(() => User)
 export class RegisterMutation {
   @Mutation(() => UserResponse)
