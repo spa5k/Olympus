@@ -23,7 +23,7 @@ const resolversEnhancerMap: ResolversEnhanceMap = {
 
 applyResolversEnhanceMap(resolversEnhancerMap);
 export const createSchema = async (): Promise<GraphQLSchema> => {
-  return buildSchema({
+  return await buildSchema({
     resolvers: [
       ...resolvers,
       LoginMutation,

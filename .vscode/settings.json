@@ -21,6 +21,7 @@
     "generated",
     "docs",
     "deps",
-    "types"
+    "types",
+    "deepsource"
   ]
 }
