@@ -8,5 +8,5 @@ export class UserResponse {
   errors?: FieldError[];
 
   @Field(() => User, { nullable: true })
-  user?: User;
+  user?: User | null;
 }

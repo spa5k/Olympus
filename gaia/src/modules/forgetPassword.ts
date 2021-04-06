@@ -10,7 +10,7 @@ export class ForgetPassword {
   async forgetPassword(
     @Arg("email") email: string,
     @Ctx() { prisma }: GaiaContext
-  ) {
+  ): Promise<boolean> {
     const user = await prisma.user.findUnique({
       where: {
         email,

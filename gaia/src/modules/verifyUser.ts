@@ -7,7 +7,7 @@ export class VerifyUser {
   async verifyUser(
     @Arg("token") token: string,
     @Ctx() { req, prisma }: GaiaContext
-  ) {
+  ): Promise<boolean> {
     const tokenRes = await prisma.tokens.findFirst({
       where: {
         type: "ACCOUNT_VERIFICATION",

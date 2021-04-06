@@ -5,7 +5,7 @@ import { UserResponse } from "../types/response/UserResponse";
 @Resolver(User)
 export class MeQuery {
   @Query(() => UserResponse)
-  async me(@Ctx() { req, prisma }: GaiaContext) {
+  async me(@Ctx() { req, prisma }: GaiaContext): Promise<UserResponse> {
     if (req.session.userId) {
       const user = await prisma.user.findUnique({
         where: {
