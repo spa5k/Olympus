@@ -6,13 +6,6 @@ import { UserResponse } from "../types/response/UserResponse";
 
 @Resolver(() => User)
 export class LoginMutation {
-  /**
-   * ! @param Input: usernameOrEmail + passsword
-   * * @name: Login
-   * ? @type: Auth
-   * TODO: Need to add authorization
-   */
-
   @Mutation(() => UserResponse)
   async login(
     @Arg("options") options: UserCreateInput,

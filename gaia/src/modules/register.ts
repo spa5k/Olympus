@@ -1,20 +1,16 @@
+import argon2 from "argon2";
 import { Arg, Ctx, Mutation, Resolver } from "type-graphql";
+import { v4 } from "uuid";
+
 import { User, UserCreateInput } from "../../../generated/graphql";
 import { GaiaContext } from "../config/context";
-import argon2 from "argon2";
 import { UserResponse } from "../types/response/UserResponse";
-import { v4 } from "uuid";
-import { sendEmail } from "../utils/sendEmail";
 import { minutesAdder } from "../utils/minutesAdder";
+import { sendEmail } from "../utils/sendEmail";
 
+const { env } = process;
 @Resolver(() => User)
 export class RegisterMutation {
-  /**
-   * ! @param Input: usernameOrEmail + passsword
-   * * @name: Register
-   * ? @type: Auth
-   */
-
   @Mutation(() => UserResponse)
   async register(
     @Arg("options") options: UserCreateInput,
@@ -42,6 +38,7 @@ export class RegisterMutation {
           token,
         },
       });
+
       await sendEmail(user.email, verificationLink);
 
       return { user };

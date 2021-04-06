@@ -19,6 +19,7 @@
   "conventionalCommits.scopes": [
     "yarn2",
     "generated",
-    "docs"
+    "docs",
+    "deps"
   ]
 }

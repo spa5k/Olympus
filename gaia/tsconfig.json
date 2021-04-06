@@ -6,7 +6,8 @@
     "moduleResolution": "node",
     "outDir": "dist",
     "declaration": true,
-    "incremental": true
+    "incremental": true,
+    "allowJs": true
   },
   "ts-node": {
     "transpileOnly": true,

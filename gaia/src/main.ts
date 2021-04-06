@@ -1,17 +1,16 @@
 import "dotenv-safe/config";
 import "reflect-metadata";
 
+import { altairExpress } from "altair-express-middleware";
+import { ApolloServer } from "apollo-server-express";
+import cors from "cors";
 import express from "express";
+import session from "express-session";
 
 import { PrismaClient } from "../../generated/client";
-
-import { sessionOptions } from "./config/session";
-import session from "express-session";
-import cors from "cors";
-import { ApolloServer } from "apollo-server-express";
 import { GaiaContext } from "./config/context";
 import { createSchema } from "./config/schema";
-import { altairExpress } from "altair-express-middleware";
+import { sessionOptions } from "./config/session";
 
 const prisma = new PrismaClient({
   log: ["query", "info", `warn`, `error`],
