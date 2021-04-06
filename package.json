@@ -12,6 +12,7 @@
     "graphql": "^15.5.0",
     "graphql-fields": "^2.0.3",
     "graphql-scalars": "^1.9.0",
+    "npm-run-all": "^4.1.5",
     "prisma": "2.19.0",
     "reflect-metadata": "^0.1.13",
     "tslib": "^2.1.0",
@@ -22,10 +23,15 @@
     "gaia"
   ],
   "scripts": {
+    "dev": "run-s generate gaia:dev",
+    "gaia:dev": "yarn gaia dev",
     "gaia": "yarn workspace @olympus/gaia",
     "eslint": "eslint --color --ext .ts,.tsx",
     "eslint:fix": "yarn eslint -- --fix",
-    "db": "docker-compose up"
+    "docker": "docker-compose up",
+    "studio": "yarn dlx prisma studio",
+    "db": "run-p docker studio",
+    "generate": "yarn prisma generate"
   },
   "husky": {
     "hooks": {
