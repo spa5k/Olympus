@@ -13,8 +13,8 @@ export async function sendEmail(to: string, html: string): Promise<void> {
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
-      user: "ssymtgwcydrgazxy@ethereal.email", // generated ethereal user
-      pass: "9EDSfrdFwYYDSkqdP9", // generated ethereal password
+      user: process.env.NODEMAILER_USER, // generated ethereal user
+      pass: process.env.NODEMAILER_USER_PASSWORD, // generated ethereal password
     },
   });
 
@@ -27,6 +27,7 @@ export async function sendEmail(to: string, html: string): Promise<void> {
   });
 
   console.log("Message sent: %s", info.messageId);
+  console.log("html", html);
   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
   // Preview only available when sending through an Ethereal account
