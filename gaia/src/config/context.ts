@@ -1,4 +1,4 @@
-import { PrismaClient } from "../../../generated/client";
+import { PrismaClient } from "@olympus/prisma";
 import pgSession from "connect-pg-simple";
 import { Request, Response } from "express";
 
