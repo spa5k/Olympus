@@ -19,7 +19,7 @@ export class ForgetPassword {
     if (!user) {
       return true;
     }
-    const token = v4();
+    const token: string = v4();
 
     await prisma.tokens.create({
       data: {
