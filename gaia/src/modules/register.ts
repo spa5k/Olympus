@@ -29,7 +29,7 @@ export class RegisterMutation {
 
     if (user) {
       const token = v4();
-      const verificationLink = `<a href="http://localhost:3000/verify/${token}">Verify your account</a>`;
+      const verificationLink: string = `<a href="http://localhost:3000/verify/${token}">Verify your account</a>`;
       await prisma.tokens.create({
         data: {
           userId: user.id,
