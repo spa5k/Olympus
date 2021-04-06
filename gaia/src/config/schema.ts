@@ -2,7 +2,7 @@ import {
   resolvers,
   ResolversEnhanceMap,
   applyResolversEnhanceMap,
-} from "../../../generated/graphql";
+} from "@olympus/tg";
 import { GraphQLSchema } from "graphql";
 import { buildSchema } from "type-graphql";
 import { LoginMutation } from "../modules/login";
@@ -18,6 +18,8 @@ const resolversEnhancerMap: ResolversEnhanceMap = {
     deleteUser: [],
   },
 };
+
+// const res: string[] = resolvers;
 
 applyResolversEnhanceMap(resolversEnhancerMap);
 export const createSchema = async (): Promise<GraphQLSchema> => {

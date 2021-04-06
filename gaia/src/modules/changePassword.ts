@@ -1,5 +1,6 @@
 import { Arg, Ctx, Mutation, Resolver } from "type-graphql";
-import { User } from "../../../generated/graphql";
+import { User } from "@olympus/tg";
+
 import { UserResponse } from "../types/response/UserResponse";
 import { GaiaContext } from "../config/context";
 import argon2 from "argon2";

@@ -1,6 +1,8 @@
 {
   "name": "@olympus/gaia",
   "dependencies": {
+    "@olympus/prisma": "workspace:*",
+    "@olympus/tg": "workspace:*",
     "altair-express-middleware": "^4.0.0",
     "apollo-server-express": "^2.22.2",
     "argon2": "^0.27.2",

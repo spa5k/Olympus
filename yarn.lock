@@ -631,6 +631,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@olympus/gaia@workspace:gaia"
   dependencies:
+    "@olympus/prisma": "workspace:*"
+    "@olympus/tg": "workspace:*"
     "@types/connect-pg-simple": ^4.2.2
     "@types/cors": ^2.8.10
     "@types/dotenv-safe": ^8.1.1
@@ -661,6 +663,29 @@ __metadata:
     type-graphql: ^1.1.1
     typescript: ^4.2.3
     uuid: ^8.3.2
+  languageName: unknown
+  linkType: soft
+
+"@olympus/prisma@workspace:*, @olympus/prisma@workspace:packages/prisma":
+  version: 0.0.0-use.local
+  resolution: "@olympus/prisma@workspace:packages/prisma"
+  dependencies:
+    "@prisma/client": 2.19.0
+    "@types/node": ^14.14.37
+  languageName: unknown
+  linkType: soft
+
+"@olympus/tg@workspace:*, @olympus/tg@workspace:packages/type-graphql":
+  version: 0.0.0-use.local
+  resolution: "@olympus/tg@workspace:packages/type-graphql"
+  dependencies:
+    "@types/graphql-fields": ^1.3.3
+    class-validator: ^0.13.1
+    graphql: ^15.5.0
+    graphql-fields: ^2.0.3
+    graphql-scalars: ^1.9.0
+    tslib: ^2.2.0
+    type-graphql: ^1.1.1
   languageName: unknown
   linkType: soft
 
@@ -6215,7 +6240,7 @@ fsevents@~2.3.1:
     prisma: 2.19.0
     reflect-metadata: ^0.1.13
     ts-node-dev: ^1.1.6
-    tslib: ^2.1.0
+    tslib: ^2.2.0
     type-graphql: ^1.1.1
     typegraphql-prisma: ^0.12.0
     typescript: ^4.2.3

@@ -1,0 +1,7 @@
+{
+  "name": "@olympus/prisma",
+  "devDependencies": {
+    "@prisma/client": "2.19.0",
+    "@types/node": "^14.14.37"
+  }
+}

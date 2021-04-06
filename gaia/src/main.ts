@@ -7,7 +7,7 @@ import cors from "cors";
 import express from "express";
 import session from "express-session";
 
-import { PrismaClient } from "../../generated/client";
+import { PrismaClient } from "@olympus/prisma";
 import { GaiaContext } from "./config/context";
 import { createSchema } from "./config/schema";
 import { sessionOptions } from "./config/session";

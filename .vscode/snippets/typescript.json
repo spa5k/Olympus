@@ -1,0 +1,42 @@
+{
+  "Return Error": {
+    "prefix": "rer",
+    "body": [
+      "return {",
+      "        errors: [",
+      "          {",
+      "            field: \"${1:}\",",
+      "            message: \"${2:}\",",
+      "          },",
+      "        ],",
+      "      }"
+    ],
+    "description": "Array Error"
+  },
+  "Resolver Starter": {
+    "prefix": "res",
+    "body": [
+      "import { Resolver } from \"type-graphql\";",
+      "@Resolver(${1:})",
+      "export class ${2:${TM_FILENAME_BASE}} {",
+      "  ",
+      "}"
+    ],
+    "description": "Resolver Starter"
+  },
+  "Export helper": {
+    "prefix": "exp",
+    "body": ["export * from '.${1:}';"],
+    "description": "Export helper"
+  },
+  "Type-graphql generated": {
+    "prefix": "tg",
+    "body": ["import {${1:}} from \"@olympus/tg\";"],
+    "description": "Type-graphql generated place"
+  },
+  "Prisma Client": {
+    "prefix": "pr",
+    "body": ["import { PrismaClient } from \"@olympus/prisma\""],
+    "description": "Prisma Client"
+  }
+}

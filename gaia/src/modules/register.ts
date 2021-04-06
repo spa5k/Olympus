@@ -2,7 +2,7 @@ import argon2 from "argon2";
 import { Arg, Ctx, Mutation, Resolver } from "type-graphql";
 import { v4 } from "uuid";
 
-import { User, UserCreateInput } from "../../../generated/graphql";
+import { User, UserCreateInput } from "@olympus/tg";
 import { GaiaContext } from "../config/context";
 import { UserResponse } from "../types/response/UserResponse";
 import { minutesAdder } from "../utils/minutesAdder";
