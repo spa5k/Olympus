@@ -106,6 +106,7 @@ type Mutation {
   forgetPassword(email: String!): Boolean!
   login(options: UserCreateInput!): UserResponse!
   register(options: UserCreateInput!): UserResponse!
+  requestVerificationAgain(email: String!): Boolean!
   updateManySession(data: SessionUpdateManyMutationInput!, where: SessionWhereInput): AffectedRowsOutput!
   updateManyTokens(data: TokensUpdateManyMutationInput!, where: TokensWhereInput): AffectedRowsOutput!
   updateManyUser(data: UserUpdateManyMutationInput!, where: UserWhereInput): AffectedRowsOutput!

@@ -12,14 +12,13 @@ import { ChangePassword } from "../modules/changePassword";
 import { ForgetPassword } from "../modules/forgetPassword";
 import { LogoutMutation } from "../modules/logout";
 import { MeQuery } from "../modules/me";
+import { VerificationEmailAgainMutation } from "../modules/verificationEmailAgain";
 
 const resolversEnhancerMap: ResolversEnhanceMap = {
   User: {
     deleteUser: [],
   },
 };
-
-// const res: string[] = resolvers;
 
 applyResolversEnhanceMap(resolversEnhancerMap);
 export const createSchema = async (): Promise<GraphQLSchema> => {
@@ -33,6 +32,7 @@ export const createSchema = async (): Promise<GraphQLSchema> => {
       ForgetPassword,
       LogoutMutation,
       MeQuery,
+      VerificationEmailAgainMutation,
     ],
     validate: true,
     emitSchemaFile: true,
