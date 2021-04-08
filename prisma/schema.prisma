@@ -11,6 +11,11 @@ generator client {
   output   = "../packages/prisma"
 }
 
+generator typegraphql {
+  provider = "typegraphql-prisma"
+  // output   = "../packages/type-graphql/tg"
+}
+
 model User {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())

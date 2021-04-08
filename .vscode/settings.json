@@ -23,6 +23,7 @@
     "deps",
     "types",
     "deepsource",
-    "gaia-email"
+    "gaia-email",
+    "prisma"
   ]
 }
