@@ -1,6 +1,6 @@
 {
   "name": "@olympus/tg",
-  "main": "tg/index.ts",
+  "main": "index.ts",
   "dependencies": {
     "class-validator": "^0.13.1",
     "graphql": "^15.5.0",

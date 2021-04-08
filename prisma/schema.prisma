@@ -8,12 +8,7 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
-}
-
-generator typegraphql {
-  provider = "typegraphql-prisma"
-  output   = "../generated/type-graphql/tg"
+  output   = "../packages/prisma"
 }
 
 model User {
