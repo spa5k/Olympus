@@ -1,5 +1,6 @@
 import { cacheExchange } from "@urql/exchange-graphcache";
 import { dedupExchange, fetchExchange, ssrExchange } from "urql";
+import { devtoolsExchange } from "@urql/devtools";
 
 import {
   LoginMutation,
@@ -12,7 +13,6 @@ import schema from "../src/generated/introspection";
 import { betterUpdateQuery } from "../src/utils/betterUpdateQuery";
 import { isServer } from "../src/utils/isServer";
 
-// The `ssrExchange` must be initialized with `isClient` and `initialState`
 const ssr = ssrExchange({
   isClient: !isServer(),
   // @ts-ignore
@@ -97,6 +97,7 @@ export const urqlClient = (ctx: any) => {
         : undefined,
     },
     exchanges: [
+      devtoolsExchange,
       dedupExchange,
       cache,
       ssr, // Add `ssr` in front of the `fetchExchange`

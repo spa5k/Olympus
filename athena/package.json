@@ -9,6 +9,7 @@
     "gen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
+    "@urql/devtools": "^2.0.3",
     "@urql/exchange-graphcache": "^4.0.0",
     "@urql/introspection": "^0.2.0",
     "graphql": "^15.5.0",

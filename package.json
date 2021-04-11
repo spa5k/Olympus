@@ -29,6 +29,8 @@
     "athena:dev": "yarn athena dev",
     "gaia:dev": "yarn gaia dev",
     "gaia": "yarn workspace @olympus/gaia",
+    "gaia-dev": "run-s generate:prisma gaia:dev",
+    "athena-dev": "run-s generate:urql athena:dev",
     "athena": "yarn workspace @olympus/athena",
     "tg": "yarn workspace @olympus/tg",
     "client": "yarn workspace @olympus/prisma",
@@ -37,8 +39,8 @@
     "docker": "docker-compose up",
     "studio": "yarn dlx prisma studio",
     "db": "run-p docker studio",
-    "generate:prisma": "yarn prisma generate",
-    "generate:urql": "yarn athena gen && echo \"URQL types generated\"",
+    "generate:prisma": "yarn prisma generate && echo \"🚀 Prisma Client generated\"",
+    "generate:urql": "yarn athena gen && echo \"🚀 URQL types generated\"",
     "generate": "run-p generate:prisma generate:urql"
   },
   "husky": {
