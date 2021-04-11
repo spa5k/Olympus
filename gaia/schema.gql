@@ -416,7 +416,6 @@ type User {
   email: String!
   id: String!
   name: String
-  password: String!
   role: UserRole!
   updatedAt: DateTime!
   verified: Boolean!

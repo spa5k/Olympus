@@ -8,12 +8,12 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
+  output   = "../packages/prisma"
 }
 
 generator typegraphql {
   provider = "typegraphql-prisma"
-  output   = "../generated/type-graphql/tg"
+  output   = "../packages/type-graphql/tg"
 }
 
 model User {
@@ -23,6 +23,7 @@ model User {
   name      String?
   role      UserRole @default(FREE)
   email     String   @unique
+  /// @TypeGraphQL.omit(output: true)
   password  String
   verified  Boolean  @default(false)
 }

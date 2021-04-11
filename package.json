@@ -21,12 +21,15 @@
   "private": true,
   "workspaces": [
     "gaia",
-    "packages/*"
+    "packages/*",
+    "athena"
   ],
   "scripts": {
-    "dev": "run-s generate gaia:dev",
+    "dev": "run-p gaia:dev athena:dev",
+    "athena:dev": "yarn athena dev",
     "gaia:dev": "yarn gaia dev",
     "gaia": "yarn workspace @olympus/gaia",
+    "athena": "yarn workspace @olympus/athena",
     "tg": "yarn workspace @olympus/tg",
     "client": "yarn workspace @olympus/prisma",
     "eslint": "eslint --color --ext .ts,.tsx",
@@ -34,7 +37,9 @@
     "docker": "docker-compose up",
     "studio": "yarn dlx prisma studio",
     "db": "run-p docker studio",
-    "generate": "yarn prisma generate"
+    "generate:prisma": "yarn prisma generate",
+    "generate:urql": "yarn athena gen && echo \"URQL types generated\"",
+    "generate": "run-p generate:prisma generate:urql"
   },
   "husky": {
     "hooks": {
@@ -44,17 +49,16 @@
   "devDependencies": {
     "@commitlint/cli": "^12.1.1",
     "@commitlint/config-conventional": "^12.1.1",
-    "@types/eslint": "^7",
+    "@types/eslint": "^7.2.9",
     "@types/graphql-fields": "^1.3.3",
     "@types/node": "^14.14.37",
-    "@types/prettier": "^2",
-    "eslint": "^7.23.0",
-    "eslint-config-galex": "^2.13.7",
+    "@types/prettier": "^2.2.3",
+    "eslint": "^7.24.0",
+    "eslint-config-galex": "^2.13.11",
     "husky": "^6.0.0",
     "prettier": "^2.2.1",
     "ts-node-dev": "^1.1.6",
     "typegraphql-prisma": "^0.12.0",
-    "typescript": "^4.2.3"
-  },
-  "type": "module"
+    "typescript": "^4.2.4"
+  }
 }
