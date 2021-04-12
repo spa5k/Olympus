@@ -1,9 +1,9 @@
 import { Arg, Ctx, Mutation, Resolver } from "type-graphql";
 import { User } from "@olympus/tg";
-import { GaiaContext } from "../config/context";
+import { GaiaContext } from "../../config/context";
 import { v4 } from "uuid";
-import { minutesAdder } from "../utils/minutesAdder";
-import { sendEmail } from "../utils/sendEmail";
+import { minutesAdder } from "../../utils/minutesAdder";
+import { sendEmail } from "../../utils/sendEmail";
 @Resolver(User)
 export class ForgetPassword {
   @Mutation(() => Boolean)

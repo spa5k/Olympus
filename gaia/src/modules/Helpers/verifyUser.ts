@@ -1,6 +1,7 @@
 import { Arg, Ctx, Mutation, Resolver } from "type-graphql";
 import { User } from "@olympus/tg";
-import { GaiaContext } from "../config/context";
+import { GaiaContext } from "../../config/context";
+
 @Resolver(User)
 export class VerifyUser {
   @Mutation(() => Boolean)

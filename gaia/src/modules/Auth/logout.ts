@@ -1,5 +1,5 @@
 import { Ctx, Mutation, Resolver } from "type-graphql";
-import { GaiaContext } from "../config/context";
+import { GaiaContext } from "../../config/context";
 import { User } from "@olympus/tg";
 
 @Resolver(User)

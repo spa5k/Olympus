@@ -1739,6 +1739,7 @@ __metadata:
     prettier: ^2.2.1
     reflect-metadata: ^0.1.13
     src: "link:./src"
+    stripe: ^8.142.0
     ts-node-dev: ^1.1.6
     tslib: ^2.2.0
     type-graphql: ^1.1.1
@@ -2490,7 +2491,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^14.14.37":
+"@types/node@npm:*, @types/node@npm:>=8.1.0, @types/node@npm:^14.14.37":
   version: 14.14.37
   resolution: "@types/node@npm:14.14.37"
   checksum: 5e2d9baf7594ebacaf016716515f30de0765169412787f981481c2fb8b468923149bb9e2e3219ee672399811672ceddc339a7372a61cf15bc656836a5494d991
@@ -10443,6 +10444,15 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
+"qs@npm:^6.6.0":
+  version: 6.10.1
+  resolution: "qs@npm:6.10.1"
+  dependencies:
+    side-channel: ^1.0.4
+  checksum: 25e50a9107322027a998ba4eacec3df4b575c4f0a02cf0602002242d09ac997ab783384b6e90d6264a4d8387de3d17fb177d9c304a0dd9ec706a3087a069b204
+  languageName: node
+  linkType: hard
+
 "querystring-es3@npm:0.2.1, querystring-es3@npm:^0.2.0":
   version: 0.2.1
   resolution: "querystring-es3@npm:0.2.1"
@@ -11838,6 +11848,16 @@ resolve@^2.0.0-next.3:
   version: 3.1.1
   resolution: "strip-json-comments@npm:3.1.1"
   checksum: f16719ce25abc58a55ef82b1c27f541dcfa5d544f17158f62d10be21ff9bd22fde45a53c592b29d80ad3c97ccb67b7451c4833913fdaeadb508a40f5e0a9c206
+  languageName: node
+  linkType: hard
+
+"stripe@npm:^8.142.0":
+  version: 8.142.0
+  resolution: "stripe@npm:8.142.0"
+  dependencies:
+    "@types/node": ">=8.1.0"
+    qs: ^6.6.0
+  checksum: 5993dd2c25d0cec4c4f7630ae38af0b827a5564e330ab5c77faf7828a176e583ce906ee16f1b4e91e383a6ca9fbf926f00c95915ab8e08e8104ff9bf2549a376
   languageName: node
   linkType: hard
 
