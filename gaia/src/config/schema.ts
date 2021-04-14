@@ -5,14 +5,14 @@ import {
 } from "@olympus/tg";
 import { GraphQLSchema } from "graphql";
 import { buildSchema } from "type-graphql";
-import { LoginMutation } from "../modules/login";
-import { RegisterMutation } from "../modules/register";
-import { VerifyUser } from "../modules/verifyUser";
-import { ChangePassword } from "../modules/changePassword";
-import { ForgetPassword } from "../modules/forgetPassword";
-import { LogoutMutation } from "../modules/logout";
+import { LoginMutation } from "../modules/Auth/login";
+import { RegisterMutation } from "../modules/Auth/register";
+import { VerifyUser } from "../modules/Helpers/verifyUser";
+import { ChangePassword } from "../modules/Helpers/changePassword";
+import { ForgetPassword } from "../modules/Helpers/forgetPassword";
+import { LogoutMutation } from "../modules/Auth/logout";
 import { MeQuery } from "../modules/me";
-import { VerificationEmailAgainMutation } from "../modules/verificationEmailAgain";
+import { VerificationEmailAgainMutation } from "../modules/Helpers/verificationEmailAgain";
 
 const resolversEnhancerMap: ResolversEnhanceMap = {
   User: {

@@ -20,9 +20,35 @@ type AggregateTokens {
 }
 
 type AggregateUser {
+  avg: UserAvgAggregate
   count: UserCountAggregate
   max: UserMaxAggregate
   min: UserMinAggregate
+  sum: UserSumAggregate
+}
+
+"""
+The `BigInt` scalar type represents non-fractional signed whole numeric values.
+"""
+scalar BigInt
+
+input BigIntFieldUpdateOperationsInput {
+  decrement: BigInt
+  divide: BigInt
+  increment: BigInt
+  multiply: BigInt
+  set: BigInt
+}
+
+input BigIntFilter {
+  equals: BigInt
+  gt: BigInt
+  gte: BigInt
+  in: [BigInt!]
+  lt: BigInt
+  lte: BigInt
+  not: NestedBigIntFilter
+  notIn: [BigInt!]
 }
 
 input BoolFieldUpdateOperationsInput {
@@ -54,6 +80,13 @@ input DateTimeFilter {
   notIn: [DateTime!]
 }
 
+input EnumSubscriptionNullableFilter {
+  equals: Subscription
+  in: [Subscription!]
+  not: NestedEnumSubscriptionNullableFilter
+  notIn: [Subscription!]
+}
+
 input EnumTokenTypeFieldUpdateOperationsInput {
   set: TokenType
 }
@@ -79,6 +112,17 @@ input EnumUserRoleFilter {
 type FieldError {
   field: String!
   message: String!
+}
+
+input IntNullableFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: NestedIntNullableFilter
+  notIn: [Int!]
 }
 
 """
@@ -119,6 +163,17 @@ type Mutation {
   verifyUser(token: String!): Boolean!
 }
 
+input NestedBigIntFilter {
+  equals: BigInt
+  gt: BigInt
+  gte: BigInt
+  in: [BigInt!]
+  lt: BigInt
+  lte: BigInt
+  not: NestedBigIntFilter
+  notIn: [BigInt!]
+}
+
 input NestedBoolFilter {
   equals: Boolean
   not: NestedBoolFilter
@@ -135,6 +190,13 @@ input NestedDateTimeFilter {
   notIn: [DateTime!]
 }
 
+input NestedEnumSubscriptionNullableFilter {
+  equals: Subscription
+  in: [Subscription!]
+  not: NestedEnumSubscriptionNullableFilter
+  notIn: [Subscription!]
+}
+
 input NestedEnumTokenTypeFilter {
   equals: TokenType
   in: [TokenType!]
@@ -147,6 +209,17 @@ input NestedEnumUserRoleFilter {
   in: [UserRole!]
   not: NestedEnumUserRoleFilter
   notIn: [UserRole!]
+}
+
+input NestedIntNullableFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: NestedIntNullableFilter
+  notIn: [Int!]
 }
 
 input NestedStringFilter {
@@ -175,6 +248,18 @@ input NestedStringNullableFilter {
   not: NestedStringNullableFilter
   notIn: [String!]
   startsWith: String
+}
+
+input NullableEnumSubscriptionFieldUpdateOperationsInput {
+  set: Subscription
+}
+
+input NullableIntFieldUpdateOperationsInput {
+  decrement: Int
+  divide: Int
+  increment: Int
+  multiply: Int
+  set: Int
 }
 
 input NullableStringFieldUpdateOperationsInput {
@@ -307,6 +392,12 @@ input StringNullableFilter {
   startsWith: String
 }
 
+enum Subscription {
+  COPPER
+  GOLD
+  SILVER
+}
+
 enum TokenType {
   ACCOUNT_VERIFICATION
   FORGET_PASSWORD
@@ -412,67 +503,96 @@ input TokensWhereUniqueInput {
 }
 
 type User {
+  ccLast4: Int
+  coins: BigInt!
   createdAt: DateTime!
   email: String!
   id: String!
   name: String
   role: UserRole!
+  stripeId: String
+  subscriptionType: Subscription
   updatedAt: DateTime!
   verified: Boolean!
 }
 
+type UserAvgAggregate {
+  ccLast4: Float
+  coins: Float!
+}
+
 type UserCountAggregate {
   _all: Int!
+  ccLast4: Int
+  coins: Int!
   createdAt: Int
   email: Int
   id: Int
   name: Int
   password: Int
   role: Int
+  stripeId: Int
+  subscriptionType: Int
   updatedAt: Int
   verified: Int
 }
 
 input UserCreateInput {
+  ccLast4: Int
+  coins: BigInt
   createdAt: DateTime
   email: String!
   id: String
   name: String
   password: String!
   role: UserRole
+  stripeId: String
+  subscriptionType: Subscription
   updatedAt: DateTime
   verified: Boolean
 }
 
 type UserMaxAggregate {
+  ccLast4: Int
+  coins: BigInt!
   createdAt: DateTime
   email: String
   id: String
   name: String
   password: String
   role: UserRole
+  stripeId: String
+  subscriptionType: Subscription
   updatedAt: DateTime
   verified: Boolean
 }
 
 type UserMinAggregate {
+  ccLast4: Int
+  coins: BigInt!
   createdAt: DateTime
   email: String
   id: String
   name: String
   password: String
   role: UserRole
+  stripeId: String
+  subscriptionType: Subscription
   updatedAt: DateTime
   verified: Boolean
 }
 
 input UserOrderByInput {
+  ccLast4: SortOrder
+  coins: SortOrder
   createdAt: SortOrder
   email: SortOrder
   id: SortOrder
   name: SortOrder
   password: SortOrder
   role: SortOrder
+  stripeId: SortOrder
+  subscriptionType: SortOrder
   updatedAt: SortOrder
   verified: SortOrder
 }
@@ -484,40 +604,57 @@ type UserResponse {
 
 enum UserRole {
   ADMIN
-  FREE
   MODERATOR
+  NORMAL
   PREMIUM
 }
 
 enum UserScalarFieldEnum {
+  ccLast4
+  coins
   createdAt
   email
   id
   name
   password
   role
+  stripeId
+  subscriptionType
   updatedAt
   verified
 }
 
+type UserSumAggregate {
+  ccLast4: Int
+  coins: BigInt!
+}
+
 input UserUpdateInput {
+  ccLast4: NullableIntFieldUpdateOperationsInput
+  coins: BigIntFieldUpdateOperationsInput
   createdAt: DateTimeFieldUpdateOperationsInput
   email: StringFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
   name: NullableStringFieldUpdateOperationsInput
   password: StringFieldUpdateOperationsInput
   role: EnumUserRoleFieldUpdateOperationsInput
+  stripeId: NullableStringFieldUpdateOperationsInput
+  subscriptionType: NullableEnumSubscriptionFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   verified: BoolFieldUpdateOperationsInput
 }
 
 input UserUpdateManyMutationInput {
+  ccLast4: NullableIntFieldUpdateOperationsInput
+  coins: BigIntFieldUpdateOperationsInput
   createdAt: DateTimeFieldUpdateOperationsInput
   email: StringFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
   name: NullableStringFieldUpdateOperationsInput
   password: StringFieldUpdateOperationsInput
   role: EnumUserRoleFieldUpdateOperationsInput
+  stripeId: NullableStringFieldUpdateOperationsInput
+  subscriptionType: NullableEnumSubscriptionFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   verified: BoolFieldUpdateOperationsInput
 }
@@ -526,12 +663,16 @@ input UserWhereInput {
   AND: [UserWhereInput!]
   NOT: [UserWhereInput!]
   OR: [UserWhereInput!]
+  ccLast4: IntNullableFilter
+  coins: BigIntFilter
   createdAt: DateTimeFilter
   email: StringFilter
   id: StringFilter
   name: StringNullableFilter
   password: StringFilter
   role: EnumUserRoleFilter
+  stripeId: StringNullableFilter
+  subscriptionType: EnumSubscriptionNullableFilter
   updatedAt: DateTimeFilter
   verified: BoolFilter
 }
@@ -539,4 +680,5 @@ input UserWhereInput {
 input UserWhereUniqueInput {
   email: String
   id: String
+  stripeId: String
 }

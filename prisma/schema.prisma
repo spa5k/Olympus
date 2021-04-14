@@ -17,15 +17,19 @@ generator typegraphql {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  name      String?
-  role      UserRole @default(FREE)
-  email     String   @unique
+  id               String        @id @default(uuid())
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  name             String?
+  role             UserRole      @default(NORMAL)
+  email            String        @unique
   /// @TypeGraphQL.omit(output: true)
-  password  String
-  verified  Boolean  @default(false)
+  password         String
+  verified         Boolean       @default(false)
+  stripeId         String?       @unique
+  coins            BigInt        @default(0)
+  ccLast4          Int?
+  subscriptionType Subscription?
 }
 
 model session {
@@ -49,10 +53,16 @@ enum UserRole {
   ADMIN
   MODERATOR
   PREMIUM
-  FREE
+  NORMAL
 }
 
 enum TokenType {
   FORGET_PASSWORD
   ACCOUNT_VERIFICATION
+}
+
+enum Subscription {
+  GOLD
+  SILVER
+  COPPER
 }

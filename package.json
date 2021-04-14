@@ -7,7 +7,7 @@
   "author": "UnButtun <unbuttun@gmail.com>",
   "dependencies": {
     "@prisma/client": "2.19.0",
-    "@yarnpkg/pnpify": "^2.4.0",
+    "@yarnpkg/pnpify": "3.0.0-rc.3",
     "class-validator": "^0.13.1",
     "graphql": "^15.5.0",
     "graphql-fields": "^2.0.3",
@@ -56,7 +56,7 @@
     "@types/node": "^14.14.37",
     "@types/prettier": "^2.2.3",
     "eslint": "^7.24.0",
-    "eslint-config-galex": "^2.13.11",
+    "eslint-config-galex": "^2.14.1",
     "husky": "^6.0.0",
     "prettier": "^2.2.1",
     "ts-node-dev": "^1.1.6",
