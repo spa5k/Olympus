@@ -17,6 +17,10 @@
 .settings/
 *.sublime-workspace
 
+**/*.env
+**/**/.env
+apps/**/*.env
+apps/gaia/.env
 # IDE - VSCode
 .vscode/*
 !.vscode/settings.json

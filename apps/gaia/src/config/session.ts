@@ -18,5 +18,5 @@ export const sessionOptions: session.SessionOptions = {
   saveUninitialized: false,
   store,
   resave: false,
-  secret: 'niceceeesdasdasdasdqawdq2241234312e124123123123124asdfzdfasr235',
+  secret: process.env.COOKIE_SECRET,
 };
