@@ -31,12 +31,12 @@
   },
   "Type-graphql generated": {
     "prefix": "tg",
-    "body": ["import {${1:}} from \"@olympus/tg\";"],
+    "body": ["import {${1:}} from \"@generated/type-graphql\";"],
     "description": "Type-graphql generated place"
   },
   "Prisma Client": {
     "prefix": "pr",
-    "body": ["import { PrismaClient } from \"@olympus/prisma\""],
+    "body": ["import { PrismaClient } from \"@prisma/client\""],
     "description": "Prisma Client"
   }
 }

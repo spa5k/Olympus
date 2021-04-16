@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 
 services:
   postgres:
@@ -7,10 +7,10 @@ services:
     volumes:
       - postgres:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - '5432:5432'
     container_name: gaia
     env_file:
-      - db.env
+      - .env
 volumes:
   postgres:
     name: gaia-db

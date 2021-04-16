@@ -1,7 +1,0 @@
-index-browser.js
-runtime
-index.js
-index.d.ts
-query-engine-debian-openssl-1.1.x
-schema.prisma
-!.gitignore

@@ -1,0 +1,184 @@
+{
+  "version": 2,
+  "cli": { "defaultCollection": "@nrwl/node" },
+  "defaultProject": "gaia",
+  "generators": {
+    "@nrwl/react": { "application": { "babel": true } },
+    "@nrwl/next": { "application": { "style": "css", "linter": "eslint" } }
+  },
+  "projects": {
+    "gaia": {
+      "root": "apps/gaia",
+      "sourceRoot": "apps/gaia/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/gaia",
+            "main": "apps/gaia/src/main.ts",
+            "tsConfig": "apps/gaia/tsconfig.app.json",
+            "assets": ["apps/gaia/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/gaia/src/environments/environment.ts",
+                  "with": "apps/gaia/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:execute",
+          "options": { "buildTarget": "gaia:build" }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": { "lintFilePatterns": ["apps/gaia/**/*.ts"] }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/gaia"],
+          "options": {
+            "jestConfig": "apps/gaia/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "athena": {
+      "root": "apps/athena",
+      "sourceRoot": "apps/athena",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/next:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "root": "apps/athena",
+            "outputPath": "dist/apps/athena"
+          },
+          "configurations": { "production": {} }
+        },
+        "serve": {
+          "executor": "@nrwl/next:server",
+          "options": {
+            "buildTarget": "athena:build",
+            "dev": true,
+            "customServerPath": "gaia"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "athena:build:production",
+              "dev": false
+            }
+          }
+        },
+        "export": {
+          "executor": "@nrwl/next:export",
+          "options": { "buildTarget": "athena:build:production" }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/athena"],
+          "options": {
+            "jestConfig": "apps/athena/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/athena/**/*.{ts,tsx,js,jsx}"]
+          }
+        }
+      }
+    },
+    "athena-e2e": {
+      "root": "apps/athena-e2e",
+      "sourceRoot": "apps/athena-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/athena-e2e/cypress.json",
+            "tsConfig": "apps/athena-e2e/tsconfig.e2e.json",
+            "devServerTarget": "athena:serve"
+          },
+          "configurations": {
+            "production": { "devServerTarget": "athena:serve:production" }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": { "lintFilePatterns": ["apps/athena-e2e/**/*.{js,ts}"] }
+        }
+      }
+    },
+    "logger": {
+      "root": "libs/logger",
+      "sourceRoot": "libs/logger/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": { "lintFilePatterns": ["libs/logger/**/*.ts"] }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/logger"],
+          "options": {
+            "jestConfig": "libs/logger/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "mail": {
+      "root": "libs/mail",
+      "sourceRoot": "libs/mail/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": { "lintFilePatterns": ["libs/mail/**/*.ts"] }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/mail"],
+          "options": {
+            "jestConfig": "libs/mail/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "stripe": {
+      "root": "libs/stripe",
+      "sourceRoot": "libs/stripe/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": { "lintFilePatterns": ["libs/stripe/**/*.ts"] }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/stripe"],
+          "options": {
+            "jestConfig": "libs/stripe/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    }
+  }
+}

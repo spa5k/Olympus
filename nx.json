@@ -1,0 +1,22 @@
+{
+  "implicitDependencies": {
+    "package.json": { "dependencies": "*", "devDependencies": "*" },
+    ".eslintrc.json": "*"
+  },
+  "affected": { "defaultBase": "main" },
+  "npmScope": "olympus",
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/workspace/tasks-runners/default",
+      "options": { "cacheableOperations": ["build", "lint", "test", "e2e"] }
+    }
+  },
+  "projects": {
+    "gaia": { "tags": ["gaia"] },
+    "athena": { "tags": ["athena"] },
+    "athena-e2e": { "tags": ["athena","test"], "implicitDependencies": ["athena"] },
+    "logger": { "tags": ["gaia","logger"] },
+    "mail": { "tags": ["gaia","mail"] },
+    "stripe": { "tags": ["gaia","stripe"] }
+  }
+}
