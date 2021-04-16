@@ -28,7 +28,7 @@ export class RegisterMutation {
 
     if (user) {
       const token: string = v4();
-      const verificationLink = `<a href="http://localhost:3000/verify/${token}">Verify your account</a>`;
+      const url = `http://localhost:3000/verify/${token}`;
       await prisma.tokens.create({
         data: {
           userId: user.id,
@@ -38,7 +38,7 @@ export class RegisterMutation {
         },
       });
 
-      await mail(user.email, verificationLink);
+      await mail(user.email, url, user.name, 'WELCOME');
 
       return { user };
     } else {

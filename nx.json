@@ -12,11 +12,17 @@
     }
   },
   "projects": {
-    "gaia": { "tags": ["gaia"] },
+    "gaia": {
+      "tags": ["gaia"],
+      "implicitDependencies": ["logger", "mail", "stripe"]
+    },
     "athena": { "tags": ["athena"] },
-    "athena-e2e": { "tags": ["athena","test"], "implicitDependencies": ["athena"] },
-    "logger": { "tags": ["gaia","logger"] },
-    "mail": { "tags": ["gaia","mail"] },
-    "stripe": { "tags": ["gaia","stripe"] }
+    "athena-e2e": {
+      "tags": ["athena", "test"],
+      "implicitDependencies": ["athena"]
+    },
+    "logger": { "tags": ["gaia", "logger"] },
+    "mail": { "tags": ["gaia", "mail"] },
+    "stripe": { "tags": ["gaia", "stripe"] }
   }
 }

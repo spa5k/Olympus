@@ -25,6 +25,7 @@
     "athena-urql",
     "gaia",
     "athena",
-    "olympus"
+    "olympus",
+    "lib/email"
   ]
 }

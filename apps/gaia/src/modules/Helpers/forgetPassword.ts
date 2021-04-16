@@ -29,9 +29,9 @@ export class ForgetPassword {
         expire: minutesAdder(new Date(), 60 * 2).toISOString(),
       },
     });
-    const forgetPasswordLink = `<a href="http://localhost:3000/verify/${token}">Reset your password</a>`;
+    const url = `http://localhost:3000/verify/${token}`;
 
-    await mail(user.email, forgetPasswordLink);
+    await mail(user.email, url, user.name, 'FORGET_PASSWORD');
     return true;
   }
 }

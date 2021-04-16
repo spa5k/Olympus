@@ -1,37 +1,23 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-      "baseUrl": ".",
-      "declaration": false,
-      "esModuleInterop": true,
-      "importHelpers": true,
-      "lib": [
-          "ESNext",
-          "ESNext.AsyncIterable",
-          "dom",
-          "es2017"
-      ],
-      "module": "ESNext",
-      "moduleResolution": "node",
-      "paths": {
-          "@olympus/logger": [
-              "libs/logger/src/index.ts"
-          ],
-          "@olympus/mail": [
-              "libs/mail/src/index.ts"
-          ],
-          "@olympus/stripe": [
-              "libs/stripe/src/index.ts"
-          ]
-      },
-      "rootDir": ".",
-      "skipDefaultLibCheck": true,
-      "skipLibCheck": true,
-      "sourceMap": true,
-      "target": "ESNext"
+    "baseUrl": ".",
+    "declaration": false,
+    "esModuleInterop": true,
+    "importHelpers": true,
+    "lib": ["ESNext", "ESNext.AsyncIterable", "dom", "es2017"],
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "paths": {
+      "@olympus/logger": ["libs/logger/src/index.ts"],
+      "@olympus/mail": ["libs/mail/src/index.ts"],
+      "@olympus/stripe": ["libs/stripe/src/index.ts"]
+    },
+    "rootDir": ".",
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "target": "ESNext"
   },
-  "exclude": [
-      "node_modules",
-      "tmp"
-  ]
+  "exclude": ["node_modules", "tmp"]
 }

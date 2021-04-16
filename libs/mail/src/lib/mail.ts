@@ -1,36 +1,43 @@
+import { logger } from '@olympus/logger';
 import nodemailer from 'nodemailer';
+import { forgetEmail, welcomeEmail } from './emails';
 
-// async..await is not allowed in global scope, must use a wrapper
-export async function mail(to: string, html: string): Promise<void> {
-  // Generate test SMTP service account from ethereal.email
-  // Only needed if you don't have a real mail account for testing
-  // let testAccount = await nodemailer.createTestAccount();
-  // console.log("test", testAccount);
-
-  // create reusable transporter object using the default SMTP transport
+export async function mail(
+  email: string,
+  url: string,
+  userName: string,
+  type: 'WELCOME' | 'FORGET_PASSWORD'
+): Promise<void> {
   const transporter = nodemailer.createTransport({
     host: 'smtp.ethereal.email',
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
-      user: process.env.NODEMAILER_USER, // generated ethereal user
-      pass: process.env.NODEMAILER_USER_PASSWORD, // generated ethereal password
+      user: process.env.NODEMAILER_USER,
+      pass: process.env.NODEMAILER_USER_PASSWORD,
     },
   });
 
-  // send mail with defined transport object
-  const info = await transporter.sendMail({
-    from: '"Fred Foo 👻" <foo@example.com>', // sender address
-    to, // list of receivers
-    subject: 'Verify Email ✔', // Subject line
-    html, // plain text body
-  });
+  let info;
+  if (type === 'WELCOME') {
+    info = await transporter.sendMail(
+      welcomeEmail({
+        company_name: process.env.COMPANY_NAME,
+        email,
+        url,
+        userName,
+      })
+    );
+  } else if (type === 'FORGET_PASSWORD') {
+    info = await transporter.sendMail(
+      forgetEmail({
+        company_name: process.env.COMPANY_NAME,
+        email,
+        url,
+        userName,
+      })
+    );
+  }
 
-  console.log('Message sent: %s', info.messageId);
-  console.log('html', html);
-  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-
-  // Preview only available when sending through an Ethereal account
-  console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-  // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+  logger.info('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 }

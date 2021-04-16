@@ -19,7 +19,14 @@
             "outputPath": "dist/apps/gaia",
             "main": "apps/gaia/src/main.ts",
             "tsConfig": "apps/gaia/tsconfig.app.json",
-            "assets": ["apps/gaia/src/assets"]
+            "assets": [
+              "apps/gaia/src/assets",
+              {
+                "input": "./libs/mail/src/lib/templates",
+                "glob": "*.html",
+                "output": "./templates/"
+              }
+            ]
           },
           "configurations": {
             "production": {
