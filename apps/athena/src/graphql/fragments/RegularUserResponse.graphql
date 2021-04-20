@@ -1,0 +1,10 @@
+# import RegularError from './FieldError.graphql'
+# import RegularUser from './RegularUser.graphql'
+fragment RegularUserResponse on UserResponse {
+  errors {
+    ...RegularError
+  }
+  user {
+    ...RegularUser
+  }
+}

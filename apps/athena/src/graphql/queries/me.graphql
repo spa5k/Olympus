@@ -1,12 +1,7 @@
+# import RegularUserResponse from '../fragments/RegularUserResponse.graphql'
 query Me {
   me {
-    errors {
-      field
-      message
-    }
-    user {
-      id
-      name
-    }
+    ...RegularUserResponse
+    __typename
   }
 }

@@ -1,18 +1,19 @@
-import argon2 from 'argon2';
-import { Arg, Ctx, Mutation, Resolver } from 'type-graphql';
-import { v4 } from 'uuid';
+import { User } from "@generated/type-graphql";
+import { mail } from "@olympus/mail";
+import argon2 from "argon2";
+import { Arg, Ctx, Mutation, Resolver } from "type-graphql";
+import { v4 } from "uuid";
 
-import { User, UserCreateInput } from '@generated/type-graphql';
-import { GaiaContext } from '../../config/context';
-import { UserResponse } from '../../types/response/UserResponse';
-import { minutesAdder } from '../../utils/minutesAdder';
-import { mail } from '@olympus/mail';
+import { GaiaContext } from "../../config/context";
+import { RegisterInput } from "../../types/inputs/RegisterInput";
+import { UserResponse } from "../../types/response/UserResponse";
+import { minutesAdder } from "../../utils/minutesAdder";
 
 @Resolver(() => User)
 export class RegisterMutation {
   @Mutation(() => UserResponse)
   async register(
-    @Arg('options') options: UserCreateInput,
+    @Arg("options") options: RegisterInput,
     @Ctx() { req, prisma }: GaiaContext
   ): Promise<UserResponse> {
     const password = await argon2.hash(options.password);
@@ -32,21 +33,21 @@ export class RegisterMutation {
       await prisma.tokens.create({
         data: {
           userId: user.id,
-          type: 'ACCOUNT_VERIFICATION',
+          type: "ACCOUNT_VERIFICATION",
           expire: minutesAdder(new Date(), 60).toISOString(),
           token,
         },
       });
 
-      await mail(user.email, url, user.name, 'WELCOME');
+      await mail(user.email, url, user.name, "WELCOME");
 
       return { user };
     } else {
       return {
         errors: [
           {
-            field: 'user',
-            message: 'not found',
+            field: "user",
+            message: "not found",
           },
         ],
       };

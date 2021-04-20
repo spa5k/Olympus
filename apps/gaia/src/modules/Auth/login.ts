@@ -1,18 +1,18 @@
-import { Arg, Ctx, Mutation, Resolver } from 'type-graphql';
-import { User, UserCreateInput } from '@generated/type-graphql';
-import { GaiaContext } from '../../config/context';
-import argon2 from 'argon2';
-import { UserResponse } from '../../types/response/UserResponse';
+import { User } from "@generated/type-graphql";
+import argon2 from "argon2";
+import { Arg, Ctx, Mutation, Resolver } from "type-graphql";
+
+import { GaiaContext } from "../../config/context";
+import { LoginInput } from "../../types/inputs/LoginInput";
+import { UserResponse } from "../../types/response/UserResponse";
 
 @Resolver(() => User)
 export class LoginMutation {
   @Mutation(() => UserResponse)
   async login(
-    @Arg('options') options: UserCreateInput,
+    @Arg("options") options: LoginInput,
     @Ctx() { req, prisma }: GaiaContext
   ): Promise<UserResponse> {
-    console.log(req);
-    console.log('session', req.session);
     const user = await prisma.user.findUnique({
       where: {
         email: options.email,
@@ -23,8 +23,8 @@ export class LoginMutation {
       return {
         errors: [
           {
-            field: 'login',
-            message: 'user not found',
+            field: "login",
+            message: "user not found",
           },
         ],
       };
@@ -36,8 +36,8 @@ export class LoginMutation {
       return {
         errors: [
           {
-            field: 'password',
-            message: 'password is wrong',
+            field: "password",
+            message: "password is wrong",
           },
         ],
       };

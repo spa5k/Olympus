@@ -1,0 +1,14 @@
+schema: "http://localhost:4000/graphql"
+documents: "apps/athena/src/graphql/**/**.graphql"
+plugins:
+  - typescript
+  - typescript-operations
+  - typescript-react-apollo
+  - typescript-apollo-client-helpers
+TSConfigFile: "apps/athena/tsconfig.json"
+config:
+  reactApolloVersion: 3
+  useTypeImports: true
+  scalars:
+    BigInt: number
+    DateTime: Date

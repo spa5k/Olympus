@@ -1,26 +1,24 @@
 overwrite: true
-schema: 'http://localhost:4000/graphql'
-documents: 'apps/athena/src/graphql/**/**.graphql'
+schema: "http://localhost:4000/graphql"
+documents: "apps/athena/src/graphql/**/**.graphql"
 generates:
-  apps/athena/src/generated/graphql.ts:
+  apps/athena/src/generated/graphql.tsx:
     plugins:
-      - 'typescript'
-      - 'typescript-operations'
-      - 'typescript-urql'
-      - 'urql-introspection'
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-urql"
     config:
       useTypeImports: true
-      module: es2015
-    hooks:
-      afterAllFileWrite:
-        - prettier --write
-        - eslint --fix
+      strictScalars: false
+      scalars:
+        BigInt: number
+        DateTime: Date
   apps/athena/src/generated/introspection.ts:
     plugins:
-      - 'urql-introspection'
+      - "urql-introspection"
     config:
       module: es2015
-    hooks:
-      afterAllFileWrite:
-        - prettier --write
-        - eslint --fix
+hooks:
+  afterAllFileWrite:
+    - prettier --write
+    - eslint --fix

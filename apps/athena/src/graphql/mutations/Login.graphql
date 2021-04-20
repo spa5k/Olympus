@@ -1,13 +1,6 @@
+# import RegularUserResponse from '../fragments/RegularUserResponse.graphql'
 mutation Login($email: String!, $password: String!) {
   login(options: { email: $email, password: $password }) {
-    errors {
-      field
-      message
-    }
-    user {
-      id
-      name
-      email
-    }
+    ...RegularUserResponse
   }
 }
