@@ -8,7 +8,7 @@ import { useLogoutMutation } from "../src/graphql/mutations/Logout.graphql";
 import { useMeQuery } from "../src/graphql/queries/me.graphql";
 import { isServer } from "../src/utils/isServer";
 
-function Index() {
+function Index(): JSX.Element {
   const { data, loading } = useMeQuery({
     skip: isServer(),
   });

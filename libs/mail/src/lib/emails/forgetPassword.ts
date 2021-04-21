@@ -1,4 +1,4 @@
-import { template } from './template';
+import { template } from "./template";
 
 type forgetPasswordProps = {
   userName: string;
@@ -12,12 +12,17 @@ export function forgetEmail({
   email,
   company_name,
   url,
-}: forgetPasswordProps) {
+}: forgetPasswordProps): {
+  from: string;
+  to: string;
+  subject: string;
+  html: string;
+} {
   return {
     from: process.env.SUPPORT_EMAIL_ADDRESS,
     to: `${name} <${email}>`,
     subject: `Reset your password!`,
-    html: template('forgetPassword.html', {
+    html: template("forgetPassword.html", {
       userName,
       email,
       company_name,

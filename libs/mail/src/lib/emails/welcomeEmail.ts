@@ -1,4 +1,4 @@
-import { template } from './template';
+import { template } from "./template";
 
 type welcomeProps = {
   userName: string;
@@ -12,12 +12,17 @@ export function welcomeEmail({
   url,
   email,
   userName,
-}: welcomeProps) {
+}: welcomeProps): {
+  from: string;
+  to: string;
+  subject: string;
+  html: string;
+} {
   return {
     from: process.env.SUPPORT_EMAIL_ADDRESS,
     to: `${userName} <${email}>`,
     subject: `Welcome! to ${company_name}`,
-    html: template('welcome.html', {
+    html: template("welcome.html", {
       userName,
       email,
       company_name,
