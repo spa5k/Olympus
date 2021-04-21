@@ -2,10 +2,10 @@ import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import React from "react";
 
-import { getApollo } from "../config/getApollo.ts";
-import { useLoginMutation } from "../src/graphql/mutations/Login.graphql";
+import { getApollo } from "../config/getApollo";
+import { useLoginMutation } from "../graphql/mutations/Login.graphql";
 
-const Login = () => {
+const Login = (): JSX.Element => {
   const router = useRouter();
   const [login] = useLoginMutation();
 

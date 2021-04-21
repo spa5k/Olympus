@@ -2,7 +2,7 @@ import { Field, Form, Formik } from "formik";
 import NextLink from "next/link";
 import React from "react";
 
-import { getApollo } from "../config/getApollo.ts";
+import { getApollo } from "../config/getApollo";
 import { useLoginMutation } from "../graphql/mutations/Login.graphql";
 import { useLogoutMutation } from "../graphql/mutations/Logout.graphql";
 import { useMeQuery } from "../graphql/queries/me.graphql";

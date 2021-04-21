@@ -1,13 +1,12 @@
-import { urqlClient } from "../config/urqlClient";
-import { useRegisterMutation } from "../src/generated/graphql";
-import { withUrqlClient } from "next-urql";
 import React from "react";
 import { Form, Formik, Field } from "formik";
 import { useRouter } from "next/router";
+import { useRegisterMutation } from "../graphql/mutations/Register.graphql";
+import { getApollo } from "../config/getApollo";
 
-const Register = () => {
+const Register = (): JSX.Element => {
   const router = useRouter();
-  const [, register] = useRegisterMutation();
+  const [register] = useRegisterMutation();
 
   return (
     <div>
@@ -18,7 +17,7 @@ const Register = () => {
           name: "",
         }}
         onSubmit={async (values) => {
-          const response = await register(values);
+          const response = await register({ variables: values });
           if (response.data?.register.user) {
             router.push("/");
           }
@@ -34,4 +33,4 @@ const Register = () => {
     </div>
   );
 };
-export default withUrqlClient(urqlClient)(Register);
+export default getApollo({ ssr: false })(Register);
