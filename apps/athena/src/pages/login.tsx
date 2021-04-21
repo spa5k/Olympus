@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import React from "react";
 import { getApollo } from "src/config/getApollo";
 import { useLoginMutation } from "src/graphql/mutations/Login.graphql";
+import { MeDocument, MeQuery } from "src/graphql/queries/me.graphql";
+import { toErrorMap } from "src/utils/toErrorMap";
 
 const Login = (): JSX.Element => {
   const router = useRouter();
@@ -16,13 +18,32 @@ const Login = (): JSX.Element => {
           password: "",
           name: "",
         }}
-        onSubmit={async (values) => {
-          const response = await login({ variables: values });
+        onSubmit={async (values, { setErrors }) => {
+          const response = await login({
+            variables: values,
+            update: (cache, { data }) => {
+              cache.writeQuery<MeQuery>({
+                query: MeDocument,
+                data: {
+                  __typename: "Query",
+                  me: {
+                    user: data?.login.user,
+                    errors: null,
+                    __typename: "UserResponse",
+                  },
+                },
+              });
+            },
+          });
           if (response.data?.login.errors) {
-            console.log("err", response.data.login.errors);
+            setErrors(toErrorMap(response.data.login.errors));
           } else if (response.data?.login.user) {
-            console.log(response.data.login.user);
-            router.push("/");
+            if (typeof router.query.next === "string") {
+              router.push(router.query.next);
+            } else {
+              // worked
+              router.push("/");
+            }
           }
         }}
       >

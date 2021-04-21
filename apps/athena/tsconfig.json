@@ -29,7 +29,6 @@
     "**/*.ts",
     "**/*.tsx",
     "next-env.d.ts",
-    "src/**/*",
     "**/*.d.ts",
     "**/*.graphql"
   ]

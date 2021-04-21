@@ -26,6 +26,7 @@
     "gaia",
     "athena",
     "olympus",
-    "lib/email"
+    "lib/email",
+    "athena/ssr"
   ]
 }

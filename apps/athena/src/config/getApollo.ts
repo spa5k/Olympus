@@ -1,11 +1,18 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import type { NextPageContext } from "next";
-import { withApollo as createWithApollo } from "next-apollo";
+import { withApollo } from "next-apollo";
 import { TypedTypePolicies } from "src/graphql/queries/me.graphql";
 
 // Remember to change the location on this path according to where stuff is getting generated
 
-const typePolicies: TypedTypePolicies = {};
+const typePolicies: TypedTypePolicies = {
+  User: {
+    keyFields: ["id"],
+  },
+  UserResponse: {
+    keyFields: [],
+  },
+};
 
 const createClient = (ctx?: NextPageContext) =>
   new ApolloClient({
@@ -25,4 +32,4 @@ const createClient = (ctx?: NextPageContext) =>
     connectToDevTools: true,
   });
 
-export const getApollo = createWithApollo(createClient);
+export const getApollo = withApollo(createClient);
