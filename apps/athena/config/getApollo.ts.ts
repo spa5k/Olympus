@@ -2,17 +2,10 @@ import { ApolloClient, InMemoryCache } from "@apollo/client";
 import type { NextPageContext } from "next";
 import { withApollo as createWithApollo } from "next-apollo";
 
-import type { TypedTypePolicies } from "graphql-let/__generated__/apps/athena/src/graphql/queries/me.graphql";
+// Remember to change the location on this path according to where stuff is getting generated
+import type { TypedTypePolicies } from "../__generated__/src/graphql/mutations/Login.graphql";
 
-const typePolicies: TypedTypePolicies = {
-  Review: {
-    fields: {
-      description: {
-        merge: true,
-      },
-    },
-  },
-};
+const typePolicies: TypedTypePolicies = {};
 
 const createClient = (ctx?: NextPageContext) =>
   new ApolloClient({

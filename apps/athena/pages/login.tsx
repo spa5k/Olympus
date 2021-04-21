@@ -1,13 +1,13 @@
-import { urqlClient } from "../config/urqlClient";
-import { useLoginMutation } from "../src/generated/graphql";
-import { withUrqlClient } from "next-urql";
-import React from "react";
-import { Form, Formik, Field } from "formik";
+import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
+import React from "react";
+
+import { getApollo } from "../config/getApollo.ts";
+import { useLoginMutation } from "../src/graphql/mutations/Login.graphql";
 
 const Login = () => {
   const router = useRouter();
-  const [, login] = useLoginMutation();
+  const [login] = useLoginMutation();
 
   return (
     <div>
@@ -18,7 +18,7 @@ const Login = () => {
           name: "",
         }}
         onSubmit={async (values) => {
-          const response = await login(values);
+          const response = await login({ variables: values });
           if (response.data?.login.errors) {
             console.log("err", response.data.login.errors);
           } else if (response.data?.login.user) {
@@ -39,4 +39,4 @@ const Login = () => {
     </div>
   );
 };
-export default withUrqlClient(urqlClient)(Login);
+export default getApollo({ ssr: false })(Login);

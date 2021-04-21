@@ -79,20 +79,13 @@
           "options": {
             "buildTarget": "athena:build",
             "dev": true,
-            "customServerPath": "gaia",
-            "commands": ["./athena-script.sh"]
+            "customServerPath": "gaia"
           },
           "configurations": {
             "production": {
               "buildTarget": "athena:build:production",
               "dev": false
             }
-          }
-        },
-        "dev": {
-          "builder": "@nrwl/workspace:run-commands",
-          "options": {
-            "commands": ["athena:dev"]
           }
         },
         "export": {

@@ -1,11 +1,12 @@
 schema: "http://localhost:4000/graphql"
-documents: "apps/athena/src/graphql/**/**.graphql"
+documents: "src/graphql/**/**.graphql"
 plugins:
   - typescript
   - typescript-operations
   - typescript-react-apollo
   - typescript-apollo-client-helpers
-TSConfigFile: "apps/athena/tsconfig.json"
+TSConfigFile: "tsconfig.json"
+cacheDir: __generated__
 config:
   reactApolloVersion: 3
   useTypeImports: true

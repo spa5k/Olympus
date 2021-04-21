@@ -1,6 +1,5 @@
 import { Field, Form, Formik } from "formik";
 import NextLink from "next/link";
-import { useRouter } from "next/router";
 import React from "react";
 
 import { getApollo } from "../config/getApollo.ts";
@@ -13,7 +12,6 @@ function Index() {
   const { data, loading } = useMeQuery({
     skip: isServer(),
   });
-  const router = useRouter();
   const [logout] = useLogoutMutation();
 
   const [login] = useLoginMutation();
@@ -22,6 +20,7 @@ function Index() {
    *
    * Note: The corresponding styles are in the ./index.css file.
    */
+
   let body = null;
 
   // data is loading
@@ -43,7 +42,7 @@ function Index() {
             if (response.data?.login.errors) {
               console.log("err", response.data.login.errors);
             } else if (response.data?.login.user) {
-              console.log(response.data.login.user);
+              console.log(response.data.login.user.id);
               // router.push("/");
             }
           }}

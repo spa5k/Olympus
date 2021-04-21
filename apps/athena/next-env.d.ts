@@ -6,4 +6,4 @@ declare module "*.graphql" {
   export default typeof DocumentNode;
 }
 
-declare module "*.yml";
+declare module "../../*.yml";
