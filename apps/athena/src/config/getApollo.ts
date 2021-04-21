@@ -3,7 +3,7 @@ import type { NextPageContext } from "next";
 import { withApollo as createWithApollo } from "next-apollo";
 
 // Remember to change the location on this path according to where stuff is getting generated
-import type { TypedTypePolicies } from "../__generated__/src/graphql/mutations/Login.graphql";
+import { TypedTypePolicies } from "../graphql/fragments/FieldError.graphql";
 
 const typePolicies: TypedTypePolicies = {};
 
