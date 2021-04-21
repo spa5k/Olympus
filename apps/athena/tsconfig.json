@@ -1,9 +1,7 @@
 {
-  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "types": ["node", "jest"],
     "allowJs": true,
+    "allowSyntheticDefaultImports": true,
     "alwaysStrict": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -19,8 +17,20 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "esnext"
+    "target": "esnext",
+    "types": ["jest", "node"],
+    "baseUrl": "."
   },
-  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "next-env.d.ts"],
-  "exclude": ["node_modules", "__generated__"]
+  "exclude": ["__generated__", "node_modules"],
+  "extends": "../../tsconfig.base.json",
+  "include": [
+    "**/*.js",
+    "**/*.jsx",
+    "**/*.ts",
+    "**/*.tsx",
+    "next-env.d.ts",
+    "src/**/*",
+    "**/*.d.ts",
+    "**/*.graphql"
+  ]
 }

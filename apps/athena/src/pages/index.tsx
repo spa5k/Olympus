@@ -1,12 +1,11 @@
 import { Field, Form, Formik } from "formik";
 import NextLink from "next/link";
 import React from "react";
-
-import { getApollo } from "../config/getApollo";
-import { useLoginMutation } from "../graphql/mutations/Login.graphql";
-import { useLogoutMutation } from "../graphql/mutations/Logout.graphql";
-import { useMeQuery } from "../graphql/queries/me.graphql";
-import { isServer } from "../utils/isServer";
+import { getApollo } from "src/config/getApollo";
+import { useLoginMutation } from "src/graphql/mutations/Login.graphql";
+import { useLogoutMutation } from "src/graphql/mutations/Logout.graphql";
+import { useMeQuery } from "src/graphql/queries/me.graphql";
+import { isServer } from "src/utils/isServer";
 
 function Index(): JSX.Element {
   const { data, loading } = useMeQuery({
@@ -15,11 +14,6 @@ function Index(): JSX.Element {
   const [logout] = useLogoutMutation();
 
   const [login] = useLoginMutation();
-  /*
-   * Replace the elements below with your own.
-   *
-   * Note: The corresponding styles are in the ./index.css file.
-   */
 
   let body = null;
 
