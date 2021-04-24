@@ -238,6 +238,7 @@ type Mutation {
   createManyTokens(data: [TokensCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
   createManyUser(data: [UserCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
   createSession(data: SessionCreateInput!): Session!
+  createSubscription(type: String!): Boolean!
   createTokens(data: TokensCreateInput!): Tokens!
   createUser(data: UserCreateInput!): User!
   deleteManySession(where: SessionWhereInput): AffectedRowsOutput!
@@ -524,6 +525,7 @@ input NullableStringFieldUpdateOperationsInput {
 
 enum Patronage {
   COPPER
+  FREE
   GOLD
   SILVER
 }

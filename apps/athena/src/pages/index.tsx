@@ -15,49 +15,43 @@ function Index(): JSX.Element {
   });
   const [logout] = useLogoutMutation();
 
-  let body = null;
-
-  // data is loading
-  if (loading) {
-    // user not logged in
-  } else if (!data?.me.user) {
-    body = (
-      <>
-        <NextLink href="/login">login</NextLink>
-        <NextLink href="/register">register</NextLink>
-      </>
-    );
-    // user is logged in
-  } else {
-    body = (
+  return (
+    <div>
+      {!data?.me.user && (
+        <>
+          <NextLink href="/login">login</NextLink>
+          <NextLink href="/register">register</NextLink>
+        </>
+      )}
       <div>
-        <p>{data.me.user.id}</p>
-
-        <button
-          onClick={async () => {
-            await logout({
-              update: (cache) => {
-                cache.writeQuery<MeQuery>({
-                  query: MeDocument,
-                  data: {
-                    __typename: "Query",
-                    me: {
-                      user: null,
-                      __typename: "UserResponse",
-                    },
+        {data?.me.user && (
+          <div>
+            <p>{data?.me?.user?.id}</p>
+            <button
+              onClick={async () => {
+                await logout({
+                  update: (cache) => {
+                    cache.writeQuery<MeQuery>({
+                      query: MeDocument,
+                      data: {
+                        __typename: "Query",
+                        me: {
+                          user: null,
+                          __typename: "UserResponse",
+                        },
+                      },
+                    });
                   },
                 });
-              },
-            });
-          }}
-        >
-          logout
-        </button>
+              }}
+            >
+              logout
+            </button>
+          </div>
+        )}
       </div>
-    );
-  }
-
-  return <div>{body}</div>;
+    </div>
+  );
 }
 
 export default getApollo({ ssr: true })(Index);

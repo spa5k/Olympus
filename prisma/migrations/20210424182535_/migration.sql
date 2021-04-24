@@ -5,7 +5,7 @@ CREATE TYPE "UserRole" AS ENUM ('ADMIN', 'MODERATOR', 'PREMIUM', 'NORMAL');
 CREATE TYPE "TokenType" AS ENUM ('FORGET_PASSWORD', 'ACCOUNT_VERIFICATION');
 
 -- CreateEnum
-CREATE TYPE "Patronage" AS ENUM ('GOLD', 'SILVER', 'COPPER');
+CREATE TYPE "Patronage" AS ENUM ('GOLD', 'SILVER', 'COPPER', 'FREE');
 
 -- CreateTable
 CREATE TABLE "User" (
@@ -20,7 +20,7 @@ CREATE TABLE "User" (
     "stripeId" TEXT,
     "coins" BIGINT NOT NULL DEFAULT 0,
     "ccLast4" INTEGER,
-    "patronageType" "Patronage",
+    "patronageType" "Patronage" DEFAULT E'FREE',
 
     PRIMARY KEY ("id")
 );

@@ -1,0 +1,3 @@
+mutation CreateSubscription($type: String!) {
+  createSubscription(type: $type)
+}

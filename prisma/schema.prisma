@@ -27,7 +27,7 @@ model User {
   stripeId      String?    @unique
   coins         BigInt     @default(0)
   ccLast4       Int?
-  patronageType Patronage?
+  patronageType Patronage? @default(FREE)
 }
 
 model session {
@@ -63,4 +63,5 @@ enum Patronage {
   GOLD
   SILVER
   COPPER
+  FREE
 }

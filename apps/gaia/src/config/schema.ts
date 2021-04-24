@@ -2,17 +2,18 @@ import {
   resolvers,
   ResolversEnhanceMap,
   applyResolversEnhanceMap,
-} from '@generated/type-graphql';
-import { GraphQLSchema } from 'graphql';
-import { buildSchema } from 'type-graphql';
-import { LoginMutation } from '../modules/Auth/login';
-import { RegisterMutation } from '../modules/Auth/register';
-import { VerifyUser } from '../modules/Helpers/verifyUser';
-import { ChangePassword } from '../modules/Helpers/changePassword';
-import { ForgetPassword } from '../modules/Helpers/forgetPassword';
-import { LogoutMutation } from '../modules/Auth/logout';
-import { MeQuery } from '../modules/me';
-import { VerificationEmailAgainMutation } from '../modules/Helpers/verificationEmailAgain';
+} from "@generated/type-graphql";
+import { GraphQLSchema } from "graphql";
+import { buildSchema } from "type-graphql";
+import { LoginMutation } from "../modules/Auth/login";
+import { RegisterMutation } from "../modules/Auth/register";
+import { VerifyUser } from "../modules/Helpers/verifyUser";
+import { ChangePassword } from "../modules/Helpers/changePassword";
+import { ForgetPassword } from "../modules/Helpers/forgetPassword";
+import { LogoutMutation } from "../modules/Auth/logout";
+import { MeQuery } from "../modules/me";
+import { VerificationEmailAgainMutation } from "../modules/Helpers/verificationEmailAgain";
+import { CreateSubscription } from "../modules/Payments/CreateSubscription";
 
 const resolversEnhancerMap: ResolversEnhanceMap = {
   User: {
@@ -33,6 +34,7 @@ export const createSchema = async (): Promise<GraphQLSchema> => {
       LogoutMutation,
       MeQuery,
       VerificationEmailAgainMutation,
+      CreateSubscription,
     ],
     validate: true,
     emitSchemaFile: true,

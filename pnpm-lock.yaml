@@ -28,6 +28,8 @@ specifiers:
   '@nrwl/web': 12.0.8
   '@nrwl/workspace': 12.0.8
   '@prisma/client': ^2.21.2
+  '@stripe/react-stripe-js': ^1.4.0
+  '@stripe/stripe-js': ^1.13.2
   '@testing-library/react': 11.2.6
   '@types/babel__core': 7.1.14
   '@types/babel__preset-env': 7.9.1
@@ -51,13 +53,13 @@ specifiers:
   '@types/uuid': ^8.3.0
   '@typescript-eslint/eslint-plugin': 4.22.0
   '@typescript-eslint/parser': 4.22.0
-  altair-express-middleware: ^4.0.1
+  altair-express-middleware: ^4.0.2
   apollo-server-express: ^2.23.0
   argon2: ^0.27.2
   babel-jest: 26.6.3
   class-validator: ^0.13.1
   connect-pg-simple: ^6.2.1
-  core-js: ^3.10.2
+  core-js: ^3.11.0
   cors: ^2.8.5
   cypress: ^7.1.0
   deepmerge: ^4.2.2
@@ -98,13 +100,13 @@ specifiers:
   react-is: ^17.0.2
   reflect-metadata: ^0.1.13
   regenerator-runtime: 0.13.7
-  stripe: ^8.144.0
+  stripe: ^8.145.0
   ts-jest: 26.5.5
   ts-node: ~9.1.1
   tslib: ^2.2.0
   tslog: ^3.2.0
   type-graphql: ^1.1.1
-  typegraphql-prisma: ^0.13.0
+  typegraphql-prisma: ^0.13.1
   typescript: ~4.2.4
   typesync: ^0.8.0
   uuid: ^8.3.2
@@ -112,12 +114,14 @@ specifiers:
 dependencies:
   '@apollo/client': 3.3.15_graphql@15.5.0+react@17.0.2
   '@prisma/client': 2.21.2_prisma@2.21.2
-  altair-express-middleware: 4.0.1
+  '@stripe/react-stripe-js': 1.4.0_f30f2f0cafa8e941d254d17589e43ca8
+  '@stripe/stripe-js': 1.13.2
+  altair-express-middleware: 4.0.2
   apollo-server-express: 2.23.0_graphql@15.5.0
   argon2: 0.27.2
   class-validator: 0.13.1
   connect-pg-simple: 6.2.1
-  core-js: 3.10.2
+  core-js: 3.11.0
   cors: 2.8.5
   deepmerge: 4.2.2
   document-register-element: 1.14.10
@@ -143,11 +147,11 @@ dependencies:
   react-is: 17.0.2
   reflect-metadata: 0.1.13
   regenerator-runtime: 0.13.7
-  stripe: 8.144.0
+  stripe: 8.145.0
   tslib: 2.2.0
   tslog: 3.2.0
   type-graphql: 1.1.1_2fd34121b17a15d834df56725e6aadf0
-  typegraphql-prisma: 0.13.0_c7ae8f07ec47def13ed180c24540e1c2
+  typegraphql-prisma: 0.13.1_c7ae8f07ec47def13ed180c24540e1c2
   uuid: 8.3.2
 
 devDependencies:
@@ -4650,6 +4654,23 @@ packages:
       '@sinonjs/commons': 1.8.3
     dev: true
 
+  /@stripe/react-stripe-js/1.4.0_f30f2f0cafa8e941d254d17589e43ca8:
+    resolution: {integrity: sha512-Pz5QmG8PgJ3pi8gOWxlngk+ns63p2L1Ds192fn55ykZNRKfGz3G6sfssUVThHn/NAt2Hp1eCEsy/hvlKnXJI6g==}
+    peerDependencies:
+      '@stripe/stripe-js': ^1.13.0
+      react: ^16.8.0 || ^17.0.0
+      react-dom: ^16.8.0 || ^17.0.0
+    dependencies:
+      '@stripe/stripe-js': 1.13.2
+      prop-types: 15.7.2
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+    dev: false
+
+  /@stripe/stripe-js/1.13.2:
+    resolution: {integrity: sha512-fycUk7ECukNc31lD5apcrUgdRC1BfiIacs+CpacoCjOgo3ablolnWCvDQWMmVWtODYa8bBv2dlBla+Edc5OvZg==}
+    dev: false
+
   /@svgr/babel-plugin-add-jsx-attribute/5.4.0:
     resolution: {integrity: sha512-ZFf2gs/8/6B8PnSofI0inYXr2SDNTDScPXhN7k5EqD4aZ3gi6u+rbmZHVB8IM3wDyx8ntKACZbtXSm7oZGRqVg==}
     engines: {node: '>=10'}
@@ -5634,16 +5655,16 @@ packages:
     resolution: {integrity: sha1-l6ERlkmyEa0zaR2fn0hqjsn74KM=}
     dev: true
 
-  /altair-express-middleware/4.0.1:
-    resolution: {integrity: sha512-eSSGaNb5UtYJUh/Bbumg0LvOll5t3TADw7e/kVpOE9IkzQ9so8HIz/Pq2gbztwdEajz/QK7MJ5mbWKt2re/5Fg==}
+  /altair-express-middleware/4.0.2:
+    resolution: {integrity: sha512-WO3cJl9lV960XlABk+TVLs9X2pb2xGlJnhCagc+jm9X+o73zxJT2GclRmhnVeJkkFI39gOGU9n87xqpXByHLbQ==}
     engines: {node: '>= 6.9.1'}
     dependencies:
-      altair-static: 4.0.1
+      altair-static: 4.0.2
       express: 4.17.1
     dev: false
 
-  /altair-static/4.0.1:
-    resolution: {integrity: sha512-6Z7q/pkZ958eWdaGlWNDVkmDxgGDDjuQs1Xn5fmLpXqV3ZDzSJj7YFmLQG9PpK8aeOu5ov9InIAgJDpwXr/dyQ==}
+  /altair-static/4.0.2:
+    resolution: {integrity: sha512-FKArM7its4Z8N/zUBDzPCWVOSF2pKasb1CWQjT+DoIgLk6XKcNhmXJ+4lL77Xrjt1qOy4esCJfyV2U3AX0/CkA==}
     engines: {node: '>= 6.9.1'}
     dev: false
 
@@ -7705,6 +7726,12 @@ packages:
   /core-js/3.10.2:
     resolution: {integrity: sha512-W+2oVYeNghuBr3yTzZFQ5rfmjZtYB/Ubg87R5YOmlGrIb+Uw9f7qjUbhsj+/EkXhcV7eOD3jiM4+sgraX3FZUw==}
     requiresBuild: true
+    dev: true
+
+  /core-js/3.11.0:
+    resolution: {integrity: sha512-bd79DPpx+1Ilh9+30aT5O1sgpQd4Ttg8oqkqi51ZzhedMM1omD2e6IOF48Z/DzDCZ2svp49tN/3vneTK6ZBkXw==}
+    requiresBuild: true
+    dev: false
 
   /core-util-is/1.0.2:
     resolution: {integrity: sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=}
@@ -16131,8 +16158,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /stripe/8.144.0:
-    resolution: {integrity: sha512-oqrs163kA1CxLMmzcL7m79Ax+gGxNYpPIKjdpD8Ckc/NOQppkWOfiIJwyiCEWTfHgIJ6/FkPH12jGzkMwPqnSg==}
+  /stripe/8.145.0:
+    resolution: {integrity: sha512-znLtEdO/ZT9mKUWechzcDQNWySt0e1RxyOOx+GZXFq6pspPhsse9MIehXEd+QdYnf8kvSAg041Txdgq+1yZqOg==}
     engines: {node: ^8.1 || >=10.*}
     dependencies:
       '@types/node': 14.14.41
@@ -16883,8 +16910,8 @@ packages:
     resolution: {integrity: sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=}
     dev: true
 
-  /typegraphql-prisma/0.13.0_c7ae8f07ec47def13ed180c24540e1c2:
-    resolution: {integrity: sha512-2VEYjPLqPbSaGHG0VcjAzjQSYjPQMJsS/teUAaZ69bnH/c60hE5UH+DeSD+gLHB0IfNyXBnZel6axxYhIzQYxA==}
+  /typegraphql-prisma/0.13.1_c7ae8f07ec47def13ed180c24540e1c2:
+    resolution: {integrity: sha512-2m9FQQoSaz0BVY3tbdTovPH7X8Ee5XDQ0gZjhtb0oiEaC4MXjT9lCxXeMAwaPJWN+s3IbstVmt94WxLWze1Wvw==}
     engines: {node: '>=12.4'}
     hasBin: true
     peerDependencies:

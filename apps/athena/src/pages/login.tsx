@@ -59,4 +59,5 @@ const Login = (): JSX.Element => {
     </div>
   );
 };
+
 export default getApollo({ ssr: false })(Login);
