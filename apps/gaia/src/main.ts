@@ -1,18 +1,24 @@
-import 'dotenv-safe/config';
-import 'reflect-metadata';
+import "dotenv/config";
+import "reflect-metadata";
+import dotenv from "dotenv";
+dotenv.config({
+  path: "env/gaia.env",
+});
 
-import { altairExpress } from 'altair-express-middleware';
-import { ApolloServer } from 'apollo-server-express';
-import cors from 'cors';
-import express from 'express';
-import session from 'express-session';
-import { PrismaClient } from '@prisma/client';
-import { GaiaContext } from './config/context';
-import { createSchema } from './config/schema';
-import { sessionOptions } from './config/session';
+import { altairExpress } from "altair-express-middleware";
+import { ApolloServer } from "apollo-server-express";
+import cors from "cors";
+import express from "express";
+import session from "express-session";
+import { PrismaClient } from "@prisma/client";
+import { GaiaContext } from "./config/context";
+import { createSchema } from "./config/schema";
+import { sessionOptions } from "./config/session";
+
+// const res = console.log(res);a
 
 const prisma = new PrismaClient({
-  log: ['query', 'info', `warn`, `error`],
+  log: ["query", "info", `warn`, `error`],
 });
 
 const main = async () => {
@@ -20,7 +26,7 @@ const main = async () => {
 
   app.use(
     cors({
-      origin: 'http://localhost:4200',
+      origin: "http://localhost:4200",
       credentials: true,
     })
   );
@@ -39,16 +45,20 @@ const main = async () => {
   server.applyMiddleware({ app, cors: false });
 
   app.use(
-    '/altair',
+    "/altair",
     altairExpress({
-      endpointURL: '/graphql',
+      endpointURL: "/graphql",
       subscriptionsEndpoint: `ws://localhost:4000/subscriptions`,
     })
   );
 
-  app.listen(4000, () => {
-    console.log(`🚀 Server launched on address http://localhost:4000/graphql`);
-    console.log(`🟢 Altair launched on address http://localhost:4000/altair`);
+  app.listen(process.env.PORT, () => {
+    console.log(
+      `🚀 Server launched on address http://localhost:${process.env.PORT}/graphql`
+    );
+    console.log(
+      `🟢 Altair launched on address http://localhost:${process.env.PORT}/altair`
+    );
   });
 };
 

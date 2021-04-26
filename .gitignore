@@ -47,3 +47,4 @@ Thumbs.db
 *.graphqls.d.ts
 
 __generated__
+generated

@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { getApollo } from "src/config/getApollo";
 import { useLoginMutation } from "src/graphql/mutations/Login.graphql";
-import { MeDocument, MeQuery } from "src/graphql/queries/me.graphql";
+import { MeDocument, MeQuery } from "src/graphql/queries/Me.graphql";
 import { toErrorMap } from "src/utils/toErrorMap";
 
 const Login = (): JSX.Element => {

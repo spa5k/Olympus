@@ -14,5 +14,6 @@ declare namespace NodeJS {
     GOLD_PLAN_ID: string;
     SILVER_PLAN_ID: string;
     COPPER_PLAN_ID: string;
+    PORT: number;
   }
 }

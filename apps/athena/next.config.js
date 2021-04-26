@@ -7,7 +7,6 @@ module.exports = withNx({
     // See: https://github.com/gregberge/svgr
     svgr: true,
   },
-
   webpack(config, options) {
     config.module.rules.push({
       test: /\.graphql$/,

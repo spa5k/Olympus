@@ -23,13 +23,5 @@
   },
   "exclude": ["__generated__", "node_modules"],
   "extends": "../../tsconfig.base.json",
-  "include": [
-    "**/*.js",
-    "**/*.jsx",
-    "**/*.ts",
-    "**/*.tsx",
-    "next-env.d.ts",
-    "**/*.d.ts",
-    "**/*.graphql"
-  ]
+  "include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", "next-env.d.ts"]
 }

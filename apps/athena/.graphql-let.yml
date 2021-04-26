@@ -6,10 +6,9 @@ plugins:
   - typescript-react-apollo
   - typescript-apollo-client-helpers
 TSConfigFile: "tsconfig.json"
-cacheDir: __generated__
 config:
-  reactApolloVersion: 3
   useTypeImports: true
   scalars:
     BigInt: number
     DateTime: Date
+cacheDir: "../../generated/"

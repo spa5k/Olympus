@@ -2,5 +2,6 @@
 mutation Register($email: String!, $name: String!, $password: String!) {
   register(options: { email: $email, name: $name, password: $password }) {
     ...RegularUserResponse
+    __typename
   }
 }

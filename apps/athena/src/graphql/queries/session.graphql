@@ -1,6 +1,0 @@
-query Sessions {
-  sessions {
-    sid
-    sess
-  }
-}

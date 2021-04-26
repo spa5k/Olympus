@@ -1,13 +1,10 @@
 import NextLink from "next/link";
 import React from "react";
-import { getApollo } from "src/config/getApollo";
-import { useLogoutMutation } from "src/graphql/mutations/Logout.graphql";
-import {
-  MeDocument,
-  MeQuery,
-  useMeQuery,
-} from "src/graphql/queries/me.graphql";
-import { isServer } from "src/utils/isServer";
+
+import { getApollo } from "../config/getApollo";
+import { useLogoutMutation } from "../graphql/mutations/Logout.graphql";
+import { useMeQuery, MeQuery, MeDocument } from "../graphql/queries/Me.graphql";
+import { isServer } from "../utils/isServer";
 
 function Index(): JSX.Element {
   const { data, loading } = useMeQuery({

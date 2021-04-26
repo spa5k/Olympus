@@ -9,5 +9,11 @@ declare namespace NodeJS {
     POSTGRES_PASSWORD: string;
     POSTGRES_DB: string;
     SUPPORT_EMAIL_ADDRESS: string;
+    PORT: string;
+    COOKIE_NAME: string;
+    COOKIE_SECRET: string;
+    COPPER_PLAN_ID: string;
+    SILVER_PLAN_ID: string;
+    GOLD_PLAN_ID: string;
   }
 }
