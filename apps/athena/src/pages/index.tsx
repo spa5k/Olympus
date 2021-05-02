@@ -7,7 +7,7 @@ import { useMeQuery, MeQuery, MeDocument } from "../graphql/queries/Me.graphql";
 import { isServer } from "../utils/isServer";
 
 function Index(): JSX.Element {
-  const { data, loading } = useMeQuery({
+  const { data } = useMeQuery({
     skip: isServer(),
   });
   const [logout] = useLogoutMutation();
@@ -23,6 +23,7 @@ function Index(): JSX.Element {
       <div>
         {data?.me.user && (
           <div>
+            <NextLink href="/checkout">Checkout</NextLink>
             <p>{data?.me?.user?.id}</p>
             <button
               onClick={async () => {

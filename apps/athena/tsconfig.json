@@ -18,8 +18,7 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "esnext",
-    "types": ["jest", "node"],
-    "baseUrl": "."
+    "types": ["jest", "node"]
   },
   "exclude": ["__generated__", "node_modules"],
   "extends": "../../tsconfig.base.json",

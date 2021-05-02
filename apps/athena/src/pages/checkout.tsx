@@ -1,5 +1,6 @@
-import { CheckoutForm } from "src/components/checkoutForm";
-import { getApollo } from "src/config/getApollo";
+import React from "react";
+import { CheckoutForm } from "../components/checkoutForm";
+import { getApollo } from "../config/getApollo";
 
 const CheckoutPage = () => {
   return <CheckoutForm />;

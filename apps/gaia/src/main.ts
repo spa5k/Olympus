@@ -14,8 +14,7 @@ import { PrismaClient } from "@prisma/client";
 import { GaiaContext } from "./config/context";
 import { createSchema } from "./config/schema";
 import { sessionOptions } from "./config/session";
-
-// const res = console.log(res);a
+import { logger } from "@olympus/logger";
 
 const prisma = new PrismaClient({
   log: ["query", "info", `warn`, `error`],
@@ -53,10 +52,10 @@ const main = async () => {
   );
 
   app.listen(process.env.PORT, () => {
-    console.log(
+    logger.silly(
       `🚀 Server launched on address http://localhost:${process.env.PORT}/graphql`
     );
-    console.log(
+    logger.silly(
       `🟢 Altair launched on address http://localhost:${process.env.PORT}/altair`
     );
   });

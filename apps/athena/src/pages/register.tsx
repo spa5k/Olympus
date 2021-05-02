@@ -1,8 +1,8 @@
 import React from "react";
 import { Form, Formik, Field } from "formik";
 import { useRouter } from "next/router";
-import { useRegisterMutation } from "src/graphql/mutations/Register.graphql";
-import { getApollo } from "src/config/getApollo";
+import { getApollo } from "../config/getApollo";
+import { useRegisterMutation } from "../graphql/mutations/Register.graphql";
 
 const Register = (): JSX.Element => {
   const router = useRouter();

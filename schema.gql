@@ -212,7 +212,7 @@ input IntNullableWithAggregatesFilter {
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
-scalar JSON
+scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
 
 input JsonFilter {
   equals: JSON
@@ -238,7 +238,7 @@ type Mutation {
   createManyTokens(data: [TokensCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
   createManyUser(data: [UserCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
   createSession(data: SessionCreateInput!): Session!
-  createSubscription(type: String!): Boolean!
+  createSubscription(address: String!, id: String!, type: String!): Boolean!
   createTokens(data: TokensCreateInput!): Tokens!
   createUser(data: UserCreateInput!): User!
   deleteManySession(where: SessionWhereInput): AffectedRowsOutput!

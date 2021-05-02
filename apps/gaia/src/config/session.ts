@@ -1,6 +1,8 @@
-import session from "express-session";
+import session, { SessionOptions } from "express-session";
+
 import pgSessionStore from "connect-pg-simple";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const pg = pgSessionStore(session);
 
 const store = new pg({
@@ -8,7 +10,7 @@ const store = new pg({
   schemaName: "gaia",
 });
 
-export const sessionOptions: session.SessionOptions = {
+export const sessionOptions: SessionOptions = {
   cookie: {
     httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24 * 7 * 365,
