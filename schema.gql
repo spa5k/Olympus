@@ -238,7 +238,7 @@ type Mutation {
   createManyTokens(data: [TokensCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
   createManyUser(data: [UserCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
   createSession(data: SessionCreateInput!): Session!
-  createSubscription(address: String!, id: String!, type: String!): Boolean!
+  createSubscription(address: String!, ccLast4: String!, id: String!, type: String!): Boolean!
   createTokens(data: TokensCreateInput!): Tokens!
   createUser(data: UserCreateInput!): User!
   deleteManySession(where: SessionWhereInput): AffectedRowsOutput!

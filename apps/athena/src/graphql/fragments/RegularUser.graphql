@@ -2,4 +2,6 @@ fragment RegularUser on User {
   id
   name
   email
+  ccLast4
+  patronageType
 }

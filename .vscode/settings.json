@@ -28,6 +28,7 @@
     "olympus",
     "lib/email",
     "athena/ssr",
-    "stripe"
+    "stripe",
+    "olympus/subscription"
   ]
 }

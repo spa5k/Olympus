@@ -1,5 +1,5 @@
 import { User } from "@generated/type-graphql";
-import { Arg, Ctx, Mutation, Resolver } from "type-graphql";
+import { Arg, Ctx, Int, Mutation, Resolver } from "type-graphql";
 
 import { GaiaContext } from "../../config/context";
 import { stripe } from "@olympus/stripe";
@@ -13,6 +13,7 @@ export class CreateSubscription {
     @Arg("type") type: "GOLD" | "SILVER" | "COPPER",
     @Arg("id") id: string,
     @Arg("address") address: string,
+    @Arg("ccLast4") ccLast4: string,
     @Ctx() { req, prisma }: GaiaContext
   ): Promise<boolean> {
     if (!req.session || !req.session.userId) {
@@ -75,27 +76,37 @@ export class CreateSubscription {
         logger.error("paymentMethod Error", error);
       }
     }
-    logger.info("paymentMethod successful");
 
     let subscription: Stripe.Response<Stripe.Subscription>;
 
-    if (paymentMethod) {
-      try {
-        subscription = await stripe.subscriptions.create({
-          customer: user.stripeId,
-          default_payment_method: paymentMethod.id,
-          items: [
-            {
-              price: priceId,
-            },
-          ],
-        });
-        logger.info("subscription successful");
-      } catch (error) {
-        logger.error("subscription error", error);
-      }
+    try {
+      subscription = await stripe.subscriptions.create({
+        customer: user.stripeId,
+        default_payment_method: paymentMethod.id,
+        items: [
+          {
+            price: priceId,
+          },
+        ],
+      });
+      logger.info("subscription successful");
+    } catch (error) {
+      logger.error("subscription error", error);
     }
 
-    logger.info("subscription", subscription);
+    console.log("subscription", subscription);
+
+    if (subscription && subscription.status === "active") {
+      await prisma.user.update({
+        where: {
+          stripeId: stripeId ? stripeId : user.stripeId,
+        },
+        data: {
+          patronageType: type,
+        },
+      });
+      return true;
+    }
+    return false;
   }
 }

@@ -10,13 +10,14 @@ import { useCreateSubscriptionMutation } from "../graphql/mutations/CreateSubscr
 import { useMeQuery } from "../graphql/queries/Me.graphql";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { isServer } from "../utils/isServer";
 
 const Checkout = ({ type }: { type: "GOLD" | "SILVER" | "COPPER" }) => {
   const stripe = useStripe();
   const router = useRouter();
   const elements = useElements();
   const [subscription] = useCreateSubscriptionMutation();
-  const { data } = useMeQuery();
+  const { data } = useMeQuery({ skip: isServer() });
   const [messages, setMessages] = useState("");
   const [address, setAddress] = useState<string>("");
 
@@ -50,8 +51,11 @@ const Checkout = ({ type }: { type: "GOLD" | "SILVER" | "COPPER" }) => {
         type,
         id: paymentMethod.id,
         address,
+        ccLast4: paymentMethod.card.last4,
       },
     });
+
+    console.log(paymentMethod);
   };
 
   if (!data?.me.user) {
@@ -59,8 +63,15 @@ const Checkout = ({ type }: { type: "GOLD" | "SILVER" | "COPPER" }) => {
       <>
         <button onClick={() => router.push("/register")}>register</button>
         <button onClick={() => router.push("/login")}>login</button>
+      </>
+    );
+  }
 
-        <p>Fk off</p>
+  if (data.me.user.patronageType !== "FREE") {
+    return (
+      <>
+        <p>You are already subscribed- {data.me.user.patronageType}</p>
+        <button onClick={() => router.push("/")}>Homepage</button>
       </>
     );
   }
@@ -77,6 +88,7 @@ const Checkout = ({ type }: { type: "GOLD" | "SILVER" | "COPPER" }) => {
           name="address"
           onChange={(e) => setAddress(e.target.value)}
           required
+          placeholder="address"
         />
         <CardElement />
         <button

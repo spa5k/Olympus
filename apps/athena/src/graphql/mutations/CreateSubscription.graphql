@@ -1,3 +1,8 @@
-mutation CreateSubscription($type: String!, $id: String!, $address: String!) {
-  createSubscription(type: $type, id: $id, address: $address)
+mutation CreateSubscription(
+  $type: String!
+  $id: String!
+  $address: String!
+  $ccLast4: String!
+) {
+  createSubscription(type: $type, id: $id, address: $address, ccLast4: $ccLast4)
 }

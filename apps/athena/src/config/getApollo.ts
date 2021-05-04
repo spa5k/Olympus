@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import type { NextPageContext } from "next";
 import { withApollo } from "next-apollo";
-import { TypedTypePolicies } from "src/graphql/queries/me.graphql";
+import { TypedTypePolicies } from "../graphql/fragments/FieldError.graphql";
 
 // Remember to change the location on this path according to where stuff is getting generated
 
