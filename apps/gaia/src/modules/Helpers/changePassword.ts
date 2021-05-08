@@ -1,16 +1,16 @@
-import { Arg, Ctx, Mutation, Resolver } from 'type-graphql';
-import { User } from '@generated/type-graphql';
+import { Arg, Ctx, Mutation, Resolver } from "type-graphql";
+import { User } from "@generated/type-graphql";
 
-import { UserResponse } from '../../types/response/UserResponse';
-import { GaiaContext } from '../../config/context';
-import argon2 from 'argon2';
+import { UserResponse } from "../../types/response/UserResponse";
+import { GaiaContext } from "../../config/context";
+import argon2 from "argon2";
 
 @Resolver(User)
 export class ChangePassword {
   @Mutation(() => UserResponse)
   async changePassword(
-    @Arg('token') token: string,
-    @Arg('newPassword') newPassword: string,
+    @Arg("token") token: string,
+    @Arg("newPassword") newPassword: string,
     @Ctx() { prisma, req }: GaiaContext
   ): Promise<UserResponse> {
     const tokenStatus = await prisma.tokens.findUnique({
@@ -23,8 +23,8 @@ export class ChangePassword {
       return {
         errors: [
           {
-            field: 'token',
-            message: 'token expired',
+            field: "token",
+            message: "token expired",
           },
         ],
       };
@@ -46,8 +46,8 @@ export class ChangePassword {
       return {
         errors: [
           {
-            field: 'token',
-            message: 'this user no longer exists',
+            field: "token",
+            message: "this user no longer exists",
           },
         ],
       };
@@ -69,7 +69,7 @@ export class ChangePassword {
       }),
       prisma.tokens.deleteMany({
         where: {
-          expire: {
+          expireAt: {
             gt: new Date().toISOString(),
           },
         },

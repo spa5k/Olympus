@@ -1,17 +1,17 @@
-import { Arg, Ctx, Mutation, Resolver } from 'type-graphql';
-import { User } from '@generated/type-graphql';
-import { GaiaContext } from '../../config/context';
+import { Arg, Ctx, Mutation, Resolver } from "type-graphql";
+import { User } from "@generated/type-graphql";
+import { GaiaContext } from "../../config/context";
 
 @Resolver(User)
 export class VerifyUser {
   @Mutation(() => Boolean)
   async verifyUser(
-    @Arg('token') token: string,
+    @Arg("token") token: string,
     @Ctx() { req, prisma }: GaiaContext
   ): Promise<boolean> {
     const tokenRes = await prisma.tokens.findFirst({
       where: {
-        type: 'ACCOUNT_VERIFICATION',
+        type: "ACCOUNT_VERIFICATION",
         token,
       },
     });
@@ -36,7 +36,7 @@ export class VerifyUser {
 
         prisma.tokens.deleteMany({
           where: {
-            expire: {
+            expireAt: {
               gt: new Date().toISOString(),
             },
           },

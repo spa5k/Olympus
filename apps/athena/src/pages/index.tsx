@@ -10,8 +10,8 @@ function Index(): JSX.Element {
   const { data } = useMeQuery({
     skip: isServer(),
   });
-  const [logout] = useLogoutMutation();
 
+  const [logout] = useLogoutMutation();
   return (
     <div>
       {!data?.me.user && (
@@ -24,7 +24,7 @@ function Index(): JSX.Element {
         {data?.me.user && (
           <div>
             <NextLink href="/checkout">Checkout</NextLink>
-            <p>{data?.me?.user?.id}</p>
+            <p>{data.me.user.id}</p>
             <button
               onClick={async () => {
                 await logout({

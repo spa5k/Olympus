@@ -13,6 +13,22 @@ type AggregateSession {
   min: SessionMinAggregate
 }
 
+type AggregateStripeCustomers {
+  avg: StripeCustomersAvgAggregate
+  count: StripeCustomersCountAggregate
+  max: StripeCustomersMaxAggregate
+  min: StripeCustomersMinAggregate
+  sum: StripeCustomersSumAggregate
+}
+
+type AggregateSubs {
+  avg: SubsAvgAggregate
+  count: SubsCountAggregate
+  max: SubsMaxAggregate
+  min: SubsMinAggregate
+  sum: SubsSumAggregate
+}
+
 type AggregateTokens {
   count: TokensCountAggregate
   max: TokensMaxAggregate
@@ -76,6 +92,19 @@ input BoolFilter {
   not: NestedBoolFilter
 }
 
+input BoolNullableFilter {
+  equals: Boolean
+  not: NestedBoolNullableFilter
+}
+
+input BoolNullableWithAggregatesFilter {
+  count: NestedIntNullableFilter
+  equals: Boolean
+  max: NestedBoolNullableFilter
+  min: NestedBoolNullableFilter
+  not: NestedBoolNullableWithAggregatesFilter
+}
+
 input BoolWithAggregatesFilter {
   count: NestedIntFilter
   equals: Boolean
@@ -101,6 +130,31 @@ input DateTimeFilter {
   lt: DateTime
   lte: DateTime
   not: NestedDateTimeFilter
+  notIn: [DateTime!]
+}
+
+input DateTimeNullableFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: NestedDateTimeNullableFilter
+  notIn: [DateTime!]
+}
+
+input DateTimeNullableWithAggregatesFilter {
+  count: NestedIntNullableFilter
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  max: NestedDateTimeNullableFilter
+  min: NestedDateTimeNullableFilter
+  not: NestedDateTimeNullableWithAggregatesFilter
   notIn: [DateTime!]
 }
 
@@ -133,6 +187,23 @@ input EnumPatronageNullableWithAggregatesFilter {
   min: NestedEnumPatronageNullableFilter
   not: NestedEnumPatronageNullableWithAggregatesFilter
   notIn: [Patronage!]
+}
+
+input EnumSubscriptionStatusNullableFilter {
+  equals: SubscriptionStatus
+  in: [SubscriptionStatus!]
+  not: NestedEnumSubscriptionStatusNullableFilter
+  notIn: [SubscriptionStatus!]
+}
+
+input EnumSubscriptionStatusNullableWithAggregatesFilter {
+  count: NestedIntNullableFilter
+  equals: SubscriptionStatus
+  in: [SubscriptionStatus!]
+  max: NestedEnumSubscriptionStatusNullableFilter
+  min: NestedEnumSubscriptionStatusNullableFilter
+  not: NestedEnumSubscriptionStatusNullableWithAggregatesFilter
+  notIn: [SubscriptionStatus!]
 }
 
 input EnumTokenTypeFieldUpdateOperationsInput {
@@ -219,6 +290,19 @@ input JsonFilter {
   not: JSON
 }
 
+input JsonNullableFilter {
+  equals: JSON
+  not: JSON
+}
+
+input JsonNullableWithAggregatesFilter {
+  count: NestedIntNullableFilter
+  equals: JSON
+  max: NestedJsonNullableFilter
+  min: NestedJsonNullableFilter
+  not: JSON
+}
+
 input JsonWithAggregatesFilter {
   count: NestedIntFilter
   equals: JSON
@@ -235,16 +319,24 @@ input LoginInput {
 type Mutation {
   changePassword(newPassword: String!, token: String!): UserResponse!
   createManySession(data: [SessionCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
+  createManyStripeCustomers(data: [StripeCustomersCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
+  createManySubs(data: [SubsCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
   createManyTokens(data: [TokensCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
   createManyUser(data: [UserCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
   createSession(data: SessionCreateInput!): Session!
-  createSubscription(address: String!, ccLast4: String!, id: String!, type: String!): Boolean!
+  createStripeCustomers(data: StripeCustomersCreateInput!): StripeCustomers!
+  createSubs(data: SubsCreateInput!): Subs!
+  createSubscription(address: String!, paymentMethodId: String!, type: String!): Boolean!
   createTokens(data: TokensCreateInput!): Tokens!
   createUser(data: UserCreateInput!): User!
   deleteManySession(where: SessionWhereInput): AffectedRowsOutput!
+  deleteManyStripeCustomers(where: StripeCustomersWhereInput): AffectedRowsOutput!
+  deleteManySubs(where: SubsWhereInput): AffectedRowsOutput!
   deleteManyTokens(where: TokensWhereInput): AffectedRowsOutput!
   deleteManyUser(where: UserWhereInput): AffectedRowsOutput!
   deleteSession(where: SessionWhereUniqueInput!): Session
+  deleteStripeCustomers(where: StripeCustomersWhereUniqueInput!): StripeCustomers
+  deleteSubs(where: SubsWhereUniqueInput!): Subs
   deleteTokens(where: TokensWhereUniqueInput!): Tokens
   deleteUser(where: UserWhereUniqueInput!): User
   forgetPassword(email: String!): Boolean!
@@ -253,12 +345,18 @@ type Mutation {
   register(options: RegisterInput!): UserResponse!
   requestVerificationAgain(email: String!): Boolean!
   updateManySession(data: SessionUpdateManyMutationInput!, where: SessionWhereInput): AffectedRowsOutput!
+  updateManyStripeCustomers(data: StripeCustomersUpdateManyMutationInput!, where: StripeCustomersWhereInput): AffectedRowsOutput!
+  updateManySubs(data: SubsUpdateManyMutationInput!, where: SubsWhereInput): AffectedRowsOutput!
   updateManyTokens(data: TokensUpdateManyMutationInput!, where: TokensWhereInput): AffectedRowsOutput!
   updateManyUser(data: UserUpdateManyMutationInput!, where: UserWhereInput): AffectedRowsOutput!
   updateSession(data: SessionUpdateInput!, where: SessionWhereUniqueInput!): Session
+  updateStripeCustomers(data: StripeCustomersUpdateInput!, where: StripeCustomersWhereUniqueInput!): StripeCustomers
+  updateSubs(data: SubsUpdateInput!, where: SubsWhereUniqueInput!): Subs
   updateTokens(data: TokensUpdateInput!, where: TokensWhereUniqueInput!): Tokens
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   upsertSession(create: SessionCreateInput!, update: SessionUpdateInput!, where: SessionWhereUniqueInput!): Session!
+  upsertStripeCustomers(create: StripeCustomersCreateInput!, update: StripeCustomersUpdateInput!, where: StripeCustomersWhereUniqueInput!): StripeCustomers!
+  upsertSubs(create: SubsCreateInput!, update: SubsUpdateInput!, where: SubsWhereUniqueInput!): Subs!
   upsertTokens(create: TokensCreateInput!, update: TokensUpdateInput!, where: TokensWhereUniqueInput!): Tokens!
   upsertUser(create: UserCreateInput!, update: UserUpdateInput!, where: UserWhereUniqueInput!): User!
   verifyUser(token: String!): Boolean!
@@ -296,6 +394,19 @@ input NestedBoolFilter {
   not: NestedBoolFilter
 }
 
+input NestedBoolNullableFilter {
+  equals: Boolean
+  not: NestedBoolNullableFilter
+}
+
+input NestedBoolNullableWithAggregatesFilter {
+  count: NestedIntNullableFilter
+  equals: Boolean
+  max: NestedBoolNullableFilter
+  min: NestedBoolNullableFilter
+  not: NestedBoolNullableWithAggregatesFilter
+}
+
 input NestedBoolWithAggregatesFilter {
   count: NestedIntFilter
   equals: Boolean
@@ -312,6 +423,31 @@ input NestedDateTimeFilter {
   lt: DateTime
   lte: DateTime
   not: NestedDateTimeFilter
+  notIn: [DateTime!]
+}
+
+input NestedDateTimeNullableFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: NestedDateTimeNullableFilter
+  notIn: [DateTime!]
+}
+
+input NestedDateTimeNullableWithAggregatesFilter {
+  count: NestedIntNullableFilter
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  max: NestedDateTimeNullableFilter
+  min: NestedDateTimeNullableFilter
+  not: NestedDateTimeNullableWithAggregatesFilter
   notIn: [DateTime!]
 }
 
@@ -344,6 +480,23 @@ input NestedEnumPatronageNullableWithAggregatesFilter {
   min: NestedEnumPatronageNullableFilter
   not: NestedEnumPatronageNullableWithAggregatesFilter
   notIn: [Patronage!]
+}
+
+input NestedEnumSubscriptionStatusNullableFilter {
+  equals: SubscriptionStatus
+  in: [SubscriptionStatus!]
+  not: NestedEnumSubscriptionStatusNullableFilter
+  notIn: [SubscriptionStatus!]
+}
+
+input NestedEnumSubscriptionStatusNullableWithAggregatesFilter {
+  count: NestedIntNullableFilter
+  equals: SubscriptionStatus
+  in: [SubscriptionStatus!]
+  max: NestedEnumSubscriptionStatusNullableFilter
+  min: NestedEnumSubscriptionStatusNullableFilter
+  not: NestedEnumSubscriptionStatusNullableWithAggregatesFilter
+  notIn: [SubscriptionStatus!]
 }
 
 input NestedEnumTokenTypeFilter {
@@ -445,6 +598,11 @@ input NestedJsonFilter {
   not: JSON
 }
 
+input NestedJsonNullableFilter {
+  equals: JSON
+  not: JSON
+}
+
 input NestedStringFilter {
   contains: String
   endsWith: String
@@ -507,8 +665,20 @@ input NestedStringWithAggregatesFilter {
   startsWith: String
 }
 
+input NullableBoolFieldUpdateOperationsInput {
+  set: Boolean
+}
+
+input NullableDateTimeFieldUpdateOperationsInput {
+  set: DateTime
+}
+
 input NullableEnumPatronageFieldUpdateOperationsInput {
   set: Patronage
+}
+
+input NullableEnumSubscriptionStatusFieldUpdateOperationsInput {
+  set: SubscriptionStatus
 }
 
 input NullableIntFieldUpdateOperationsInput {
@@ -530,19 +700,34 @@ enum Patronage {
   SILVER
 }
 
+type PricesResponse {
+  pricesJson: String!
+}
+
 type Query {
   aggregateSession(cursor: SessionWhereUniqueInput, orderBy: [SessionOrderByInput!], skip: Int, take: Int, where: SessionWhereInput): AggregateSession!
+  aggregateStripeCustomers(cursor: StripeCustomersWhereUniqueInput, orderBy: [StripeCustomersOrderByInput!], skip: Int, take: Int, where: StripeCustomersWhereInput): AggregateStripeCustomers!
+  aggregateSubs(cursor: SubsWhereUniqueInput, orderBy: [SubsOrderByInput!], skip: Int, take: Int, where: SubsWhereInput): AggregateSubs!
   aggregateTokens(cursor: TokensWhereUniqueInput, orderBy: [TokensOrderByInput!], skip: Int, take: Int, where: TokensWhereInput): AggregateTokens!
   aggregateUser(cursor: UserWhereUniqueInput, orderBy: [UserOrderByInput!], skip: Int, take: Int, where: UserWhereInput): AggregateUser!
   findFirstSession(cursor: SessionWhereUniqueInput, distinct: [SessionScalarFieldEnum!], orderBy: [SessionOrderByInput!], skip: Int, take: Int, where: SessionWhereInput): Session
+  findFirstStripeCustomers(cursor: StripeCustomersWhereUniqueInput, distinct: [StripeCustomersScalarFieldEnum!], orderBy: [StripeCustomersOrderByInput!], skip: Int, take: Int, where: StripeCustomersWhereInput): StripeCustomers
+  findFirstSubs(cursor: SubsWhereUniqueInput, distinct: [SubsScalarFieldEnum!], orderBy: [SubsOrderByInput!], skip: Int, take: Int, where: SubsWhereInput): Subs
   findFirstTokens(cursor: TokensWhereUniqueInput, distinct: [TokensScalarFieldEnum!], orderBy: [TokensOrderByInput!], skip: Int, take: Int, where: TokensWhereInput): Tokens
   findFirstUser(cursor: UserWhereUniqueInput, distinct: [UserScalarFieldEnum!], orderBy: [UserOrderByInput!], skip: Int, take: Int, where: UserWhereInput): User
+  findManyStripeCustomers(cursor: StripeCustomersWhereUniqueInput, distinct: [StripeCustomersScalarFieldEnum!], orderBy: [StripeCustomersOrderByInput!], skip: Int, take: Int, where: StripeCustomersWhereInput): [StripeCustomers!]!
+  findManySubs(cursor: SubsWhereUniqueInput, distinct: [SubsScalarFieldEnum!], orderBy: [SubsOrderByInput!], skip: Int, take: Int, where: SubsWhereInput): [Subs!]!
   findManyTokens(cursor: TokensWhereUniqueInput, distinct: [TokensScalarFieldEnum!], orderBy: [TokensOrderByInput!], skip: Int, take: Int, where: TokensWhereInput): [Tokens!]!
+  findUniqueStripeCustomers(where: StripeCustomersWhereUniqueInput!): StripeCustomers
+  findUniqueSubs(where: SubsWhereUniqueInput!): Subs
   findUniqueTokens(where: TokensWhereUniqueInput!): Tokens
   groupBySession(by: [SessionScalarFieldEnum!]!, having: SessionScalarWhereWithAggregatesInput, orderBy: [SessionOrderByInput!], skip: Int, take: Int, where: SessionWhereInput): [SessionGroupBy!]!
+  groupByStripeCustomers(by: [StripeCustomersScalarFieldEnum!]!, having: StripeCustomersScalarWhereWithAggregatesInput, orderBy: [StripeCustomersOrderByInput!], skip: Int, take: Int, where: StripeCustomersWhereInput): [StripeCustomersGroupBy!]!
+  groupBySubs(by: [SubsScalarFieldEnum!]!, having: SubsScalarWhereWithAggregatesInput, orderBy: [SubsOrderByInput!], skip: Int, take: Int, where: SubsWhereInput): [SubsGroupBy!]!
   groupByTokens(by: [TokensScalarFieldEnum!]!, having: TokensScalarWhereWithAggregatesInput, orderBy: [TokensOrderByInput!], skip: Int, take: Int, where: TokensWhereInput): [TokensGroupBy!]!
   groupByUser(by: [UserScalarFieldEnum!]!, having: UserScalarWhereWithAggregatesInput, orderBy: [UserOrderByInput!], skip: Int, take: Int, where: UserWhereInput): [UserGroupBy!]!
   me: UserResponse!
+  prices: PricesResponse!
   session(where: SessionWhereUniqueInput!): Session
   sessions(cursor: SessionWhereUniqueInput, distinct: [SessionScalarFieldEnum!], orderBy: [SessionOrderByInput!], skip: Int, take: Int, where: SessionWhereInput): [Session!]!
   user(where: UserWhereUniqueInput!): User
@@ -725,6 +910,1028 @@ input StringWithAggregatesFilter {
   startsWith: String
 }
 
+type StripeCustomers {
+  address: JSON
+  balance: Int
+  created: DateTime
+  currency: String
+  default_source: String
+  description: String
+  email: String
+  id: String!
+  livemode: Boolean
+  metadata: JSON
+  name: String
+  phone: String
+  shipping: JSON
+  stripeId: String!
+  subscriptions(cursor: SubsWhereUniqueInput, distinct: [SubsScalarFieldEnum!], orderBy: [SubsOrderByInput!], skip: Int, take: Int, where: SubsWhereInput): [Subs!]!
+  user: User!
+  userId: String!
+}
+
+type StripeCustomersAvgAggregate {
+  balance: Float
+}
+
+type StripeCustomersCountAggregate {
+  _all: Int!
+  address: Int!
+  balance: Int!
+  created: Int!
+  currency: Int!
+  default_source: Int!
+  description: Int!
+  email: Int!
+  id: Int!
+  livemode: Int!
+  metadata: Int!
+  name: Int!
+  phone: Int!
+  shipping: Int!
+  stripeId: Int!
+  userId: Int!
+}
+
+input StripeCustomersCreateInput {
+  address: JSON
+  balance: Int
+  created: DateTime
+  currency: String
+  default_source: String
+  description: String
+  email: String
+  id: String
+  livemode: Boolean
+  metadata: JSON
+  name: String
+  phone: String
+  shipping: JSON
+  stripeId: String!
+  subscriptions: SubsCreateNestedManyWithoutCustomersInput
+  user: UserCreateNestedOneWithoutStripeInput!
+}
+
+input StripeCustomersCreateManyInput {
+  address: JSON
+  balance: Int
+  created: DateTime
+  currency: String
+  default_source: String
+  description: String
+  email: String
+  id: String
+  livemode: Boolean
+  metadata: JSON
+  name: String
+  phone: String
+  shipping: JSON
+  stripeId: String!
+  userId: String!
+}
+
+input StripeCustomersCreateNestedOneWithoutSubscriptionsInput {
+  connect: StripeCustomersWhereUniqueInput
+  connectOrCreate: StripeCustomersCreateOrConnectWithoutSubscriptionsInput
+  create: StripeCustomersCreateWithoutSubscriptionsInput
+}
+
+input StripeCustomersCreateNestedOneWithoutUserInput {
+  connect: StripeCustomersWhereUniqueInput
+  connectOrCreate: StripeCustomersCreateOrConnectWithoutUserInput
+  create: StripeCustomersCreateWithoutUserInput
+}
+
+input StripeCustomersCreateOrConnectWithoutSubscriptionsInput {
+  create: StripeCustomersCreateWithoutSubscriptionsInput!
+  where: StripeCustomersWhereUniqueInput!
+}
+
+input StripeCustomersCreateOrConnectWithoutUserInput {
+  create: StripeCustomersCreateWithoutUserInput!
+  where: StripeCustomersWhereUniqueInput!
+}
+
+input StripeCustomersCreateWithoutSubscriptionsInput {
+  address: JSON
+  balance: Int
+  created: DateTime
+  currency: String
+  default_source: String
+  description: String
+  email: String
+  id: String
+  livemode: Boolean
+  metadata: JSON
+  name: String
+  phone: String
+  shipping: JSON
+  stripeId: String!
+  user: UserCreateNestedOneWithoutStripeInput!
+}
+
+input StripeCustomersCreateWithoutUserInput {
+  address: JSON
+  balance: Int
+  created: DateTime
+  currency: String
+  default_source: String
+  description: String
+  email: String
+  id: String
+  livemode: Boolean
+  metadata: JSON
+  name: String
+  phone: String
+  shipping: JSON
+  stripeId: String!
+  subscriptions: SubsCreateNestedManyWithoutCustomersInput
+}
+
+type StripeCustomersGroupBy {
+  address: JSON
+  avg: StripeCustomersAvgAggregate
+  balance: Int
+  count: StripeCustomersCountAggregate
+  created: DateTime
+  currency: String
+  default_source: String
+  description: String
+  email: String
+  id: String!
+  livemode: Boolean
+  max: StripeCustomersMaxAggregate
+  metadata: JSON
+  min: StripeCustomersMinAggregate
+  name: String
+  phone: String
+  shipping: JSON
+  stripeId: String!
+  sum: StripeCustomersSumAggregate
+  userId: String!
+}
+
+type StripeCustomersMaxAggregate {
+  balance: Int
+  created: DateTime
+  currency: String
+  default_source: String
+  description: String
+  email: String
+  id: String
+  livemode: Boolean
+  name: String
+  phone: String
+  stripeId: String
+  userId: String
+}
+
+type StripeCustomersMinAggregate {
+  balance: Int
+  created: DateTime
+  currency: String
+  default_source: String
+  description: String
+  email: String
+  id: String
+  livemode: Boolean
+  name: String
+  phone: String
+  stripeId: String
+  userId: String
+}
+
+input StripeCustomersOrderByInput {
+  address: SortOrder
+  balance: SortOrder
+  created: SortOrder
+  currency: SortOrder
+  default_source: SortOrder
+  description: SortOrder
+  email: SortOrder
+  id: SortOrder
+  livemode: SortOrder
+  metadata: SortOrder
+  name: SortOrder
+  phone: SortOrder
+  shipping: SortOrder
+  stripeId: SortOrder
+  userId: SortOrder
+}
+
+input StripeCustomersRelationFilter {
+  is: StripeCustomersWhereInput
+  isNot: StripeCustomersWhereInput
+}
+
+enum StripeCustomersScalarFieldEnum {
+  address
+  balance
+  created
+  currency
+  default_source
+  description
+  email
+  id
+  livemode
+  metadata
+  name
+  phone
+  shipping
+  stripeId
+  userId
+}
+
+input StripeCustomersScalarWhereWithAggregatesInput {
+  AND: [StripeCustomersScalarWhereWithAggregatesInput!]
+  NOT: [StripeCustomersScalarWhereWithAggregatesInput!]
+  OR: [StripeCustomersScalarWhereWithAggregatesInput!]
+  address: JsonNullableWithAggregatesFilter
+  balance: IntNullableWithAggregatesFilter
+  created: DateTimeNullableWithAggregatesFilter
+  currency: StringNullableWithAggregatesFilter
+  default_source: StringNullableWithAggregatesFilter
+  description: StringNullableWithAggregatesFilter
+  email: StringNullableWithAggregatesFilter
+  id: StringWithAggregatesFilter
+  livemode: BoolNullableWithAggregatesFilter
+  metadata: JsonNullableWithAggregatesFilter
+  name: StringNullableWithAggregatesFilter
+  phone: StringNullableWithAggregatesFilter
+  shipping: JsonNullableWithAggregatesFilter
+  stripeId: StringWithAggregatesFilter
+  userId: StringWithAggregatesFilter
+}
+
+input StripeCustomersStripeIdUserIdCompoundUniqueInput {
+  stripeId: String!
+  userId: String!
+}
+
+type StripeCustomersSumAggregate {
+  balance: Int
+}
+
+input StripeCustomersUpdateInput {
+  address: JSON
+  balance: NullableIntFieldUpdateOperationsInput
+  created: NullableDateTimeFieldUpdateOperationsInput
+  currency: NullableStringFieldUpdateOperationsInput
+  default_source: NullableStringFieldUpdateOperationsInput
+  description: NullableStringFieldUpdateOperationsInput
+  email: NullableStringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  livemode: NullableBoolFieldUpdateOperationsInput
+  metadata: JSON
+  name: NullableStringFieldUpdateOperationsInput
+  phone: NullableStringFieldUpdateOperationsInput
+  shipping: JSON
+  stripeId: StringFieldUpdateOperationsInput
+  subscriptions: SubsUpdateManyWithoutCustomersInput
+  user: UserUpdateOneRequiredWithoutStripeInput
+}
+
+input StripeCustomersUpdateManyMutationInput {
+  address: JSON
+  balance: NullableIntFieldUpdateOperationsInput
+  created: NullableDateTimeFieldUpdateOperationsInput
+  currency: NullableStringFieldUpdateOperationsInput
+  default_source: NullableStringFieldUpdateOperationsInput
+  description: NullableStringFieldUpdateOperationsInput
+  email: NullableStringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  livemode: NullableBoolFieldUpdateOperationsInput
+  metadata: JSON
+  name: NullableStringFieldUpdateOperationsInput
+  phone: NullableStringFieldUpdateOperationsInput
+  shipping: JSON
+  stripeId: StringFieldUpdateOperationsInput
+}
+
+input StripeCustomersUpdateOneWithoutSubscriptionsInput {
+  connect: StripeCustomersWhereUniqueInput
+  connectOrCreate: StripeCustomersCreateOrConnectWithoutSubscriptionsInput
+  create: StripeCustomersCreateWithoutSubscriptionsInput
+  delete: Boolean
+  disconnect: Boolean
+  update: StripeCustomersUpdateWithoutSubscriptionsInput
+  upsert: StripeCustomersUpsertWithoutSubscriptionsInput
+}
+
+input StripeCustomersUpdateOneWithoutUserInput {
+  connect: StripeCustomersWhereUniqueInput
+  connectOrCreate: StripeCustomersCreateOrConnectWithoutUserInput
+  create: StripeCustomersCreateWithoutUserInput
+  delete: Boolean
+  disconnect: Boolean
+  update: StripeCustomersUpdateWithoutUserInput
+  upsert: StripeCustomersUpsertWithoutUserInput
+}
+
+input StripeCustomersUpdateWithoutSubscriptionsInput {
+  address: JSON
+  balance: NullableIntFieldUpdateOperationsInput
+  created: NullableDateTimeFieldUpdateOperationsInput
+  currency: NullableStringFieldUpdateOperationsInput
+  default_source: NullableStringFieldUpdateOperationsInput
+  description: NullableStringFieldUpdateOperationsInput
+  email: NullableStringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  livemode: NullableBoolFieldUpdateOperationsInput
+  metadata: JSON
+  name: NullableStringFieldUpdateOperationsInput
+  phone: NullableStringFieldUpdateOperationsInput
+  shipping: JSON
+  stripeId: StringFieldUpdateOperationsInput
+  user: UserUpdateOneRequiredWithoutStripeInput
+}
+
+input StripeCustomersUpdateWithoutUserInput {
+  address: JSON
+  balance: NullableIntFieldUpdateOperationsInput
+  created: NullableDateTimeFieldUpdateOperationsInput
+  currency: NullableStringFieldUpdateOperationsInput
+  default_source: NullableStringFieldUpdateOperationsInput
+  description: NullableStringFieldUpdateOperationsInput
+  email: NullableStringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  livemode: NullableBoolFieldUpdateOperationsInput
+  metadata: JSON
+  name: NullableStringFieldUpdateOperationsInput
+  phone: NullableStringFieldUpdateOperationsInput
+  shipping: JSON
+  stripeId: StringFieldUpdateOperationsInput
+  subscriptions: SubsUpdateManyWithoutCustomersInput
+}
+
+input StripeCustomersUpsertWithoutSubscriptionsInput {
+  create: StripeCustomersCreateWithoutSubscriptionsInput!
+  update: StripeCustomersUpdateWithoutSubscriptionsInput!
+}
+
+input StripeCustomersUpsertWithoutUserInput {
+  create: StripeCustomersCreateWithoutUserInput!
+  update: StripeCustomersUpdateWithoutUserInput!
+}
+
+input StripeCustomersWhereInput {
+  AND: [StripeCustomersWhereInput!]
+  NOT: [StripeCustomersWhereInput!]
+  OR: [StripeCustomersWhereInput!]
+  address: JsonNullableFilter
+  balance: IntNullableFilter
+  created: DateTimeNullableFilter
+  currency: StringNullableFilter
+  default_source: StringNullableFilter
+  description: StringNullableFilter
+  email: StringNullableFilter
+  id: StringFilter
+  livemode: BoolNullableFilter
+  metadata: JsonNullableFilter
+  name: StringNullableFilter
+  phone: StringNullableFilter
+  shipping: JsonNullableFilter
+  stripeId: StringFilter
+  subscriptions: SubsListRelationFilter
+  user: UserRelationFilter
+  userId: StringFilter
+}
+
+input StripeCustomersWhereUniqueInput {
+  id: String
+  stripeId: String
+  stripeId_userId: StripeCustomersStripeIdUserIdCompoundUniqueInput
+}
+
+type Subs {
+  billing_thresholds: JSON
+  cancel_at: Int
+  cancel_at_period_end: Boolean
+  canceled_at: Int
+  collection_method: String
+  created: Int
+  current_period_end: Int
+  current_period_start: Int
+  customer: String!
+  customers: StripeCustomers
+  days_until_due: Int
+  default_payment_method: String
+  default_source: String
+  default_tax_rates: JSON
+  discount: JSON
+  ended_at: Int
+  id: String!
+  items: JSON
+  latest_invoice: String
+  livemode: Boolean
+  metadata: JSON
+  next_pending_invoice_item_invoice: Int
+  pause_collection: JSON
+  pending_invoice_item_interval: JSON
+  pending_setup_intent: String
+  pending_update: JSON
+  start_date: Int
+  status: SubscriptionStatus
+  trial_end: JSON
+  trial_start: JSON
+}
+
+type SubsAvgAggregate {
+  cancel_at: Float
+  canceled_at: Float
+  created: Float
+  current_period_end: Float
+  current_period_start: Float
+  days_until_due: Float
+  ended_at: Float
+  next_pending_invoice_item_invoice: Float
+  start_date: Float
+}
+
+type SubsCountAggregate {
+  _all: Int!
+  billing_thresholds: Int!
+  cancel_at: Int!
+  cancel_at_period_end: Int!
+  canceled_at: Int!
+  collection_method: Int!
+  created: Int!
+  current_period_end: Int!
+  current_period_start: Int!
+  customer: Int!
+  days_until_due: Int!
+  default_payment_method: Int!
+  default_source: Int!
+  default_tax_rates: Int!
+  discount: Int!
+  ended_at: Int!
+  id: Int!
+  items: Int!
+  latest_invoice: Int!
+  livemode: Int!
+  metadata: Int!
+  next_pending_invoice_item_invoice: Int!
+  pause_collection: Int!
+  pending_invoice_item_interval: Int!
+  pending_setup_intent: Int!
+  pending_update: Int!
+  start_date: Int!
+  status: Int!
+  trial_end: Int!
+  trial_start: Int!
+}
+
+input SubsCreateInput {
+  billing_thresholds: JSON
+  cancel_at: Int
+  cancel_at_period_end: Boolean
+  canceled_at: Int
+  collection_method: String
+  created: Int
+  current_period_end: Int
+  current_period_start: Int
+  customers: StripeCustomersCreateNestedOneWithoutSubscriptionsInput
+  days_until_due: Int
+  default_payment_method: String
+  default_source: String
+  default_tax_rates: JSON
+  discount: JSON
+  ended_at: Int
+  id: String!
+  items: JSON
+  latest_invoice: String
+  livemode: Boolean
+  metadata: JSON
+  next_pending_invoice_item_invoice: Int
+  pause_collection: JSON
+  pending_invoice_item_interval: JSON
+  pending_setup_intent: String
+  pending_update: JSON
+  start_date: Int
+  status: SubscriptionStatus
+  trial_end: JSON
+  trial_start: JSON
+}
+
+input SubsCreateManyCustomersInput {
+  billing_thresholds: JSON
+  cancel_at: Int
+  cancel_at_period_end: Boolean
+  canceled_at: Int
+  collection_method: String
+  created: Int
+  current_period_end: Int
+  current_period_start: Int
+  days_until_due: Int
+  default_payment_method: String
+  default_source: String
+  default_tax_rates: JSON
+  discount: JSON
+  ended_at: Int
+  id: String!
+  items: JSON
+  latest_invoice: String
+  livemode: Boolean
+  metadata: JSON
+  next_pending_invoice_item_invoice: Int
+  pause_collection: JSON
+  pending_invoice_item_interval: JSON
+  pending_setup_intent: String
+  pending_update: JSON
+  start_date: Int
+  status: SubscriptionStatus
+  trial_end: JSON
+  trial_start: JSON
+}
+
+input SubsCreateManyCustomersInputEnvelope {
+  data: [SubsCreateManyCustomersInput!]!
+  skipDuplicates: Boolean
+}
+
+input SubsCreateManyInput {
+  billing_thresholds: JSON
+  cancel_at: Int
+  cancel_at_period_end: Boolean
+  canceled_at: Int
+  collection_method: String
+  created: Int
+  current_period_end: Int
+  current_period_start: Int
+  customer: String!
+  days_until_due: Int
+  default_payment_method: String
+  default_source: String
+  default_tax_rates: JSON
+  discount: JSON
+  ended_at: Int
+  id: String!
+  items: JSON
+  latest_invoice: String
+  livemode: Boolean
+  metadata: JSON
+  next_pending_invoice_item_invoice: Int
+  pause_collection: JSON
+  pending_invoice_item_interval: JSON
+  pending_setup_intent: String
+  pending_update: JSON
+  start_date: Int
+  status: SubscriptionStatus
+  trial_end: JSON
+  trial_start: JSON
+}
+
+input SubsCreateNestedManyWithoutCustomersInput {
+  connect: [SubsWhereUniqueInput!]
+  connectOrCreate: [SubsCreateOrConnectWithoutCustomersInput!]
+  create: [SubsCreateWithoutCustomersInput!]
+  createMany: SubsCreateManyCustomersInputEnvelope
+}
+
+input SubsCreateOrConnectWithoutCustomersInput {
+  create: SubsCreateWithoutCustomersInput!
+  where: SubsWhereUniqueInput!
+}
+
+input SubsCreateWithoutCustomersInput {
+  billing_thresholds: JSON
+  cancel_at: Int
+  cancel_at_period_end: Boolean
+  canceled_at: Int
+  collection_method: String
+  created: Int
+  current_period_end: Int
+  current_period_start: Int
+  days_until_due: Int
+  default_payment_method: String
+  default_source: String
+  default_tax_rates: JSON
+  discount: JSON
+  ended_at: Int
+  id: String!
+  items: JSON
+  latest_invoice: String
+  livemode: Boolean
+  metadata: JSON
+  next_pending_invoice_item_invoice: Int
+  pause_collection: JSON
+  pending_invoice_item_interval: JSON
+  pending_setup_intent: String
+  pending_update: JSON
+  start_date: Int
+  status: SubscriptionStatus
+  trial_end: JSON
+  trial_start: JSON
+}
+
+type SubsGroupBy {
+  avg: SubsAvgAggregate
+  billing_thresholds: JSON
+  cancel_at: Int
+  cancel_at_period_end: Boolean
+  canceled_at: Int
+  collection_method: String
+  count: SubsCountAggregate
+  created: Int
+  current_period_end: Int
+  current_period_start: Int
+  customer: String!
+  days_until_due: Int
+  default_payment_method: String
+  default_source: String
+  default_tax_rates: JSON
+  discount: JSON
+  ended_at: Int
+  id: String!
+  items: JSON
+  latest_invoice: String
+  livemode: Boolean
+  max: SubsMaxAggregate
+  metadata: JSON
+  min: SubsMinAggregate
+  next_pending_invoice_item_invoice: Int
+  pause_collection: JSON
+  pending_invoice_item_interval: JSON
+  pending_setup_intent: String
+  pending_update: JSON
+  start_date: Int
+  status: SubscriptionStatus
+  sum: SubsSumAggregate
+  trial_end: JSON
+  trial_start: JSON
+}
+
+input SubsListRelationFilter {
+  every: SubsWhereInput
+  none: SubsWhereInput
+  some: SubsWhereInput
+}
+
+type SubsMaxAggregate {
+  cancel_at: Int
+  cancel_at_period_end: Boolean
+  canceled_at: Int
+  collection_method: String
+  created: Int
+  current_period_end: Int
+  current_period_start: Int
+  customer: String
+  days_until_due: Int
+  default_payment_method: String
+  default_source: String
+  ended_at: Int
+  id: String
+  latest_invoice: String
+  livemode: Boolean
+  next_pending_invoice_item_invoice: Int
+  pending_setup_intent: String
+  start_date: Int
+  status: SubscriptionStatus
+}
+
+type SubsMinAggregate {
+  cancel_at: Int
+  cancel_at_period_end: Boolean
+  canceled_at: Int
+  collection_method: String
+  created: Int
+  current_period_end: Int
+  current_period_start: Int
+  customer: String
+  days_until_due: Int
+  default_payment_method: String
+  default_source: String
+  ended_at: Int
+  id: String
+  latest_invoice: String
+  livemode: Boolean
+  next_pending_invoice_item_invoice: Int
+  pending_setup_intent: String
+  start_date: Int
+  status: SubscriptionStatus
+}
+
+input SubsOrderByInput {
+  billing_thresholds: SortOrder
+  cancel_at: SortOrder
+  cancel_at_period_end: SortOrder
+  canceled_at: SortOrder
+  collection_method: SortOrder
+  created: SortOrder
+  current_period_end: SortOrder
+  current_period_start: SortOrder
+  customer: SortOrder
+  days_until_due: SortOrder
+  default_payment_method: SortOrder
+  default_source: SortOrder
+  default_tax_rates: SortOrder
+  discount: SortOrder
+  ended_at: SortOrder
+  id: SortOrder
+  items: SortOrder
+  latest_invoice: SortOrder
+  livemode: SortOrder
+  metadata: SortOrder
+  next_pending_invoice_item_invoice: SortOrder
+  pause_collection: SortOrder
+  pending_invoice_item_interval: SortOrder
+  pending_setup_intent: SortOrder
+  pending_update: SortOrder
+  start_date: SortOrder
+  status: SortOrder
+  trial_end: SortOrder
+  trial_start: SortOrder
+}
+
+enum SubsScalarFieldEnum {
+  billing_thresholds
+  cancel_at
+  cancel_at_period_end
+  canceled_at
+  collection_method
+  created
+  current_period_end
+  current_period_start
+  customer
+  days_until_due
+  default_payment_method
+  default_source
+  default_tax_rates
+  discount
+  ended_at
+  id
+  items
+  latest_invoice
+  livemode
+  metadata
+  next_pending_invoice_item_invoice
+  pause_collection
+  pending_invoice_item_interval
+  pending_setup_intent
+  pending_update
+  start_date
+  status
+  trial_end
+  trial_start
+}
+
+input SubsScalarWhereInput {
+  AND: [SubsScalarWhereInput!]
+  NOT: [SubsScalarWhereInput!]
+  OR: [SubsScalarWhereInput!]
+  billing_thresholds: JsonNullableFilter
+  cancel_at: IntNullableFilter
+  cancel_at_period_end: BoolNullableFilter
+  canceled_at: IntNullableFilter
+  collection_method: StringNullableFilter
+  created: IntNullableFilter
+  current_period_end: IntNullableFilter
+  current_period_start: IntNullableFilter
+  customer: StringFilter
+  days_until_due: IntNullableFilter
+  default_payment_method: StringNullableFilter
+  default_source: StringNullableFilter
+  default_tax_rates: JsonNullableFilter
+  discount: JsonNullableFilter
+  ended_at: IntNullableFilter
+  id: StringFilter
+  items: JsonNullableFilter
+  latest_invoice: StringNullableFilter
+  livemode: BoolNullableFilter
+  metadata: JsonNullableFilter
+  next_pending_invoice_item_invoice: IntNullableFilter
+  pause_collection: JsonNullableFilter
+  pending_invoice_item_interval: JsonNullableFilter
+  pending_setup_intent: StringNullableFilter
+  pending_update: JsonNullableFilter
+  start_date: IntNullableFilter
+  status: EnumSubscriptionStatusNullableFilter
+  trial_end: JsonNullableFilter
+  trial_start: JsonNullableFilter
+}
+
+input SubsScalarWhereWithAggregatesInput {
+  AND: [SubsScalarWhereWithAggregatesInput!]
+  NOT: [SubsScalarWhereWithAggregatesInput!]
+  OR: [SubsScalarWhereWithAggregatesInput!]
+  billing_thresholds: JsonNullableWithAggregatesFilter
+  cancel_at: IntNullableWithAggregatesFilter
+  cancel_at_period_end: BoolNullableWithAggregatesFilter
+  canceled_at: IntNullableWithAggregatesFilter
+  collection_method: StringNullableWithAggregatesFilter
+  created: IntNullableWithAggregatesFilter
+  current_period_end: IntNullableWithAggregatesFilter
+  current_period_start: IntNullableWithAggregatesFilter
+  customer: StringWithAggregatesFilter
+  days_until_due: IntNullableWithAggregatesFilter
+  default_payment_method: StringNullableWithAggregatesFilter
+  default_source: StringNullableWithAggregatesFilter
+  default_tax_rates: JsonNullableWithAggregatesFilter
+  discount: JsonNullableWithAggregatesFilter
+  ended_at: IntNullableWithAggregatesFilter
+  id: StringWithAggregatesFilter
+  items: JsonNullableWithAggregatesFilter
+  latest_invoice: StringNullableWithAggregatesFilter
+  livemode: BoolNullableWithAggregatesFilter
+  metadata: JsonNullableWithAggregatesFilter
+  next_pending_invoice_item_invoice: IntNullableWithAggregatesFilter
+  pause_collection: JsonNullableWithAggregatesFilter
+  pending_invoice_item_interval: JsonNullableWithAggregatesFilter
+  pending_setup_intent: StringNullableWithAggregatesFilter
+  pending_update: JsonNullableWithAggregatesFilter
+  start_date: IntNullableWithAggregatesFilter
+  status: EnumSubscriptionStatusNullableWithAggregatesFilter
+  trial_end: JsonNullableWithAggregatesFilter
+  trial_start: JsonNullableWithAggregatesFilter
+}
+
+type SubsSumAggregate {
+  cancel_at: Int
+  canceled_at: Int
+  created: Int
+  current_period_end: Int
+  current_period_start: Int
+  days_until_due: Int
+  ended_at: Int
+  next_pending_invoice_item_invoice: Int
+  start_date: Int
+}
+
+input SubsUpdateInput {
+  billing_thresholds: JSON
+  cancel_at: NullableIntFieldUpdateOperationsInput
+  cancel_at_period_end: NullableBoolFieldUpdateOperationsInput
+  canceled_at: NullableIntFieldUpdateOperationsInput
+  collection_method: NullableStringFieldUpdateOperationsInput
+  created: NullableIntFieldUpdateOperationsInput
+  current_period_end: NullableIntFieldUpdateOperationsInput
+  current_period_start: NullableIntFieldUpdateOperationsInput
+  customers: StripeCustomersUpdateOneWithoutSubscriptionsInput
+  days_until_due: NullableIntFieldUpdateOperationsInput
+  default_payment_method: NullableStringFieldUpdateOperationsInput
+  default_source: NullableStringFieldUpdateOperationsInput
+  default_tax_rates: JSON
+  discount: JSON
+  ended_at: NullableIntFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  items: JSON
+  latest_invoice: NullableStringFieldUpdateOperationsInput
+  livemode: NullableBoolFieldUpdateOperationsInput
+  metadata: JSON
+  next_pending_invoice_item_invoice: NullableIntFieldUpdateOperationsInput
+  pause_collection: JSON
+  pending_invoice_item_interval: JSON
+  pending_setup_intent: NullableStringFieldUpdateOperationsInput
+  pending_update: JSON
+  start_date: NullableIntFieldUpdateOperationsInput
+  status: NullableEnumSubscriptionStatusFieldUpdateOperationsInput
+  trial_end: JSON
+  trial_start: JSON
+}
+
+input SubsUpdateManyMutationInput {
+  billing_thresholds: JSON
+  cancel_at: NullableIntFieldUpdateOperationsInput
+  cancel_at_period_end: NullableBoolFieldUpdateOperationsInput
+  canceled_at: NullableIntFieldUpdateOperationsInput
+  collection_method: NullableStringFieldUpdateOperationsInput
+  created: NullableIntFieldUpdateOperationsInput
+  current_period_end: NullableIntFieldUpdateOperationsInput
+  current_period_start: NullableIntFieldUpdateOperationsInput
+  days_until_due: NullableIntFieldUpdateOperationsInput
+  default_payment_method: NullableStringFieldUpdateOperationsInput
+  default_source: NullableStringFieldUpdateOperationsInput
+  default_tax_rates: JSON
+  discount: JSON
+  ended_at: NullableIntFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  items: JSON
+  latest_invoice: NullableStringFieldUpdateOperationsInput
+  livemode: NullableBoolFieldUpdateOperationsInput
+  metadata: JSON
+  next_pending_invoice_item_invoice: NullableIntFieldUpdateOperationsInput
+  pause_collection: JSON
+  pending_invoice_item_interval: JSON
+  pending_setup_intent: NullableStringFieldUpdateOperationsInput
+  pending_update: JSON
+  start_date: NullableIntFieldUpdateOperationsInput
+  status: NullableEnumSubscriptionStatusFieldUpdateOperationsInput
+  trial_end: JSON
+  trial_start: JSON
+}
+
+input SubsUpdateManyWithWhereWithoutCustomersInput {
+  data: SubsUpdateManyMutationInput!
+  where: SubsScalarWhereInput!
+}
+
+input SubsUpdateManyWithoutCustomersInput {
+  connect: [SubsWhereUniqueInput!]
+  connectOrCreate: [SubsCreateOrConnectWithoutCustomersInput!]
+  create: [SubsCreateWithoutCustomersInput!]
+  createMany: SubsCreateManyCustomersInputEnvelope
+  delete: [SubsWhereUniqueInput!]
+  deleteMany: [SubsScalarWhereInput!]
+  disconnect: [SubsWhereUniqueInput!]
+  set: [SubsWhereUniqueInput!]
+  update: [SubsUpdateWithWhereUniqueWithoutCustomersInput!]
+  updateMany: [SubsUpdateManyWithWhereWithoutCustomersInput!]
+  upsert: [SubsUpsertWithWhereUniqueWithoutCustomersInput!]
+}
+
+input SubsUpdateWithWhereUniqueWithoutCustomersInput {
+  data: SubsUpdateWithoutCustomersInput!
+  where: SubsWhereUniqueInput!
+}
+
+input SubsUpdateWithoutCustomersInput {
+  billing_thresholds: JSON
+  cancel_at: NullableIntFieldUpdateOperationsInput
+  cancel_at_period_end: NullableBoolFieldUpdateOperationsInput
+  canceled_at: NullableIntFieldUpdateOperationsInput
+  collection_method: NullableStringFieldUpdateOperationsInput
+  created: NullableIntFieldUpdateOperationsInput
+  current_period_end: NullableIntFieldUpdateOperationsInput
+  current_period_start: NullableIntFieldUpdateOperationsInput
+  days_until_due: NullableIntFieldUpdateOperationsInput
+  default_payment_method: NullableStringFieldUpdateOperationsInput
+  default_source: NullableStringFieldUpdateOperationsInput
+  default_tax_rates: JSON
+  discount: JSON
+  ended_at: NullableIntFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  items: JSON
+  latest_invoice: NullableStringFieldUpdateOperationsInput
+  livemode: NullableBoolFieldUpdateOperationsInput
+  metadata: JSON
+  next_pending_invoice_item_invoice: NullableIntFieldUpdateOperationsInput
+  pause_collection: JSON
+  pending_invoice_item_interval: JSON
+  pending_setup_intent: NullableStringFieldUpdateOperationsInput
+  pending_update: JSON
+  start_date: NullableIntFieldUpdateOperationsInput
+  status: NullableEnumSubscriptionStatusFieldUpdateOperationsInput
+  trial_end: JSON
+  trial_start: JSON
+}
+
+input SubsUpsertWithWhereUniqueWithoutCustomersInput {
+  create: SubsCreateWithoutCustomersInput!
+  update: SubsUpdateWithoutCustomersInput!
+  where: SubsWhereUniqueInput!
+}
+
+input SubsWhereInput {
+  AND: [SubsWhereInput!]
+  NOT: [SubsWhereInput!]
+  OR: [SubsWhereInput!]
+  billing_thresholds: JsonNullableFilter
+  cancel_at: IntNullableFilter
+  cancel_at_period_end: BoolNullableFilter
+  canceled_at: IntNullableFilter
+  collection_method: StringNullableFilter
+  created: IntNullableFilter
+  current_period_end: IntNullableFilter
+  current_period_start: IntNullableFilter
+  customer: StringFilter
+  customers: StripeCustomersRelationFilter
+  days_until_due: IntNullableFilter
+  default_payment_method: StringNullableFilter
+  default_source: StringNullableFilter
+  default_tax_rates: JsonNullableFilter
+  discount: JsonNullableFilter
+  ended_at: IntNullableFilter
+  id: StringFilter
+  items: JsonNullableFilter
+  latest_invoice: StringNullableFilter
+  livemode: BoolNullableFilter
+  metadata: JsonNullableFilter
+  next_pending_invoice_item_invoice: IntNullableFilter
+  pause_collection: JsonNullableFilter
+  pending_invoice_item_interval: JsonNullableFilter
+  pending_setup_intent: StringNullableFilter
+  pending_update: JsonNullableFilter
+  start_date: IntNullableFilter
+  status: EnumSubscriptionStatusNullableFilter
+  trial_end: JsonNullableFilter
+  trial_start: JsonNullableFilter
+}
+
+input SubsWhereUniqueInput {
+  customer: String
+  id: String
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELED
+  INCOMPLETE
+  INCOMPLETE_EXPIRED
+  PAST_DUE
+  TRIALING
+  UNPAID
+}
+
 enum TokenType {
   ACCOUNT_VERIFICATION
   FORGET_PASSWORD
@@ -732,7 +1939,7 @@ enum TokenType {
 
 type Tokens {
   createdAt: DateTime!
-  expire: DateTime!
+  expireAt: DateTime!
   id: String!
   token: String!
   type: TokenType!
@@ -742,7 +1949,7 @@ type Tokens {
 type TokensCountAggregate {
   _all: Int!
   createdAt: Int!
-  expire: Int!
+  expireAt: Int!
   id: Int!
   token: Int!
   type: Int!
@@ -751,7 +1958,7 @@ type TokensCountAggregate {
 
 input TokensCreateInput {
   createdAt: DateTime
-  expire: DateTime!
+  expireAt: DateTime!
   id: String
   token: String!
   type: TokenType!
@@ -760,7 +1967,7 @@ input TokensCreateInput {
 
 input TokensCreateManyInput {
   createdAt: DateTime
-  expire: DateTime!
+  expireAt: DateTime!
   id: String
   token: String!
   type: TokenType!
@@ -770,7 +1977,7 @@ input TokensCreateManyInput {
 type TokensGroupBy {
   count: TokensCountAggregate
   createdAt: DateTime!
-  expire: DateTime!
+  expireAt: DateTime!
   id: String!
   max: TokensMaxAggregate
   min: TokensMinAggregate
@@ -781,7 +1988,7 @@ type TokensGroupBy {
 
 type TokensMaxAggregate {
   createdAt: DateTime
-  expire: DateTime
+  expireAt: DateTime
   id: String
   token: String
   type: TokenType
@@ -790,7 +1997,7 @@ type TokensMaxAggregate {
 
 type TokensMinAggregate {
   createdAt: DateTime
-  expire: DateTime
+  expireAt: DateTime
   id: String
   token: String
   type: TokenType
@@ -799,7 +2006,7 @@ type TokensMinAggregate {
 
 input TokensOrderByInput {
   createdAt: SortOrder
-  expire: SortOrder
+  expireAt: SortOrder
   id: SortOrder
   token: SortOrder
   type: SortOrder
@@ -808,7 +2015,7 @@ input TokensOrderByInput {
 
 enum TokensScalarFieldEnum {
   createdAt
-  expire
+  expireAt
   id
   token
   type
@@ -820,7 +2027,7 @@ input TokensScalarWhereWithAggregatesInput {
   NOT: [TokensScalarWhereWithAggregatesInput!]
   OR: [TokensScalarWhereWithAggregatesInput!]
   createdAt: DateTimeWithAggregatesFilter
-  expire: DateTimeWithAggregatesFilter
+  expireAt: DateTimeWithAggregatesFilter
   id: StringWithAggregatesFilter
   token: StringWithAggregatesFilter
   type: EnumTokenTypeWithAggregatesFilter
@@ -829,7 +2036,7 @@ input TokensScalarWhereWithAggregatesInput {
 
 input TokensUpdateInput {
   createdAt: DateTimeFieldUpdateOperationsInput
-  expire: DateTimeFieldUpdateOperationsInput
+  expireAt: DateTimeFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
   token: StringFieldUpdateOperationsInput
   type: EnumTokenTypeFieldUpdateOperationsInput
@@ -838,7 +2045,7 @@ input TokensUpdateInput {
 
 input TokensUpdateManyMutationInput {
   createdAt: DateTimeFieldUpdateOperationsInput
-  expire: DateTimeFieldUpdateOperationsInput
+  expireAt: DateTimeFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
   token: StringFieldUpdateOperationsInput
   type: EnumTokenTypeFieldUpdateOperationsInput
@@ -850,7 +2057,7 @@ input TokensWhereInput {
   NOT: [TokensWhereInput!]
   OR: [TokensWhereInput!]
   createdAt: DateTimeFilter
-  expire: DateTimeFilter
+  expireAt: DateTimeFilter
   id: StringFilter
   token: StringFilter
   type: EnumTokenTypeFilter
@@ -863,7 +2070,6 @@ input TokensWhereUniqueInput {
 }
 
 type User {
-  ccLast4: Int
   coins: BigInt!
   createdAt: DateTime!
   email: String!
@@ -871,19 +2077,17 @@ type User {
   name: String
   patronageType: Patronage
   role: UserRole!
-  stripeId: String
+  stripe: StripeCustomers
   updatedAt: DateTime!
   verified: Boolean!
 }
 
 type UserAvgAggregate {
-  ccLast4: Float
   coins: Float
 }
 
 type UserCountAggregate {
   _all: Int!
-  ccLast4: Int!
   coins: Int!
   createdAt: Int!
   email: Int!
@@ -892,13 +2096,11 @@ type UserCountAggregate {
   password: Int!
   patronageType: Int!
   role: Int!
-  stripeId: Int!
   updatedAt: Int!
   verified: Int!
 }
 
 input UserCreateInput {
-  ccLast4: Int
   coins: BigInt
   createdAt: DateTime
   email: String!
@@ -907,13 +2109,12 @@ input UserCreateInput {
   password: String!
   patronageType: Patronage
   role: UserRole
-  stripeId: String
+  stripe: StripeCustomersCreateNestedOneWithoutUserInput
   updatedAt: DateTime
   verified: Boolean
 }
 
 input UserCreateManyInput {
-  ccLast4: Int
   coins: BigInt
   createdAt: DateTime
   email: String!
@@ -922,14 +2123,36 @@ input UserCreateManyInput {
   password: String!
   patronageType: Patronage
   role: UserRole
-  stripeId: String
+  updatedAt: DateTime
+  verified: Boolean
+}
+
+input UserCreateNestedOneWithoutStripeInput {
+  connect: UserWhereUniqueInput
+  connectOrCreate: UserCreateOrConnectWithoutStripeInput
+  create: UserCreateWithoutStripeInput
+}
+
+input UserCreateOrConnectWithoutStripeInput {
+  create: UserCreateWithoutStripeInput!
+  where: UserWhereUniqueInput!
+}
+
+input UserCreateWithoutStripeInput {
+  coins: BigInt
+  createdAt: DateTime
+  email: String!
+  id: String
+  name: String
+  password: String!
+  patronageType: Patronage
+  role: UserRole
   updatedAt: DateTime
   verified: Boolean
 }
 
 type UserGroupBy {
   avg: UserAvgAggregate
-  ccLast4: Int
   coins: BigInt!
   count: UserCountAggregate
   createdAt: DateTime!
@@ -941,14 +2164,12 @@ type UserGroupBy {
   password: String!
   patronageType: Patronage
   role: UserRole!
-  stripeId: String
   sum: UserSumAggregate
   updatedAt: DateTime!
   verified: Boolean!
 }
 
 type UserMaxAggregate {
-  ccLast4: Int
   coins: BigInt
   createdAt: DateTime
   email: String
@@ -957,13 +2178,11 @@ type UserMaxAggregate {
   password: String
   patronageType: Patronage
   role: UserRole
-  stripeId: String
   updatedAt: DateTime
   verified: Boolean
 }
 
 type UserMinAggregate {
-  ccLast4: Int
   coins: BigInt
   createdAt: DateTime
   email: String
@@ -972,13 +2191,11 @@ type UserMinAggregate {
   password: String
   patronageType: Patronage
   role: UserRole
-  stripeId: String
   updatedAt: DateTime
   verified: Boolean
 }
 
 input UserOrderByInput {
-  ccLast4: SortOrder
   coins: SortOrder
   createdAt: SortOrder
   email: SortOrder
@@ -987,9 +2204,13 @@ input UserOrderByInput {
   password: SortOrder
   patronageType: SortOrder
   role: SortOrder
-  stripeId: SortOrder
   updatedAt: SortOrder
   verified: SortOrder
+}
+
+input UserRelationFilter {
+  is: UserWhereInput
+  isNot: UserWhereInput
 }
 
 type UserResponse {
@@ -1005,7 +2226,6 @@ enum UserRole {
 }
 
 enum UserScalarFieldEnum {
-  ccLast4
   coins
   createdAt
   email
@@ -1014,7 +2234,6 @@ enum UserScalarFieldEnum {
   password
   patronageType
   role
-  stripeId
   updatedAt
   verified
 }
@@ -1023,7 +2242,6 @@ input UserScalarWhereWithAggregatesInput {
   AND: [UserScalarWhereWithAggregatesInput!]
   NOT: [UserScalarWhereWithAggregatesInput!]
   OR: [UserScalarWhereWithAggregatesInput!]
-  ccLast4: IntNullableWithAggregatesFilter
   coins: BigIntWithAggregatesFilter
   createdAt: DateTimeWithAggregatesFilter
   email: StringWithAggregatesFilter
@@ -1032,18 +2250,15 @@ input UserScalarWhereWithAggregatesInput {
   password: StringWithAggregatesFilter
   patronageType: EnumPatronageNullableWithAggregatesFilter
   role: EnumUserRoleWithAggregatesFilter
-  stripeId: StringNullableWithAggregatesFilter
   updatedAt: DateTimeWithAggregatesFilter
   verified: BoolWithAggregatesFilter
 }
 
 type UserSumAggregate {
-  ccLast4: Int
   coins: BigInt
 }
 
 input UserUpdateInput {
-  ccLast4: NullableIntFieldUpdateOperationsInput
   coins: BigIntFieldUpdateOperationsInput
   createdAt: DateTimeFieldUpdateOperationsInput
   email: StringFieldUpdateOperationsInput
@@ -1052,13 +2267,12 @@ input UserUpdateInput {
   password: StringFieldUpdateOperationsInput
   patronageType: NullableEnumPatronageFieldUpdateOperationsInput
   role: EnumUserRoleFieldUpdateOperationsInput
-  stripeId: NullableStringFieldUpdateOperationsInput
+  stripe: StripeCustomersUpdateOneWithoutUserInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   verified: BoolFieldUpdateOperationsInput
 }
 
 input UserUpdateManyMutationInput {
-  ccLast4: NullableIntFieldUpdateOperationsInput
   coins: BigIntFieldUpdateOperationsInput
   createdAt: DateTimeFieldUpdateOperationsInput
   email: StringFieldUpdateOperationsInput
@@ -1067,16 +2281,40 @@ input UserUpdateManyMutationInput {
   password: StringFieldUpdateOperationsInput
   patronageType: NullableEnumPatronageFieldUpdateOperationsInput
   role: EnumUserRoleFieldUpdateOperationsInput
-  stripeId: NullableStringFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   verified: BoolFieldUpdateOperationsInput
+}
+
+input UserUpdateOneRequiredWithoutStripeInput {
+  connect: UserWhereUniqueInput
+  connectOrCreate: UserCreateOrConnectWithoutStripeInput
+  create: UserCreateWithoutStripeInput
+  update: UserUpdateWithoutStripeInput
+  upsert: UserUpsertWithoutStripeInput
+}
+
+input UserUpdateWithoutStripeInput {
+  coins: BigIntFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
+  email: StringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  name: NullableStringFieldUpdateOperationsInput
+  password: StringFieldUpdateOperationsInput
+  patronageType: NullableEnumPatronageFieldUpdateOperationsInput
+  role: EnumUserRoleFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
+  verified: BoolFieldUpdateOperationsInput
+}
+
+input UserUpsertWithoutStripeInput {
+  create: UserCreateWithoutStripeInput!
+  update: UserUpdateWithoutStripeInput!
 }
 
 input UserWhereInput {
   AND: [UserWhereInput!]
   NOT: [UserWhereInput!]
   OR: [UserWhereInput!]
-  ccLast4: IntNullableFilter
   coins: BigIntFilter
   createdAt: DateTimeFilter
   email: StringFilter
@@ -1085,7 +2323,7 @@ input UserWhereInput {
   password: StringFilter
   patronageType: EnumPatronageNullableFilter
   role: EnumUserRoleFilter
-  stripeId: StringNullableFilter
+  stripe: StripeCustomersRelationFilter
   updatedAt: DateTimeFilter
   verified: BoolFilter
 }
@@ -1093,5 +2331,4 @@ input UserWhereInput {
 input UserWhereUniqueInput {
   email: String
   id: String
-  stripeId: String
 }

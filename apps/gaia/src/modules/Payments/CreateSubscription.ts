@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { User } from "@generated/type-graphql";
-import { Arg, Ctx, Int, Mutation, Resolver } from "type-graphql";
+import { Arg, Ctx, Mutation, Resolver } from "type-graphql";
 
 import { GaiaContext } from "../../config/context";
 import { stripe } from "@olympus/stripe";
@@ -11,14 +12,15 @@ export class CreateSubscription {
   @Mutation(() => Boolean)
   async createSubscription(
     @Arg("type") type: "GOLD" | "SILVER" | "COPPER",
-    @Arg("id") id: string,
+    @Arg("paymentMethodId") paymentMethodId: string,
     @Arg("address") address: string,
-    @Arg("ccLast4") ccLast4: string,
     @Ctx() { req, prisma }: GaiaContext
-  ): Promise<boolean> {
+  ) {
     if (!req.session || !req.session.userId) {
       return false;
     }
+
+    const { userId } = req.session;
 
     logger.info("address", address);
 
@@ -26,13 +28,20 @@ export class CreateSubscription {
       where: {
         id: req.session.userId,
       },
+      include: {
+        stripe: {
+          select: {
+            stripeId: true,
+          },
+        },
+      },
     });
 
     if (!user) {
       return false;
     }
 
-    const { stripeId } = user;
+    let { stripeId } = user.stripe;
 
     let priceId: string;
     if (type === "GOLD") {
@@ -43,8 +52,10 @@ export class CreateSubscription {
       priceId = process.env.COPPER_PLAN_ID;
     }
 
+    let stripeData: Stripe.Response<Stripe.Customer>;
+
     if (!stripeId) {
-      const stripeData = await stripe.customers.create({
+      stripeData = await stripe.customers.create({
         email: user.email,
         name: user.name,
         address: {
@@ -54,59 +65,78 @@ export class CreateSubscription {
           state: "CA",
         },
       });
-
+      // TODO: PAYMENT METHOD IS MISSING
       await prisma.user.update({
         where: {
           id: req.session.userId,
         },
         data: {
-          stripeId: stripeData.id,
+          stripe: {
+            create: {
+              stripeId: stripeData.id,
+              name: user.name,
+              email: user.email,
+              address,
+              metadata: stripeData.metadata,
+              currency: "USD",
+              shipping: address,
+              description: `Account for user - ${user.name}, id - ${user.id}`,
+
+              // phone:phone
+            },
+          },
         },
       });
+
+      stripeId = stripeData.id;
     }
 
-    let paymentMethod;
-
-    if (stripeId || user.stripeId) {
+    if (stripeId) {
       try {
-        paymentMethod = await stripe.paymentMethods.attach(id, {
-          customer: stripeId ? stripeId : user.stripeId,
-        });
+        const subscription: Stripe.Response<Stripe.Subscription> = await stripe.subscriptions.create(
+          {
+            customer: stripeId,
+            payment_behavior: "default_incomplete",
+            expand: ["latest_invoice.payment_intent"],
+            items: [
+              {
+                price: priceId,
+              },
+            ],
+          }
+        );
+        logger.info("subscription successful", subscription);
+
+        if (subscription && subscription.status === "active") {
+          await prisma.user.update({
+            where: {
+              id: user.id,
+            },
+            data: {
+              patronageType: type,
+              stripe: {
+                connect: {
+                  stripeId_userId: {
+                    stripeId,
+                    userId,
+                  },
+                },
+              },
+            },
+          });
+        }
+
+        return {
+          subscriptionId: subscription.id,
+          clientSecret:
+            // @ts-ignore
+            subscription.latest_invoice.payment_intent.client_secret,
+        };
       } catch (error) {
-        logger.error("paymentMethod Error", error);
+        logger.error("subscription error", error.message);
       }
     }
 
-    let subscription: Stripe.Response<Stripe.Subscription>;
-
-    try {
-      subscription = await stripe.subscriptions.create({
-        customer: user.stripeId,
-        default_payment_method: paymentMethod.id,
-        items: [
-          {
-            price: priceId,
-          },
-        ],
-      });
-      logger.info("subscription successful");
-    } catch (error) {
-      logger.error("subscription error", error);
-    }
-
-    console.log("subscription", subscription);
-
-    if (subscription && subscription.status === "active") {
-      await prisma.user.update({
-        where: {
-          stripeId: stripeId ? stripeId : user.stripeId,
-        },
-        data: {
-          patronageType: type,
-        },
-      });
-      return true;
-    }
     return false;
   }
 }

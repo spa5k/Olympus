@@ -34,7 +34,7 @@ export class RegisterMutation {
         data: {
           userId: user.id,
           type: "ACCOUNT_VERIFICATION",
-          expire: minutesAdder(new Date(), 60).toISOString(),
+          expireAt: minutesAdder(new Date(), 60).toISOString(),
           token,
         },
       });

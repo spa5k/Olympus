@@ -14,6 +14,7 @@ import { LogoutMutation } from "../modules/Auth/logout";
 import { MeQuery } from "../modules/me";
 import { VerificationEmailAgainMutation } from "../modules/Helpers/verificationEmailAgain";
 import { CreateSubscription } from "../modules/Payments/CreateSubscription";
+import { PricesQuery } from "../modules/Payments/Prices";
 
 const resolversEnhancerMap: ResolversEnhanceMap = {
   User: {
@@ -35,6 +36,7 @@ export const createSchema = async (): Promise<GraphQLSchema> => {
       MeQuery,
       VerificationEmailAgainMutation,
       CreateSubscription,
+      PricesQuery,
     ],
     validate: true,
     emitSchemaFile: true,

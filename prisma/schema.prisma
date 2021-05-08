@@ -16,21 +16,23 @@ generator typegraphql {
 }
 
 model User {
-  id            String     @id @default(uuid())
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
+  id            String           @id @default(uuid())
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
   name          String?
-  role          UserRole   @default(NORMAL)
-  email         String     @unique
+  role          UserRole         @default(NORMAL)
+  email         String           @unique
   /// @TypeGraphQL.omit(output: true)
   password      String
-  verified      Boolean    @default(false)
-  stripeId      String?    @unique
-  coins         BigInt     @default(0)
-  ccLast4       Int?
-  patronageType Patronage? @default(FREE)
+  verified      Boolean          @default(false)
+  coins         BigInt           @default(0)
+  patronageType Patronage?       @default(FREE)
+  stripe        StripeCustomers?
+
+  @@index([patronageType])
 }
 
+/// @@TypeGraphQL.type(name: "Session")
 model session {
   sid    String   @id @db.VarChar
   sess   Json     @db.Json
@@ -39,13 +41,93 @@ model session {
   @@index([expire], name: "IDX_session_expire")
 }
 
-model tokens {
+model Tokens {
   id        String    @id @default(uuid())
   type      TokenType
   userId    String
-  expire    DateTime  @db.Timestamp(6)
+  expireAt  DateTime  @db.Timestamp(6)
   createdAt DateTime  @default(now())
   token     String    @unique
+
+  @@index([userId, expireAt, token, type])
+  @@index([userId])
+}
+
+// Stripe Customers Table
+model StripeCustomers {
+  id             String          @id @default(uuid())
+  user           User            @relation(fields: [userId], references: [id])
+  // Stripe ID of the User it's related to
+  stripeId       String          @unique
+  // User Id of the User it's related to
+  userId         String
+  address        Json?
+  description    String?
+  email          String?
+  // Whole JSON object you get while creating stripe customer
+  metadata       Json?
+  name           String?
+  phone          String?
+  shipping       Json?
+  balance        Int?
+  created        DateTime?       @default(now())
+  currency       String?
+  default_source String?
+  livemode       Boolean?
+  subscriptions  Subscriptions[]
+
+  @@unique([stripeId, userId])
+  @@index([stripeId])
+}
+
+/// @@TypeGraphQL.type(name: "Subs")
+model Subscriptions {
+  id                                String              @id
+  cancel_at_period_end              Boolean?
+  // When current period is ending and new invoice will be generated
+  current_period_end                Int?
+  // When current invoice payment started
+  current_period_start              Int?
+  default_payment_method            String?
+  // List of subscription items, each with an attached price.
+  items                             Json?
+  // Whole JSON object you get while creating stripe subscription
+  metadata                          Json?
+  pending_setup_intent              String?
+  pending_update                    Json?
+  status                            SubscriptionStatus?
+  billing_thresholds                Json?
+  cancel_at                         Int?
+  canceled_at                       Int?
+  collection_method                 String?
+  created                           Int?
+  days_until_due                    Int?
+  default_source                    String?
+  default_tax_rates                 Json?
+  discount                          Json?
+  ended_at                          Int?
+  livemode                          Boolean?
+  next_pending_invoice_item_invoice Int?
+  pause_collection                  Json?
+  pending_invoice_item_interval     Json?
+  start_date                        Int?
+  trial_end                         Json?
+  trial_start                       Json?
+  customer                          String              @unique
+  latest_invoice                    String?
+  customers                         StripeCustomers?    @relation(fields: [customer], references: [id])
+
+  @@index([cancel_at_period_end, days_until_due])
+}
+
+enum SubscriptionStatus {
+  TRIALING
+  ACTIVE
+  CANCELED
+  INCOMPLETE
+  INCOMPLETE_EXPIRED
+  PAST_DUE
+  UNPAID
 }
 
 enum UserRole {

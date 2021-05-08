@@ -23,39 +23,6 @@ const Checkout = ({ type }: { type: "GOLD" | "SILVER" | "COPPER" }) => {
 
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    // @ts-ignore
-    const { error, paymentMethod } = await stripe?.createPaymentMethod({
-      type: "card",
-      // @ts-ignore
-      card: elements?.getElement(CardElement),
-      billing_details: {
-        name: data?.me.user?.name as string,
-        email: data?.me.user?.email as string,
-        address: {
-          line1: address,
-          city: "California",
-          country: "US",
-          state: "CA",
-        },
-      },
-    });
-    console.log(paymentMethod);
-    if (error) {
-      setMessages(error.message);
-      return;
-    }
-    setMessages(`Payment method created ${paymentMethod.id}`);
-
-    await subscription({
-      variables: {
-        type,
-        id: paymentMethod.id,
-        address,
-        ccLast4: paymentMethod.card.last4,
-      },
-    });
-
-    console.log(paymentMethod);
   };
 
   if (!data?.me.user) {
@@ -103,31 +70,15 @@ const Checkout = ({ type }: { type: "GOLD" | "SILVER" | "COPPER" }) => {
   );
 };
 
-const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-);
-
 export const CheckoutForm = () => {
-  return (
-    <div>
-      <Elements
+  return <div></div>;
+};
+
+{
+  /* <Elements
         stripe={stripePromise}
         key={process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}
       >
         <Checkout type="COPPER" />
-      </Elements>
-      {/* <Elements
-        stripe={stripePromise}
-        key={process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}
-      >
-        <Checkout type="SILVER" />
-      </Elements>
-      <Elements
-        stripe={stripePromise}
-        key={process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}
-      >
-        <Checkout type="GOLD" />
-      </Elements> */}
-    </div>
-  );
-};
+      </Elements> */
+}
